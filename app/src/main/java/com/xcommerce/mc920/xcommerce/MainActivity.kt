@@ -22,10 +22,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         tabs.setupWithViewPager(viewpager)
         tabs.setSelectedTabIndicatorColor(resources.getColor(R.color.tabsSelected))
 
-        // TODO: Add tabs
-//         tabs.addTab(
-//
-//        )
+        // add tabs
+        tabs.addTab(tabs.newTab().setText("DESTAQUES"));
+        tabs.addTab(tabs.newTab().setText("CATEGORIAS"));
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with cart icon", Snackbar.LENGTH_LONG)
