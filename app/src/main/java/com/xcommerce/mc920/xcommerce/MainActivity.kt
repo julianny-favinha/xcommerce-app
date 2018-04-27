@@ -20,10 +20,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with cart icon", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+//        Codigo para botao flutuante direita inferior da tela
+//        fab.setOnClickListener { view ->
+//            Snackbar.make(view, "Replace with cart icon", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).show()
+//        }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
