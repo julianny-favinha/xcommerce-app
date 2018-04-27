@@ -1,14 +1,10 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.home
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.xcommerce.mc920.xcommerce.categories.CategoriesFragment
-import com.xcommerce.mc920.xcommerce.highlights.HighlightsFragment
-
-/**
- * Created by julianny-favinha on 26/04/18.
- */
+import com.xcommerce.mc920.xcommerce.home.highlights.HighlightsFragment
 
 
 class TabPagerAdapter(fm: FragmentManager, private var tabCount: Int) : FragmentPagerAdapter(fm) {

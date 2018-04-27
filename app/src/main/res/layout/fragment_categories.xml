@@ -4,7 +4,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xcommerce.mc920.xcommerce.highlights.HighlightsFragment">
+    tools:context="com.xcommerce.mc920.xcommerce.home.highlights.HighlightsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
