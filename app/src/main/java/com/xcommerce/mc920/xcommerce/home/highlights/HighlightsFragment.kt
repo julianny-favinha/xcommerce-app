@@ -22,15 +22,19 @@ class HighlightsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // TODO: Get data from backend
-        val products = listOf(Product(name="Teste1", brand="Teste", price=1L),
-                Product("Teste2", "Teste", 2L),
-                Product("Teste2", "Teste", 2L),
-                Product("Teste2", "Teste", 2L)
-        ,Product("Teste2", "Teste", 2L)
-        ,Product("Teste2", "Teste", 2L),
-                Product("Teste2", "Teste", 2L)
-        ,
-                Product("Teste2", "Teste", 2L),Product("Teste2", "Teste", 2L),Product("Teste2", "Teste", 2L),Product("Teste2", "Teste", 2L),Product("Teste2", "Teste", 2L),Product("Teste2", "Teste", 2L))
+        val products = listOf(Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"))
 
         recycler_view.layoutManager = LinearLayoutManager(this.context)
         recycler_view.adapter = ProductsAdapter(products, this)
