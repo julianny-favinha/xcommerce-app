@@ -11,4 +11,5 @@
 
     <string name="categorias">Categorias</string>
     <string name="destaques">Destaques</string>
+    <string name="title_activity_product_detail">ProductDetailActivity</string>
 </resources>
