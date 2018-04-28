@@ -20,6 +20,13 @@
             android:src="@drawable/mock_sofa" />
 
         <TextView
+            android:id="@+id/note_item_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            tools:text="Código" />
+
+        <TextView
             android:id="@+id/note_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

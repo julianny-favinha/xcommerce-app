@@ -22,19 +22,19 @@ class HighlightsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // TODO: Get data from backend
-        val products = listOf(Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
-                Product(name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"))
+        val products = listOf(Product(id=0, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=1, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=2, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=3, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=4, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=5, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=6, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=7, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=8, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=9, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=10, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=11, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"),
+                Product(id=12, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa"))
 
         recycler_view.layoutManager = LinearLayoutManager(this.context)
         recycler_view.adapter = ProductsAdapter(products, this)
