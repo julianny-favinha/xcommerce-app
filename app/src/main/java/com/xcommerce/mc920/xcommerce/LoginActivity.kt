@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
+class LoginActivity : AppCompatActivity()/*, LoaderCallbacks<Cursor>*/ {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         // Set up the login form.
-        populateAutoComplete()
+        //populateAutoComplete()
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         email_sign_in_button.setOnClickListener { attemptLogin() }
     }
 
+/*
     private fun populateAutoComplete() {
         if (!mayRequestContacts()) {
             return
@@ -87,7 +88,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             }
         }
     }
-
+*/
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -189,6 +190,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
     }
 
+/*
     override fun onCreateLoader(i: Int, bundle: Bundle?): Loader<Cursor> {
         return CursorLoader(this,
                 // Retrieve data rows for the device user's 'profile' contact.
@@ -234,6 +236,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         val ADDRESS = 0
         val IS_PRIMARY = 1
     }
+*/
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
@@ -283,10 +286,10 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         /**
          * Id to identity READ_CONTACTS permission request.
-         */
+         *
         private val REQUEST_READ_CONTACTS = 0
 
-        /**
+        **
          * A dummy authentication store containing known user names and passwords.
          * TODO: remove after connecting to a real authentication system.
          */
