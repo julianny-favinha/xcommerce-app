@@ -45,7 +45,8 @@ class ProductsAdapter(private val products: List<Product>, private val fragment:
     override fun onBindViewHolder(holder: ProductViewHolder?, position: Int) {
         val (id, name, brand, price, imageUrl) = products[position]
         holder?.let {
-            it.id.text = id.toString()
+            val codeString = "Código " + id.toString()
+            it.id.text = codeString
             it.name.text = name
             it.brand.text = brand
             val priceString = "R$" + ("%.2f".format(price/100.0)).toString()

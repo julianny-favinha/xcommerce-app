@@ -31,11 +31,12 @@ class ProductDetailActivity : AppCompatActivity() {
         val id = intent.getStringExtra("id")
 
         // TODO: get product by id from back-end
-        product_detail_id.text = product.id.toString()
-        product_detail_name.text = product.name
-        product_detail_brand.text = product.brand
+        val codeString = "Código "
+        this.product_detail_id.text = codeString + product.id.toString()
+        this.product_detail_name.text = product.name
+        this.product_detail_brand.text = product.brand
         val priceString = "R$" + ("%.2f".format(product.price/100.0)).toString()
-        product_detail_price.text = priceString
+        this.product_detail_price.text = priceString
     }
 
     override fun onSupportNavigateUp(): Boolean {

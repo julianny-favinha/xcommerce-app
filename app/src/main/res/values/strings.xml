@@ -11,5 +11,6 @@
 
     <string name="categorias">Categorias</string>
     <string name="destaques">Destaques</string>
+    <string name="text_description_photo">Foto do produto</string>
     <string name="title_activity_product_detail">ProductDetailActivity</string>
 </resources>
