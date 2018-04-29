@@ -16,6 +16,8 @@ class HighlightsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_highlights, container, false)
+
+
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -38,6 +40,7 @@ class HighlightsFragment : Fragment() {
 
         recycler_view.layoutManager = LinearLayoutManager(this.context)
         recycler_view.adapter = ProductsAdapter(products, this)
+        recycler_view.adapter.notifyDataSetChanged()
 
     }
 
