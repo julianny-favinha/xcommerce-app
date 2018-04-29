@@ -20,6 +20,7 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
     var name = itemView.note_item_name
     var brand = itemView.note_item_brand
     var price = itemView.note_item_price
+    var category = itemView.note_item_category
     var image = itemView.note_item_image
 
     val item = itemView.setOnClickListener(object: View.OnClickListener {
@@ -43,16 +44,18 @@ class ProductsAdapter(private val products: List<Product>, private val fragment:
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder?, position: Int) {
-        val (id, name, brand, price, imageUrl) = products[position]
+        val (id, name, brand, price, category, imageUrl) = products[position]
         holder?.let {
             val codeString = "Código " + id.toString()
             it.id.text = codeString
             it.name.text = name
             it.brand.text = brand
+            it.category.text = category
             val priceString = "R$" + ("%.2f".format(price/100.0)).toString()
             it.price.text = priceString
             // TODO: aqui vai ser trocado pela imagem da url indicada em imageUrl
             it.image.setImageResource(R.drawable.mock_sofa)
+
         }
     }
 }

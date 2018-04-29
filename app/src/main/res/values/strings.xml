@@ -9,8 +9,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="categorias">Categorias</string>
-    <string name="destaques">Destaques</string>
+    <string name="category">Categoria</string>
+    <string name="description">Descrição</string>
     <string name="text_description_photo">Foto do produto</string>
     <string name="title_activity_product_detail">ProductDetailActivity</string>
 </resources>

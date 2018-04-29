@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.content_product_detail.*
 class ProductDetailActivity : AppCompatActivity() {
 
     // TODO: após o request do módulo isso nao vai existir
-    val product = Product(id=15, name="Sofá", brand="Marca de um sofá", price=100L, imageUrl="mock_sofa")
+    val product = Product(id=15, name="Sofá", brand="Marca de um sofá", price=100L, category = "Eletrodomésticos", description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.", imageUrl="mock_sofa")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +31,14 @@ class ProductDetailActivity : AppCompatActivity() {
         val id = intent.getStringExtra("id")
 
         // TODO: get product by id from back-end
-        val codeString = "Código "
-        this.product_detail_id.text = codeString + product.id.toString()
+        val codeString = "Código " + product.id.toString()
+        this.product_detail_id.text = codeString
         this.product_detail_name.text = product.name
         this.product_detail_brand.text = product.brand
         val priceString = "R$" + ("%.2f".format(product.price/100.0)).toString()
         this.product_detail_price.text = priceString
+        this.product_detail_category.text = product.category
+        this.product_detail_description.text = product.description
     }
 
     override fun onSupportNavigateUp(): Boolean {

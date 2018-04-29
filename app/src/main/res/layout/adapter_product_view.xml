@@ -46,6 +46,13 @@
             tools:text="Marca" />
 
         <TextView
+            android:id="@+id/note_item_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="Categoria" />
+
+        <TextView
             android:id="@+id/note_item_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
