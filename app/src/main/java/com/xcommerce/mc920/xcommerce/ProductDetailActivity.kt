@@ -19,18 +19,27 @@ class ProductDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_product_detail)
         setSupportActionBar(toolbar)
 
+        // back button
+        this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Trocar para adicionar item no carrinho", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
 
-        // pega intent e coloca o valor no text view
+        // get intent
         val id = intent.getStringExtra("id")
 
+        // TODO: get product by id from back-end
         product_detail_id.text = product.id.toString()
         product_detail_name.text = product.name
         product_detail_brand.text = product.brand
         val priceString = "R$" + ("%.2f".format(product.price/100.0)).toString()
         product_detail_price.text = priceString
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
