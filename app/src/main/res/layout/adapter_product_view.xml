@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/mock_sofa" />
+            android:src="@drawable/mock_sofa"
+            android:contentDescription="Product photo" />
 
         <TextView
             android:id="@+id/note_item_id"
