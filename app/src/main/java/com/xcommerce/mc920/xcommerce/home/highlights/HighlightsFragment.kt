@@ -9,30 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.home.highlights.recycler_view.ProductsAdapter
-import com.xcommerce.mc920.xcommerce.model.Highlights
 import com.xcommerce.mc920.xcommerce.model.Product
 import kotlinx.android.synthetic.main.fragment_highlights.*
 
 class HighlightsFragment : Fragment() {
 
-    private var highlights = emptyList<Product>()
+    private var highlights = emptyList<Product>().toMutableList()
     private var task: HighlightsFetchTask? = null
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val inflate = inflater?.inflate(R.layout.fragment_highlights, container, false)
+        return inflater?.inflate(R.layout.fragment_highlights, container, false)
+    }
 
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         recycler_view.layoutManager = LinearLayoutManager(this.context)
         recycler_view.adapter = ProductsAdapter(highlights, this)
 
         task = HighlightsFetchTask(this)
         task?.execute("bla")
-
-        return inflate
-    }
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 
         if(isTaskRunning(task)){
             showProgressBar()
@@ -59,7 +56,7 @@ class HighlightsFragment : Fragment() {
     }
 
     fun populateResult(highlights: List<Product>) {
-        this.highlights = highlights
+        this.highlights.addAll(highlights)
         recycler_view.adapter.notifyDataSetChanged()
     }
 
