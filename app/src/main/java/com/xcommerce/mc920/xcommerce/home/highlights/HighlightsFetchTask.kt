@@ -10,7 +10,7 @@ class HighlightsFetchTask(private var container: HighlightsFragment?) : AsyncTas
 
     override fun doInBackground(vararg p0: String?): Highlights {
         try {
-            TODO("do request and use jackson to parse")
+            TODO("do request and use jackson to parse, make it generic!")
         } catch (e: Exception) {
             return Highlights(emptyList())
         }
