@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.content_product_detail.*
 class ProductDetailActivity : AppCompatActivity() {
 
     // TODO: após o request do módulo isso nao vai existir
-    val product = Product(id=15, name="Sofá", brand="Marca de um sofá", price=100L, category = "Eletrodomésticos", description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.", imageUrl="mock_sofa")
+    val product = Product(id=15, name="Sofá", brand="Marca de um sofá", price=100, category = "Eletrodomésticos", description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.", imageUrl="mock_sofa")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
