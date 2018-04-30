@@ -29,7 +29,7 @@ class HighlightsFragment : Fragment() {
         recycler_view.adapter = ProductsAdapter(highlights, this)
 
         task = HighlightsFetchTask(this)
-        task?.execute("bla")
+        task?.execute()
 
         if(isTaskRunning(task)){
             showProgressBar()
@@ -56,6 +56,7 @@ class HighlightsFragment : Fragment() {
     }
 
     fun populateResult(highlights: List<Product>) {
+        this.highlights.clear()
         this.highlights.addAll(highlights)
         recycler_view.adapter.notifyDataSetChanged()
     }
