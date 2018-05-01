@@ -52,7 +52,6 @@ class HighlightsFragment : Fragment() {
     fun hideProgressBar(){
         progressbar.visibility = View.GONE
         recycler_view.visibility = View.VISIBLE
-
     }
 
     fun populateResult(highlights: List<Product>) {
