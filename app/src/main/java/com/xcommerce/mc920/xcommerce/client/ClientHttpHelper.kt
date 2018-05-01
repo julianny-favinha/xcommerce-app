@@ -12,7 +12,7 @@ class ClientHttpHelper {
 
         const val BASE = "https://desolate-gorge-89381.herokuapp.com"
 
-        inline fun <reified T: Any> getRequest(path: String): T? {
+        inline fun <reified T : Any> getRequest(path: String): T? {
             val client = OkHttpClient()
             val objectMapper = jacksonObjectMapper()
 
@@ -26,7 +26,29 @@ class ClientHttpHelper {
                 return null
             }
 
-            return objectMapper.readValue(response.body()!!.byteStream())
+            // TODO("change backend to conform with Product")
+            val jsonExample = """{
+              "highlights": [
+                {
+                  "id": 1,
+                  "name": "GOOGLE",
+                  "brand": "Google",
+                  "category": "Internet",
+                  "description": "HAHAHAHA",
+                  "price": 1000,
+                  "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
+                }
+              , {
+                  "id": 1,
+                  "name": "GOOGLE",
+                  "brand": "Google",
+                  "category": "Internet",
+                  "description": "HAHAHAHA",
+                  "price": 1000,
+                    "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
+              }]
+            }"""
+            return objectMapper.readValue(jsonExample)
 
         }
 

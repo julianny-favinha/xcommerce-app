@@ -10,7 +10,7 @@ class HighlightsFetchTask(private var container: HighlightsFragment?) : AsyncTas
 
     override fun doInBackground(vararg p0: String?): Highlights {
         try {
-            return ClientHttpHelper.getRequest(ProductAPI.Highlight.PATH)
+            return ClientHttpHelper.getRequest(ProductAPI.Highlights.PATH)
                     ?: Highlights(emptyList())
         } catch (e: Exception) {
             return Highlights(emptyList())

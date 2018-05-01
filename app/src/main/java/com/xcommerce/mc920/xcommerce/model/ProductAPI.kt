@@ -1,7 +1,7 @@
 package com.xcommerce.mc920.xcommerce.model
 
 class ProductAPI {
-    object Highlight {
+    object Highlights {
         const val PATH = "/product/highlights"
     }
 }
