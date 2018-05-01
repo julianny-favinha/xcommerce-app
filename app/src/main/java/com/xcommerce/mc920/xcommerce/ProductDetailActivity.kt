@@ -3,7 +3,9 @@ package com.xcommerce.mc920.xcommerce
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.TextView
+import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.Product
 
 import kotlinx.android.synthetic.main.activity_product_detail.*
@@ -22,9 +24,11 @@ class ProductDetailActivity : AppCompatActivity() {
         // back button
         this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        Log.d("[CART]", CartHelper.retrieveCart().cartItemMap.toString())
+
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Trocar para adicionar item no carrinho", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            CartHelper.retrieveCart().add(product, 1)
+            finish()
         }
 
         // get intent
