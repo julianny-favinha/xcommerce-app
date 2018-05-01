@@ -1,16 +1,17 @@
 package com.xcommerce.mc920.xcommerce.home.highlights
 
 import android.os.AsyncTask
-import android.util.Log
+import com.xcommerce.mc920.xcommerce.client.ClientHttpHelper
 import com.xcommerce.mc920.xcommerce.model.Highlights
-import com.xcommerce.mc920.xcommerce.model.Product
+import com.xcommerce.mc920.xcommerce.model.ProductAPI
 
 
 class HighlightsFetchTask(private var container: HighlightsFragment?) : AsyncTask<String, Void, Highlights>() {
 
     override fun doInBackground(vararg p0: String?): Highlights {
         try {
-            TODO("do request and use jackson to parse, make it generic!")
+            return ClientHttpHelper.getRequest(ProductAPI.Highlight.PATH)
+                    ?: Highlights(emptyList())
         } catch (e: Exception) {
             return Highlights(emptyList())
         }
@@ -23,7 +24,7 @@ class HighlightsFetchTask(private var container: HighlightsFragment?) : AsyncTas
 
     override fun onPostExecute(result: Highlights?) {
         super.onPostExecute(result)
-        if (result != null) container?.populateResult(result.products)
+        if (result != null) container?.populateResult(result.highlights)
         container?.hideProgressBar()
         this.container = null
     }
