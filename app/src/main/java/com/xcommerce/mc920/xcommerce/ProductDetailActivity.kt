@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.Product
+import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.content_product_detail.*
@@ -53,26 +54,5 @@ class ProductDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-}
-
-private class DownloadImageTask(internal var bmImage: ImageView) : AsyncTask<String, Void, Bitmap>() {
-
-    override fun doInBackground(vararg urls: String): Bitmap? {
-        val urldisplay = urls[0]
-        var mIcon11: Bitmap? = null
-        try {
-            val `in` = java.net.URL(urldisplay).openStream()
-            mIcon11 = BitmapFactory.decodeStream(`in`)
-        } catch (e: Exception) {
-            Log.e("Error", e.message)
-            e.printStackTrace()
-        }
-
-        return mIcon11
-    }
-
-    override fun onPostExecute(result: Bitmap) {
-        bmImage.setImageBitmap(result)
     }
 }

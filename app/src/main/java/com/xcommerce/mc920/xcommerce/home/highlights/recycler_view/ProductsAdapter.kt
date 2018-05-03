@@ -12,7 +12,9 @@ import android.view.View
 import android.widget.ImageView
 import com.xcommerce.mc920.xcommerce.ProductDetailActivity
 import com.xcommerce.mc920.xcommerce.R
+import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 import kotlinx.android.synthetic.main.adapter_product_view.view.*
+import kotlinx.android.synthetic.main.content_product_detail.*
 
 class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
@@ -44,7 +46,7 @@ class ProductsAdapter(private val products: List<Product>, private val fragment:
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder?, position: Int) {
-        val (id, name, brand, price, category, imageUrl) = products[position]
+        val (id, name, brand, price, category, description, imageUrl) = products[position]
         holder?.let {
             val codeString = "Código " + id.toString()
             it.id.text = codeString
@@ -53,9 +55,7 @@ class ProductsAdapter(private val products: List<Product>, private val fragment:
             it.category.text = category
             val priceString = "R$" + ("%.2f".format(price/100.0)).toString()
             it.price.text = priceString
-            // TODO: aqui vai ser trocado pela imagem da url indicada em imageUrl
-            it.image.setImageResource(R.drawable.mock_sofa)
-
+            DownloadImageTask(it.image).execute(imageUrl)
         }
     }
 }
