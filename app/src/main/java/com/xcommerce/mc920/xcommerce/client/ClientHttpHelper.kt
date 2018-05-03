@@ -37,17 +37,17 @@ class ClientHttpHelper {
                   "description": "HAHAHAHA",
                   "price": 1000,
                   "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
-                }
-              , {
+                }, {
                   "id": 1,
                   "name": "GOOGLE",
                   "brand": "Google",
                   "category": "Internet",
                   "description": "HAHAHAHA",
                   "price": 1000,
-                    "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
+                  "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
               }]
             }"""
+
             return objectMapper.readValue(jsonExample)
 
         }

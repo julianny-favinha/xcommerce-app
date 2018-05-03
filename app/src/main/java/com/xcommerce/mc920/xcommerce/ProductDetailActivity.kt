@@ -1,9 +1,13 @@
 package com.xcommerce.mc920.xcommerce
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.Product
@@ -14,7 +18,7 @@ import kotlinx.android.synthetic.main.content_product_detail.*
 class ProductDetailActivity : AppCompatActivity() {
 
     // TODO: após o request do módulo isso nao vai existir
-    val product = Product(id=15, name="Sofá", brand="Marca de um sofá", price=100, category = "Eletrodomésticos", description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.", imageUrl="mock_sofa")
+    val product = Product(id=15, name="Sofá", brand="Marca de um sofá", price=100, category = "Eletrodomésticos", description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.", imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +47,32 @@ class ProductDetailActivity : AppCompatActivity() {
         this.product_detail_price.text = priceString
         this.product_detail_category.text = product.category
         this.product_detail_description.text = product.description
+        DownloadImageTask(this.product_detail_image).execute(product.imageUrl)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+}
+
+private class DownloadImageTask(internal var bmImage: ImageView) : AsyncTask<String, Void, Bitmap>() {
+
+    override fun doInBackground(vararg urls: String): Bitmap? {
+        val urldisplay = urls[0]
+        var mIcon11: Bitmap? = null
+        try {
+            val `in` = java.net.URL(urldisplay).openStream()
+            mIcon11 = BitmapFactory.decodeStream(`in`)
+        } catch (e: Exception) {
+            Log.e("Error", e.message)
+            e.printStackTrace()
+        }
+
+        return mIcon11
+    }
+
+    override fun onPostExecute(result: Bitmap) {
+        bmImage.setImageBitmap(result)
     }
 }
