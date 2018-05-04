@@ -24,11 +24,12 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
     var price = itemView.note_item_price
     var category = itemView.note_item_category
     var image = itemView.note_item_image
+    lateinit var product : Product
 
     val item = itemView.setOnClickListener(object: View.OnClickListener {
         override fun onClick(p0: View?) {
             val intent = Intent(p0?.context, ProductDetailActivity::class.java)
-            intent.putExtra("id", id.text)
+            intent.putExtra("product", product)
             p0?.context?.startActivity(intent)
         }
     })
@@ -46,16 +47,19 @@ class ProductsAdapter(private val products: List<Product>, private val fragment:
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder?, position: Int) {
-        val (id, name, brand, price, category, description, imageUrl) = products[position]
+        val product = products[position]
         holder?.let {
-            val codeString = "Código " + id.toString()
+            val codeString = "Código " + product.id.toString()
             it.id.text = codeString
-            it.name.text = name
-            it.brand.text = brand
-            it.category.text = category
-            val priceString = "R$" + ("%.2f".format(price/100.0)).toString()
+            it.name.text = product.name
+            it.brand.text = product.brand
+            it.category.text = product.category
+            val priceString = "R$" + ("%.2f".format(product.price/100.0)).toString()
             it.price.text = priceString
-            DownloadImageTask(it.image).execute(imageUrl)
+            DownloadImageTask(it.image).execute(product.imageUrl)
+            it.product = product
         }
     }
+
+
 }

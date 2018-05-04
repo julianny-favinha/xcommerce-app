@@ -1,4 +1,4 @@
-package com.xcommerce.mc920.xcommerce.client
+package com.xcommerce.mc920.xcommerce.utilities
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class ClientHttpHelper {
+class ClientHttpUtil {
 
     companion object {
 
@@ -22,9 +22,9 @@ class ClientHttpHelper {
             val response = client.newCall(request).execute()
             Log.d("[CLIENT HTTP]", "Received: " + response.toString())
 
-            if (!response.isSuccessful) {
-                return null
-            }
+//            if (!response.isSuccessful) {
+//                return null
+//            }
 
             // TODO("change backend to conform with Product")
             val jsonExample = """{
