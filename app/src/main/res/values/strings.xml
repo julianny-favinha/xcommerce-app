@@ -21,10 +21,11 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_password_check">Senha (Verificação)</string>
-    <string name="prompt_cep">CEP</string>
+    <string name="prompt_cep">CEP (XXXXX-XXX)</string>
     <string name="prompt_address">Endereço</string>
     <string name="action_sign_in">Fazer login</string>
     <string name="action_sign_up">Fazer Cadastro</string>
+    <string name="action_validate">Validar</string>
     <string name="action_goto_sign_up">Cadastrar</string>
     <string name="error_invalid_email">Email Inválido</string>
     <string name="error_invalid_password">Senha Inválida</string>

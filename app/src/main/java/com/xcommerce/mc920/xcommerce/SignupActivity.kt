@@ -42,6 +42,7 @@ class SignupActivity : AppCompatActivity() {
         })
 
         email_sign_up_button.setOnClickListener { attemptSignup() }
+        cep_validate_button.setOnClickListener { validateCep() }
     }
 
     /**
@@ -157,18 +158,38 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
+    private fun validateCep() {
+        val mCep = cep.text.toString()
+        if (TextUtils.isEmpty(mCep) || !isCepValid(mCep)) {
+            cep.error = getString(R.string.error_invalid_cep)
+            cep.requestFocus()
+        } else {
+            findViewById<TextView>(R.id.address).apply { text = "Av. Albert Einstein" }
+        }
+    }
+
     private fun isBirthdateValid(birthdate: String): Boolean {
         //TODO: Replace with proper birthdate check
-        val b = birthdate.split("/").map { it.toInt() }
-        if (b.size == 3 && b[0] <= 31 && b[1] <= 12 && b[2] <= 2018) {
-            return true
+        var valid = false
+        try {
+            val b = birthdate.split("/").map { it.toInt() }
+            valid = (b.size == 3 && b[0] <= 31 && b[1] <= 12 && b[2] <= 2018)
+        } catch (e: NumberFormatException) {
+            return false
         }
-        return false
+        return valid
     }
 
     private fun isCepValid(cep: String): Boolean {
         //TODO: Check cep validity
-        return true
+        var valid = false
+        try {
+            val c = cep.split("-").map { it.toInt() }
+            valid = (c.size == 2 && c[0] <= 99999 && c[1] <= 999)
+        } catch (e: NumberFormatException) {
+            return false
+        }
+        return valid
     }
 
     private fun isAddressValid(address: String): Boolean {
