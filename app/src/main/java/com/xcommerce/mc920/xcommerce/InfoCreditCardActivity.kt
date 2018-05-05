@@ -1,16 +1,15 @@
 package com.xcommerce.mc920.xcommerce
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 
-import kotlinx.android.synthetic.main.activity_info_credit_cart.*
+import kotlinx.android.synthetic.main.activity_info_credit_card.*
 
-class InfoCreditCartActivity : AppCompatActivity() {
+class InfoCreditCardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_info_credit_cart)
+        setContentView(R.layout.activity_info_credit_card)
         setSupportActionBar(toolbar)
 
 //        fab.setOnClickListener { view ->
