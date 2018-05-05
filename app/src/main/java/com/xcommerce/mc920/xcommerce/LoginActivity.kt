@@ -35,13 +35,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        /*password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
-            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                attemptLogin()
-                return@OnEditorActionListener true
-            }
-            false
-        })*/
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
         sign_up_button.setOnClickListener { redirectSignUp() }
@@ -173,10 +166,7 @@ class LoginActivity : AppCompatActivity() {
                                                    private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
-            // TODO: attempt authentication against a network service.
-
             val ret = ClientHttpUtil.postRequest<ClientResponse, Login>(ClientAPI.Login.PATH, Login(mEmail, mPassword))
-
             return ret?.success ?: false
         }
 

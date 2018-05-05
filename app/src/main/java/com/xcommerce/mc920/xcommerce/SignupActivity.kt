@@ -36,14 +36,6 @@ class SignupActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.email).apply { text = emailStr }
         findViewById<TextView>(R.id.password).apply { text = passwordStr }
 
-        /*password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
-            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                attemptSignup()
-                return@OnEditorActionListener true
-            }
-            false
-        })*/
-
         email_sign_up_button.setOnClickListener { attemptSignup() }
         cep_validate_button.setOnClickListener { completeWithCep() }
     }
