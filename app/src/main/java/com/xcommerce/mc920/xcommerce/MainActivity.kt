@@ -1,5 +1,6 @@
 package com.xcommerce.mc920.xcommerce
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -88,6 +89,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_meuspedidos -> {
 
+            }
+            R.id.nav_carrinho -> {
+                val intent = Intent(this, CartActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_sac -> {
 
