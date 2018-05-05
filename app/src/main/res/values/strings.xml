@@ -13,4 +13,11 @@
     <string name="description">Descrição</string>
     <string name="text_description_photo">Foto do produto</string>
     <string name="title_activity_product_detail">ProductDetailActivity</string>
+    <string name="title_activity_checkout">CheckoutActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="deliveryAddress">Endereço de entrega</string>
+    <string name="deliveryOptions">Opções de entrega</string>
+    <string name="paymentMethod">Modo de pagamento</string>
+    <string name="checkout">Finalizar compra</string>
+    <string name="total">Total</string>
 </resources>
