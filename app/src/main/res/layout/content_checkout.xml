@@ -22,7 +22,6 @@
                 android:layout_height="20sp" />
 
             <TextView
-                android:id="@+id/checkout_delivery_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/delivery_address"
@@ -35,12 +34,13 @@
                 android:id="@+id/checkout_delivery_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Endereço"
+                android:text="@string/address"
                 android:textSize="20sp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
 
             <Button
+                android:id="@+id/checkout_button_add_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_address"/>
@@ -60,7 +60,6 @@
                 android:layout_height="20sp" />
 
             <TextView
-                android:id="@+id/checkout_delivery_options_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/delivery_options"
@@ -75,19 +74,20 @@
                 android:orientation="horizontal">
 
                 <RadioGroup
+                    android:id="@+id/checkout_radio_pac_sedex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <RadioButton
+                        android:id="@+id/checkout_pac"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/pac"
                         android:text="@string/pac" />
 
                     <RadioButton
+                        android:id="@+id/checkout_sedex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/sedex"
                         android:text="@string/sedex" />
 
                 </RadioGroup>
@@ -143,27 +143,30 @@
                 android:paddingRight="10dp"/>
 
             <RadioGroup
+                android:id="@+id/checkout_radio_payment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <RadioButton
+                    android:id="@+id/checkout_radio_button_credit_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/credit_card"
                     android:text="@string/credit_card" />
 
                 <RadioButton
+                    android:id="@+id/checkout_radio_button_boleto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/boleto"
                     android:text="@string/boleto" />
 
             </RadioGroup>
 
             <Button
+                android:id="@+id/checkout_add_info_credit_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_info_credit_card"/>
+                android:text="@string/add_info_credit_card"
+                android:enabled="false"/>
 
             <Space
                 android:layout_width="wrap_content"
@@ -209,25 +212,14 @@
                 android:layout_height="20sp" />
 
             <Button
+                android:id="@+id/checkout_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/checkout"/>
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="20sp" />
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="20sp" />
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="20sp" />
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="20sp" />
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="20sp" />
+                android:layout_height="100sp" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
