@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".InfoCreditCartActivity"
+    tools:showIn="@layout/activity_info_credit_cart">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/name_credit_card"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+            <EditText
+                android:id="@+id/credit_card_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome"
+                android:inputType="text"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/number_credit_card"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+            <EditText
+                android:id="@+id/credit_card_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Número"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/code_credit_card"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+            <EditText
+                android:id="@+id/credit_card_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Código"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/valid_credit_card"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+            <EditText
+                android:id="@+id/credit_card_validate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="date"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="340dp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</android.support.constraint.ConstraintLayout>
