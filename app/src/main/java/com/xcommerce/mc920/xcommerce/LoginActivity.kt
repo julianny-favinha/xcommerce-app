@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONObject
 
 const val EMAIL = "com.xcommerce.mc851.EMAIL"
 const val PASSWORD = "com.xcommerce.mc851.PASSWORD"
@@ -105,6 +106,10 @@ class LoginActivity : AppCompatActivity() {
             putExtra(EMAIL, emailStr)
             putExtra(PASSWORD, passwordStr)
         }
+        email.error = null
+        password.error = null
+        findViewById<TextView>(R.id.email).apply { text = "" }
+        findViewById<TextView>(R.id.password).apply { text = "" }
         startActivity(signup)
     }
 
@@ -165,6 +170,12 @@ class LoginActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
+            val loginfo = JSONObject(mapOf(
+                    "email" to mEmail,
+                    "pass" to mPassword
+                )
+            )
+
             try {
                 // Simulate network access.
                 Thread.sleep(2000)
@@ -193,10 +204,4 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        /**
-         * TODO: remove after connecting to a real authentication system.
-         */
-        private val DUMMY_CREDENTIALS = arrayOf("foo@example.com:hello", "bar@example.com:world")
-    }
 }

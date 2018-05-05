@@ -13,6 +13,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_signup.*
+import org.json.JSONObject
 
 /**
  * A login screen that offers login via email/password.
@@ -57,7 +58,7 @@ class SignupActivity : AppCompatActivity() {
 
         // Reset errors.
         name.error = null
-        birthdate.error = null
+        cpf.error = null
         cep.error = null
         address.error = null
         email.error = null
@@ -69,7 +70,7 @@ class SignupActivity : AppCompatActivity() {
 
         // Store values at the time of the login attempt.
         val nameStr = name.text.toString()
-        val birthdateStr = birthdate.text.toString()
+        val cpfStr = cpf.text.toString()
         val cepStr = cep.text.toString()
         val addressStr = address.text.toString()
         val emailStr = email.text.toString()
@@ -112,7 +113,7 @@ class SignupActivity : AppCompatActivity() {
             cancel = true
         } else if (!isAddressValid(addressStr)) {
             address.error = getString(R.string.error_invalid_address)
-            focusView = birthdate
+            focusView = address
             cancel = true
         }
 
@@ -122,19 +123,19 @@ class SignupActivity : AppCompatActivity() {
             focusView = cep
             cancel = true
         } else if (!isCepValid(cepStr)) {
-            birthdate.error = getString(R.string.error_invalid_cep)
+            cep.error = getString(R.string.error_invalid_cep)
             focusView = cep
             cancel = true
         }
 
-        // Check for valid birthdate.
-        if(TextUtils.isEmpty(birthdateStr)) {
-            birthdate.error = getString(R.string.error_field_required)
-            focusView = birthdate
+        // Check for valid cpf.
+        if(TextUtils.isEmpty(cpfStr)) {
+            cpf.error = getString(R.string.error_field_required)
+            focusView = cpf
             cancel = true
-        } else if (!isBirthdateValid(birthdateStr)) {
-            birthdate.error = getString(R.string.error_invalid_birthdate)
-            focusView = birthdate
+        } else if (!isCPFValid(cpfStr)) {
+            cpf.error = getString(R.string.error_invalid_cpf)
+            focusView = cpf
             cancel = true
         }
 
@@ -153,7 +154,7 @@ class SignupActivity : AppCompatActivity() {
             // Show a progress spinner, and kick off a background task to
             // perform the user signup attempt.
             showProgress(true)
-            mAuthTask = UserSignupTask(nameStr, birthdateStr, cepStr, addressStr, emailStr, passwordStr, checkPasswordStr)
+            mAuthTask = UserSignupTask(nameStr, cpfStr, cepStr, addressStr, emailStr, passwordStr)
             mAuthTask!!.execute(null as Void?)
         }
     }
@@ -164,16 +165,22 @@ class SignupActivity : AppCompatActivity() {
             cep.error = getString(R.string.error_invalid_cep)
             cep.requestFocus()
         } else {
+            try {
+                // Simulate network access.
+                Thread.sleep(500)
+            } catch (e: InterruptedException) {
+                return
+            }
             findViewById<TextView>(R.id.address).apply { text = "Av. Albert Einstein" }
         }
     }
 
-    private fun isBirthdateValid(birthdate: String): Boolean {
+    private fun isCPFValid(cpf: String): Boolean {
         //TODO: Replace with proper birthdate check
         var valid = false
         try {
-            val b = birthdate.split("/").map { it.toInt() }
-            valid = (b.size == 3 && b[0] <= 31 && b[1] <= 12 && b[2] <= 2018)
+            val b = cpf.split("-").map { it.toInt() }
+            valid = (b.size == 2 && b[0] <= 999999999 && b[1] <= 99)
         } catch (e: NumberFormatException) {
             return false
         }
@@ -250,15 +257,31 @@ class SignupActivity : AppCompatActivity() {
      * the user.
      */
     inner class UserSignupTask internal constructor(private val mName: String,
-                                                    private val mBirthdate: String,
+                                                    private val mCPF: String,
                                                     private val mCep: String,
                                                     private val mAddress: String,
                                                     private val mEmail: String,
-                                                    private val mPassword: String,
-                                                    private val mCheckPassword: String) : AsyncTask<Void, Void, Boolean>() {
+                                                    private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
+
+            val signinfo = JSONObject(mapOf(
+                    "name" to mName,
+                    "cpf" to mCPF,
+                    "cep" to mCep,
+                    "address" to mAddress,
+                    "email" to mEmail,
+                    "pass" to mPassword
+                )
+            )
+
+            try {
+                // Simulate network access.
+                Thread.sleep(2000)
+            } catch (e: InterruptedException) {
+                return false
+            }
 
             return true
         }
@@ -270,8 +293,8 @@ class SignupActivity : AppCompatActivity() {
             if (success!!) {
                 finish()
             } else {
-                password.error = getString(R.string.error_incorrect_password)
-                password.requestFocus()
+                email.error = getString(R.string.error_email_unavailable)
+                email.requestFocus()
             }
         }
 

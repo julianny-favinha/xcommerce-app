@@ -17,23 +17,26 @@
     <string name="title_activity_signup">Cadastrar</string>
 
     <string name="prompt_name">Nome Completo</string>
-    <string name="prompt_birthdate">Data de Nascimento   (DD/MM/AAAA)</string>
+    <string name="prompt_cpf">CPF (XXXXXXXXX-XX)</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_password_check">Senha (Verificação)</string>
     <string name="prompt_cep">CEP (XXXXX-XXX)</string>
     <string name="prompt_address">Endereço</string>
+
     <string name="action_sign_in">Fazer login</string>
+    <string name="action_sign_in_short">Login</string>
     <string name="action_sign_up">Fazer Cadastro</string>
     <string name="action_validate">Validar</string>
     <string name="action_goto_sign_up">Cadastrar</string>
+
     <string name="error_invalid_email">Email Inválido</string>
     <string name="error_invalid_password">Senha Inválida</string>
-    <string name="error_invalid_birthdate">Data de Nascimento Inválida</string>
+    <string name="error_invalid_cpf">CPF Inválido</string>
     <string name="error_invalid_cep">CEP Inválido</string>
     <string name="error_invalid_address">Endereço Inválido</string>
     <string name="error_incorrect_password">Senha Incorreta</string>
     <string name="error_badcheck_password">Senhas devem ser iguais</string>
     <string name="error_field_required">Campo Obrigatório</string>
-    <string name="action_sign_in_short">Login</string>
+    <string name="error_email_unavailable">Email Indisponível</string>
 </resources>

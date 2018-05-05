@@ -17,6 +17,7 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
@@ -51,10 +52,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/birthdate"
+                    android:id="@+id/cpf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_birthdate"
+                    android:hint="@string/prompt_cpf"
                     android:inputType="text|date"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -64,24 +65,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="0dp"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/cep"
-                    android:layout_width="fill_parent"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/prompt_cep"
-                    android:inputType="textPostalAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/cep"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_cep"
+                        android:inputType="textPostalAddress"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+
+                </android.support.design.widget.TextInputLayout>
 
                 <Button
                     android:id="@+id/cep_validate_button"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/action_validate"
                     android:textStyle="bold" />
 
