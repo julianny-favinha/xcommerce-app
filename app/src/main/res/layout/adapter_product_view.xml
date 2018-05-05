@@ -14,10 +14,22 @@
 
         <ImageView
             android:id="@+id/note_item_image"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/mock_sofa" />
+            android:src="@drawable/image_placeholder"
+            android:contentDescription="@string/text_description_photo" />
+
+        <TextView
+            android:id="@+id/note_item_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            tools:text="Código" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="12sp" />
 
         <TextView
             android:id="@+id/note_item_name"
@@ -32,6 +44,13 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             tools:text="Marca" />
+
+        <TextView
+            android:id="@+id/note_item_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="Categoria" />
 
         <TextView
             android:id="@+id/note_item_price"
