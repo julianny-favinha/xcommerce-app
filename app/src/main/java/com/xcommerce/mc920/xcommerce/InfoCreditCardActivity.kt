@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_info_credit_card.*
 import android.content.Intent
 import android.view.View
 import com.xcommerce.mc920.xcommerce.R.id.toolbar
-
+import kotlinx.android.synthetic.main.content_info_credit_card.*
 
 
 class InfoCreditCardActivity : AppCompatActivity() {
@@ -21,6 +21,11 @@ class InfoCreditCardActivity : AppCompatActivity() {
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
         toolbar.setNavigationOnClickListener {
             startActivity(Intent(applicationContext, CheckoutActivity::class.java))
+        }
+
+        // save information
+        credit_card_button_save.setOnClickListener {
+            
         }
     }
 

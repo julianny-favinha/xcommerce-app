@@ -100,7 +100,7 @@
                 android:layout_height="20sp" />
 
             <Button
-                android:id="@+id/credit_card_save_button"
+                android:id="@+id/credit_card_button_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/save" />
