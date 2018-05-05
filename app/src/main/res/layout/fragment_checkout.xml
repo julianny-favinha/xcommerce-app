@@ -159,6 +159,11 @@
 
                 </RadioGroup>
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_info_credit_card"/>
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="20sp" />
@@ -206,6 +211,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/checkout"/>
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="20sp" />

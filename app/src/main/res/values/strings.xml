@@ -25,5 +25,6 @@
     <string name="sedex">Sedex</string>
     <string name="calcular_frete">Calcular frete</string>
     <string name="credit_card">Cartão de crédito</string>
+    <string name="add_info_credit_card">Adicionar informações do cartão de crédito</string>
     <string name="boleto">Boleto</string>
 </resources>
