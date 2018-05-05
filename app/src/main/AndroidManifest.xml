@@ -26,10 +26,6 @@
             android:label="@string/title_activity_product_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CheckoutActivity2"
-            android:label="@string/title_activity_checkout"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".InfoCreditCardActivity"
             android:label="@string/title_activity_info_credit_cart"
             android:theme="@style/AppTheme.NoActionBar" />

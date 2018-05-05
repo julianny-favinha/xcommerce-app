@@ -6,15 +6,16 @@
 
     <string name="action_settings">Configurações</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Olá fragment branco!</string>
+    <string name="title_activity_product_detail">Detalhe do produto</string>
+    <string name="title_activity_checkout">Finalizar compra</string>
+    <string name="title_activity_info_credit_cart">Infromações do cartão de crédito</string>
+    <string name="title_activity_address">Adicionar novo endereço</string>
 
     <string name="category">Categoria</string>
     <string name="description">Descrição</string>
     <string name="save">Salvar</string>
     <string name="text_description_photo">Foto do produto</string>
-    <string name="title_activity_product_detail">ProductDetailActivity</string>
-    <string name="title_activity_checkout">CheckoutActivity</string>
+
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="delivery_address">Endereço de entrega</string>
     <string name="add_address">Adicionar endereço</string>
@@ -33,6 +34,4 @@
     <string name="code_credit_card">Código de segurança</string>
     <string name="valid_credit_card">Mês e ano da validade</string>
     <string name="boleto">Boleto</string>
-    <string name="title_activity_info_credit_cart">InfoCreditCartActivity</string>
-    <string name="title_activity_address">AddressActivity</string>
 </resources>
