@@ -36,6 +36,10 @@
         <activity
             android:name=".CheckoutActivity"
             android:label="@string/title_activity_checkout"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddressActivity"
+            android:label="@string/title_activity_address"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

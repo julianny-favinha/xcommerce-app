@@ -34,4 +34,5 @@
     <string name="valid_credit_card">Mês e ano da validade</string>
     <string name="boleto">Boleto</string>
     <string name="title_activity_info_credit_cart">InfoCreditCartActivity</string>
+    <string name="title_activity_address">AddressActivity</string>
 </resources>
