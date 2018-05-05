@@ -30,7 +30,8 @@ class CheckoutActivity : AppCompatActivity() {
 
         // add new address
         checkout_button_add_address.setOnClickListener {
-
+            val intent = Intent(this, AddressActivity::class.java)
+            startActivity(intent)
         }
 
         // add credit card info
