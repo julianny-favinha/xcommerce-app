@@ -19,5 +19,6 @@
     <string name="deliveryOptions">Opções de entrega</string>
     <string name="paymentMethod">Modo de pagamento</string>
     <string name="checkout">Finalizar compra</string>
-    <string name="total">Total</string>
+    <string name="PAC">PAC</string>
+    <string name="Sedex">Sedex</string>
 </resources>
