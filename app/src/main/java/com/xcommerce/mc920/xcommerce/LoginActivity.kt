@@ -165,16 +165,11 @@ class LoginActivity : AppCompatActivity() {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
+    inner class UserLoginTask internal constructor(private val mEmail: String,
+                                                   private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
-
-            val loginfo = JSONObject(mapOf(
-                    "email" to mEmail,
-                    "pass" to mPassword
-                )
-            )
 
             try {
                 // Simulate network access.

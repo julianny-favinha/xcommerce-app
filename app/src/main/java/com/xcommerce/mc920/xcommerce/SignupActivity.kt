@@ -43,7 +43,7 @@ class SignupActivity : AppCompatActivity() {
         })
 
         email_sign_up_button.setOnClickListener { attemptSignup() }
-        cep_validate_button.setOnClickListener { validateCep() }
+        cep_validate_button.setOnClickListener { completeWithCep() }
     }
 
     /**
@@ -133,7 +133,7 @@ class SignupActivity : AppCompatActivity() {
             cpf.error = getString(R.string.error_field_required)
             focusView = cpf
             cancel = true
-        } else if (!isCPFValid(cpfStr)) {
+        } else if (!isCpfValid(cpfStr)) {
             cpf.error = getString(R.string.error_invalid_cpf)
             focusView = cpf
             cancel = true
@@ -159,44 +159,43 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateCep() {
+    /**
+     * Find address corresponding to given CEP
+     */
+    private fun completeWithCep() {
         val mCep = cep.text.toString()
         if (TextUtils.isEmpty(mCep) || !isCepValid(mCep)) {
             cep.error = getString(R.string.error_invalid_cep)
             cep.requestFocus()
         } else {
+            //TODO: Connect with module to get address
             try {
                 // Simulate network access.
                 Thread.sleep(500)
             } catch (e: InterruptedException) {
                 return
             }
+
             findViewById<TextView>(R.id.address).apply { text = "Av. Albert Einstein" }
         }
     }
 
-    private fun isCPFValid(cpf: String): Boolean {
-        //TODO: Replace with proper birthdate check
-        var valid = false
-        try {
-            val b = cpf.split("-").map { it.toInt() }
-            valid = (b.size == 2 && b[0] <= 999999999 && b[1] <= 99)
-        } catch (e: NumberFormatException) {
-            return false
+    private fun isCpfValid(cpf: String): Boolean {
+        //TODO: Replace with proper CPF check
+        val c = cpf.toIntOrNull()
+        if (c != null && c <= 99999999999){
+            return true
         }
-        return valid
+        return false
     }
 
     private fun isCepValid(cep: String): Boolean {
         //TODO: Check cep validity
-        var valid = false
-        try {
-            val c = cep.split("-").map { it.toInt() }
-            valid = (c.size == 2 && c[0] <= 99999 && c[1] <= 999)
-        } catch (e: NumberFormatException) {
-            return false
+        val c = cep.toIntOrNull()
+        if (c != null && c <= 99999999){
+            return true
         }
-        return valid
+        return false
     }
 
     private fun isAddressValid(address: String): Boolean {
@@ -264,17 +263,7 @@ class SignupActivity : AppCompatActivity() {
                                                     private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
-            // TODO: attempt authentication against a network service.
-
-            val signinfo = JSONObject(mapOf(
-                    "name" to mName,
-                    "cpf" to mCPF,
-                    "cep" to mCep,
-                    "address" to mAddress,
-                    "email" to mEmail,
-                    "pass" to mPassword
-                )
-            )
+            // TODO: attempt authentication against a network service
 
             try {
                 // Simulate network access.

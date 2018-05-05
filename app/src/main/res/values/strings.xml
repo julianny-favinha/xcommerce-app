@@ -17,11 +17,11 @@
     <string name="title_activity_signup">Cadastrar</string>
 
     <string name="prompt_name">Nome Completo</string>
-    <string name="prompt_cpf">CPF (XXXXXXXXX-XX)</string>
+    <string name="prompt_cpf">CPF (Só Números)</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_password_check">Senha (Verificação)</string>
-    <string name="prompt_cep">CEP (XXXXX-XXX)</string>
+    <string name="prompt_cep">CEP (Só Números)</string>
     <string name="prompt_address">Endereço</string>
 
     <string name="action_sign_in">Fazer login</string>
