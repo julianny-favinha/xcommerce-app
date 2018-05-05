@@ -2,34 +2,41 @@ package com.xcommerce.mc920.xcommerce.home.highlights.recycler_view
 
 import android.content.Intent
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView.Adapter
 import android.view.ViewGroup
 import com.xcommerce.mc920.xcommerce.model.Product
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
 import com.xcommerce.mc920.xcommerce.ProductDetailActivity
 import com.xcommerce.mc920.xcommerce.R
+import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 import kotlinx.android.synthetic.main.adapter_product_view.view.*
 
 class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
-    var id = itemView.note_item_id
-    var name = itemView.note_item_name
-    var brand = itemView.note_item_brand
-    var price = itemView.note_item_price
-    var category = itemView.note_item_category
-    var image = itemView.note_item_image
+    private val id = itemView.note_item_id
+    private val name = itemView.note_item_name
+    private val brand = itemView.note_item_brand
+    private val price = itemView.note_item_price
+    private val category = itemView.note_item_category
+    private val image = itemView.note_item_image
 
-    val item = itemView.setOnClickListener(object: View.OnClickListener {
-        override fun onClick(p0: View?) {
-            val intent = Intent(p0?.context, ProductDetailActivity::class.java)
-            intent.putExtra("id", id.text)
-            p0?.context?.startActivity(intent)
-        }
-    })
+    fun bindClick(listener: View.OnClickListener) {
+        itemView.setOnClickListener(listener)
+    }
+
+    fun bindData(product: Product) {
+        val codeString = "Código " + product.id.toString()
+        id.text = codeString
+        name.text = product.name
+        brand.text = product.brand
+        category.text = product.category
+        val priceString = "R$" + ("%.2f".format(product.price / 100.0))
+        price.text = priceString
+        DownloadImageTask(image).execute(product.imageUrl)
+    }
+
 }
 
 class ProductsAdapter(private val products: List<Product>, private val fragment: Fragment) : Adapter<ProductViewHolder>() {
@@ -44,18 +51,16 @@ class ProductsAdapter(private val products: List<Product>, private val fragment:
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder?, position: Int) {
-        val (id, name, brand, price, category, imageUrl) = products[position]
-        holder?.let {
-            val codeString = "Código " + id.toString()
-            it.id.text = codeString
-            it.name.text = name
-            it.brand.text = brand
-            it.category.text = category
-            val priceString = "R$" + ("%.2f".format(price/100.0)).toString()
-            it.price.text = priceString
-            // TODO: aqui vai ser trocado pela imagem da url indicada em imageUrl
-            it.image.setImageResource(R.drawable.mock_sofa)
+        val product = products[position]
 
-        }
+        holder?.bindClick(View.OnClickListener { p0 ->
+            val intent = Intent(p0?.context, ProductDetailActivity::class.java)
+            intent.putExtra("product", product)
+            p0?.context?.startActivity(intent)
+        })
+
+        holder?.bindData(product)
     }
+
+
 }
