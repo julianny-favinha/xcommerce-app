@@ -13,6 +13,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
+import com.xcommerce.mc920.xcommerce.model.ClientAPI
+import com.xcommerce.mc920.xcommerce.model.Login
+import com.xcommerce.mc920.xcommerce.model.Response
+import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
@@ -171,14 +175,9 @@ class LoginActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000)
-            } catch (e: InterruptedException) {
-                return false
-            }
+            val ret = ClientHttpUtil.postRequest<Response, Login>(ClientAPI.Login.PATH, Login(mEmail, mPassword))
 
-            return mEmail == mPassword
+            return ret?.success
         }
 
         override fun onPostExecute(success: Boolean?) {

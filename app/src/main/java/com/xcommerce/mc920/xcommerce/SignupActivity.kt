@@ -12,6 +12,10 @@ import android.view.TextureView
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import com.xcommerce.mc920.xcommerce.model.ClientAPI
+import com.xcommerce.mc920.xcommerce.model.Response
+import com.xcommerce.mc920.xcommerce.model.Signup
+import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_signup.*
 import org.json.JSONObject
 
@@ -265,14 +269,9 @@ class SignupActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000)
-            } catch (e: InterruptedException) {
-                return false
-            }
+            val ret = ClientHttpUtil.postRequest<Response, Signup>(ClientAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
 
-            return true
+            return ret?.success
         }
 
         override fun onPostExecute(success: Boolean?) {
