@@ -38,7 +38,7 @@
     <string name="error_incorrect_password">Senha Incorreta</string>
     <string name="error_badcheck_password">Senhas devem ser iguais</string>
     <string name="error_field_required">Campo Obrigatório</string>
-    <string name="error_email_unavailable">Email Indisponível</string>
+    <string name="error_existing_user">Já existe usuário com este email</string>
     <string name="category">Categoria</string>
     <string name="description">Descrição</string>
     <string name="text_description_photo">Foto do produto</string>

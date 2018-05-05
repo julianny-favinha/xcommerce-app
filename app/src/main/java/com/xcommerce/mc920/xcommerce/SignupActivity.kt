@@ -12,9 +12,7 @@ import android.view.TextureView
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import com.xcommerce.mc920.xcommerce.model.ClientAPI
-import com.xcommerce.mc920.xcommerce.model.Response
-import com.xcommerce.mc920.xcommerce.model.Signup
+import com.xcommerce.mc920.xcommerce.model.*
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_signup.*
 import org.json.JSONObject
@@ -38,13 +36,13 @@ class SignupActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.email).apply { text = emailStr }
         findViewById<TextView>(R.id.password).apply { text = passwordStr }
 
-        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+        /*password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptSignup()
                 return@OnEditorActionListener true
             }
             false
-        })
+        })*/
 
         email_sign_up_button.setOnClickListener { attemptSignup() }
         cep_validate_button.setOnClickListener { completeWithCep() }
@@ -168,19 +166,17 @@ class SignupActivity : AppCompatActivity() {
      */
     private fun completeWithCep() {
         val mCep = cep.text.toString()
-        if (TextUtils.isEmpty(mCep) || !isCepValid(mCep)) {
+        if (TextUtils.isEmpty(mCep)) {
             cep.error = getString(R.string.error_invalid_cep)
             cep.requestFocus()
         } else {
-            //TODO: Connect with module to get address
-            try {
-                // Simulate network access.
-                Thread.sleep(500)
-            } catch (e: InterruptedException) {
-                return
+            val add = ClientHttpUtil.postRequest<CEPAddress, CEP>(CEPApi.CheckCEP.PATH, CEP(mCep))
+            if (add == null || !add.success){
+                cep.error = getString(R.string.error_invalid_cep)
+                cep.requestFocus()
+            } else {
+                findViewById<TextView>(R.id.address).apply { text = add.logradouro }
             }
-
-            findViewById<TextView>(R.id.address).apply { text = "Av. Albert Einstein" }
         }
     }
 
@@ -194,12 +190,11 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun isCepValid(cep: String): Boolean {
-        //TODO: Check cep validity
-        val c = cep.toIntOrNull()
-        if (c != null && c <= 99999999){
-            return true
+        if (TextUtils.isEmpty(cep) || cep.toIntOrNull() == null || cep.toInt() > 99999999){
+            return false
         }
-        return false
+        val add = ClientHttpUtil.postRequest<CEPAddress, CEP>(CEPApi.CheckCEP.PATH, CEP(cep))
+        return add?.success ?: false
     }
 
     private fun isAddressValid(address: String): Boolean {
@@ -267,11 +262,8 @@ class SignupActivity : AppCompatActivity() {
                                                     private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
-            // TODO: attempt authentication against a network service
-
-            val ret = ClientHttpUtil.postRequest<Response, Signup>(ClientAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
-
-            return ret?.success
+            val ret = ClientHttpUtil.postRequest<ClientResponse, Signup>(ClientAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
+            return ret?.success ?: false
         }
 
         override fun onPostExecute(success: Boolean?) {
@@ -281,7 +273,7 @@ class SignupActivity : AppCompatActivity() {
             if (success!!) {
                 finish()
             } else {
-                email.error = getString(R.string.error_email_unavailable)
+                email.error = getString(R.string.error_existing_user)
                 email.requestFocus()
             }
         }

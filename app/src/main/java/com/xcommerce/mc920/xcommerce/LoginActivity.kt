@@ -14,8 +14,8 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.model.ClientAPI
+import com.xcommerce.mc920.xcommerce.model.ClientResponse
 import com.xcommerce.mc920.xcommerce.model.Login
-import com.xcommerce.mc920.xcommerce.model.Response
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
@@ -35,13 +35,13 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+        /*password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
                 return@OnEditorActionListener true
             }
             false
-        })
+        })*/
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
         sign_up_button.setOnClickListener { redirectSignUp() }
@@ -175,9 +175,9 @@ class LoginActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
-            val ret = ClientHttpUtil.postRequest<Response, Login>(ClientAPI.Login.PATH, Login(mEmail, mPassword))
+            val ret = ClientHttpUtil.postRequest<ClientResponse, Login>(ClientAPI.Login.PATH, Login(mEmail, mPassword))
 
-            return ret?.success
+            return ret?.success ?: false
         }
 
         override fun onPostExecute(success: Boolean?) {
