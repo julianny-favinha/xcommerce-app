@@ -24,8 +24,7 @@ class AddressActivity : AppCompatActivity() {
 
         // validate CEP
         address_button_validate.setOnClickListener {
-            address_text_view_address.visibility = View.VISIBLE
-            address_button_save.visibility = View.VISIBLE
+            address_info.visibility = View.VISIBLE
         }
 
         // save address

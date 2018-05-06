@@ -50,31 +50,78 @@
                     android:text="@string/validate"/>
             </LinearLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
-            <TextView
-                android:id="@+id/address_text_view_address"
+            <LinearLayout
+                android:id="@+id/address_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Depois de clicar em validar, o endereço aparecerá aqui"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:visibility="gone"/>
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+                <TextView
+                    android:id="@+id/address_text_view_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Depois de clicar em validar, o endereço aparecerá aqui"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number"
+                    android:textStyle="bold"
+                    android:textSize="25sp"/>
+
+                <EditText
+                    android:id="@+id/address_edit_text_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/number"
+                    android:inputType="number"
+                    android:paddingRight="100dp"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/complement"
+                    android:textStyle="bold"
+                    android:textSize="25sp"/>
+
+                <EditText
+                    android:id="@+id/address_edit_text_complement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/complement"
+                    android:inputType="text"
+                    android:paddingRight="100dp"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+
+                <Button
+                    android:id="@+id/address_button_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save_address"/>
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
-            <Button
-                android:id="@+id/address_button_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/save_address"
-                android:visibility="gone"/>
-
+                android:layout_height="50dp" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

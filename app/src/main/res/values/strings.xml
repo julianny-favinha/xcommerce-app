@@ -36,6 +36,7 @@
     <string name="boleto">Boleto</string>
     <string name="cep">CEP</string>
     <string name="number">Número</string>
+    <string name="complement">Complemento</string>
     <string name="save_address">Salvar endereço</string>
     <string name="validate">Validar</string>
 </resources>
