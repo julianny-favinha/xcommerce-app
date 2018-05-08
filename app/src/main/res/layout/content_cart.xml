@@ -8,13 +8,20 @@
     tools:context=".cart.CartActivity"
     tools:showIn="@layout/activity_cart">
 
+    <TextView
+        android:id="@+id/empty_cart_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seu carrinho está vazio."
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:visibility="gone" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_view">
-
-
+        android:id="@+id/list_view"
+        android:visibility="visible">
     </ListView>
 
 </android.support.constraint.ConstraintLayout>

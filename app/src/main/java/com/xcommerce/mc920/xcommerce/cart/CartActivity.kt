@@ -2,6 +2,7 @@ package com.xcommerce.mc920.xcommerce.cart
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.R
@@ -18,6 +19,17 @@ class CartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
         setSupportActionBar(toolbar)
+
+        // Set the visibility of empty cart message
+        if(CartHelper.retrieveCart().isEmpty()) {
+            empty_cart_txt.setVisibility(View.VISIBLE)
+            list_view.setVisibility(View.GONE)
+            total_value.setText("0")
+        } else {
+            empty_cart_txt.setVisibility(View.GONE)
+            list_view.setVisibility(View.VISIBLE)
+            total_value.setText("R$" + CartHelper.retrieveCart().totalPrice)
+        }
 
 //
 //        val values = listOf(CartItem(product = Product(

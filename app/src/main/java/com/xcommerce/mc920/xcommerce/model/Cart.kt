@@ -66,4 +66,8 @@ class Cart {
 
         return quantity > 1
     }
+
+    fun isEmpty(): Boolean {
+        return cartItemMap.isEmpty()
+    }
 }

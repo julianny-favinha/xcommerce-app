@@ -54,25 +54,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
                 />
 
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="11dp"
-                    android:text="R$"
-                    android:textColor="@color/cardview_light_background"
-                    app:layout_constraintStart_toEndOf="@+id/total_txt"
-                    app:layout_constraintTop_toTopOf="parent" />
-                />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/total_value"
                     android:layout_width="wrap_content"
                     android:layout_height="21dp"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="8dp"
-                    android:text="970,00"
+                    android:text=""
                     android:textColor="@color/cardview_light_background"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/total_txt"
