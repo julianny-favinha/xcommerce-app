@@ -10,6 +10,13 @@
             android:title="Meus pedidos" />
     </group>
 
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_carrinho"
+            android:icon="@drawable/ic_menu_shoppingcart_black"
+            android:title="Meu carrinho" />
+    </group>
+
     <item android:title="SAC">
         <menu>
             <item
