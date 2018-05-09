@@ -154,7 +154,6 @@ class SignupActivity : AppCompatActivity() {
                 if (TextUtils.isEmpty(address.text.toString())) {
                     findViewById<TextView>(R.id.address).apply { text = add.logradouro }
                 }
-                finish()
             } else {
                 cep.error = getString(R.string.error_invalid_cep)
                 cep.requestFocus()
