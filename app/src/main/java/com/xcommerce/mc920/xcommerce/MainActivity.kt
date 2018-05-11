@@ -1,5 +1,6 @@
 package com.xcommerce.mc920.xcommerce
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
@@ -68,6 +69,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_sac -> {
 
+            }
+            R.id.nav_login -> {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
         }
 
