@@ -33,7 +33,7 @@ class Cart {
         if(!cartItemMap.containsKey(product)) throw IllegalStateException("Product not found in cart!")
         val currentQuantity = cartItemMap[product]!!
 
-        if(currentQuantity < 0 || currentQuantity > quantity) throw IllegalStateException("Quantity to decrease is not valid!")
+        if(currentQuantity < 0 || currentQuantity < quantity) throw IllegalStateException("Quantity to decrease is not valid!")
 
         if(currentQuantity == quantity){
             cartItemMap.remove(product)
@@ -58,5 +58,16 @@ class Cart {
         cartItemMap.clear()
         totalPrice = 0
         totalQuantity = 0
+    }
+
+    fun isPositive(product: Product): Boolean {
+        if(!cartItemMap.containsKey(product)) throw IllegalStateException("Product not found in cart!")
+        val quantity = cartItemMap[product]!!
+
+        return quantity > 1
+    }
+
+    fun isEmpty(): Boolean {
+        return cartItemMap.isEmpty()
     }
 }

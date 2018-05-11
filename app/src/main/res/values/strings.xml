@@ -73,4 +73,6 @@
     <string name="error_field_required">Campo Obrigatório</string>
     <string name="error_existing_user">Já existe usuário com este email</string>
 
+    <string name="title_activity_product_detail">ProductDetailActivity</string>
+    <string name="title_activity_cart">CartActivity</string>
 </resources>
