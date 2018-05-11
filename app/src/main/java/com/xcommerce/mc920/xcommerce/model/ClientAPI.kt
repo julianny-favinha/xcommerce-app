@@ -7,4 +7,7 @@ class ClientAPI {
     object Signup {
         const val PATH = "/client/signup"
     }
+    object Details {
+        const val PATH = "/client/details"
+    }
 }

@@ -1,26 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserProfileActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".UserProfileActivity"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/profile_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+    <ScrollView
+        android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </android.support.design.widget.AppBarLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
 
-    <include layout="@layout/content_user_profile" />
+                    tools:text="Nome: "/>
 
-</android.support.design.widget.CoordinatorLayout>
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp"
+
+                    tools:text="Ronaldo Prata Amorim"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+
+                    tools:text="CPF: "/>
+
+                <TextView
+                    android:id="@+id/cpf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp"
+
+                    tools:text="350.728.538-02"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+
+                    tools:text="Endereço: "/>
+
+                <TextView
+                    android:id="@+id/statecity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+
+                    tools:text="SP, Campinas" />
+
+                <TextView
+                    android:id="@+id/cep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+
+                    tools:text="13083-705" />
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp"
+
+                    tools:text="Rua Ruberlei Boareto da Silva 350" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+
+                    tools:text="Email: "/>
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+
+                    tools:text="roroprata@gmail.com"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
