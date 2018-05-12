@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
-import com.xcommerce.mc920.xcommerce.model.ClientAPI
-import com.xcommerce.mc920.xcommerce.model.ClientResponse
+import com.xcommerce.mc920.xcommerce.model.UserAPI
 import com.xcommerce.mc920.xcommerce.model.Login
+import com.xcommerce.mc920.xcommerce.model.UserResponse
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -33,6 +33,15 @@ class LoginActivity : AppCompatActivity() {
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
         sign_up_button.setOnClickListener { redirectSignUp() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        /**TODO: Find if user is logged in
+        if (User.logged == true){
+            finish()
+        }*/
     }
 
     /**
@@ -100,8 +109,6 @@ class LoginActivity : AppCompatActivity() {
         }
         email.error = null
         password.error = null
-        findViewById<TextView>(R.id.email).apply { text = "" }
-        findViewById<TextView>(R.id.password).apply { text = "" }
         startActivity(signup)
     }
 
@@ -150,18 +157,18 @@ class LoginActivity : AppCompatActivity() {
      * the user.
      */
     inner class UserLoginTask internal constructor(private val mEmail: String,
-                                                   private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
+                                                   private val mPassword: String) : AsyncTask<Void, Void, UserResponse>() {
 
-        override fun doInBackground(vararg params: Void): Boolean? {
-            val ret = ClientHttpUtil.postRequest<ClientResponse, Login>(ClientAPI.Login.PATH, Login(mEmail, mPassword))
-            return ret?.success ?: false
+        override fun doInBackground(vararg params: Void): UserResponse? {
+            return ClientHttpUtil.postRequest(UserAPI.Login.PATH, Login(mEmail, mPassword))
         }
 
-        override fun onPostExecute(success: Boolean?) {
+        override fun onPostExecute(res: UserResponse?) {
             mAuthTask = null
             showProgress(false)
 
-            if (success!!) {
+            if (res?.success == true) {
+                //TODO: Save details on User class
                 finish()
             } else {
                 password.error = getString(R.string.error_incorrect_password)

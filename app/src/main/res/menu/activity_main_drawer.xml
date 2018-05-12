@@ -11,6 +11,12 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_profile"
+            android:title="Perfil de usuário" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
             android:id="@+id/nav_meuspedidos"
             android:icon="@drawable/ic_menu_shoppingcart_black"
             android:title="Meus pedidos" />

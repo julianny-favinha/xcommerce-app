@@ -36,6 +36,15 @@ class SignupActivity : AppCompatActivity() {
         cep_validate_button.setOnClickListener { completeWithCep() }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        /**TODO: Find if user is logged in
+        if (User.logged == true){
+            finish()
+        }*/
+    }
+
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -162,6 +171,8 @@ class SignupActivity : AppCompatActivity() {
 
         override fun onCancelled() {
             mCepTask = null
+            cep.error = "Error"
+            cep.requestFocus()
         }
     }
 
@@ -175,7 +186,7 @@ class SignupActivity : AppCompatActivity() {
                                                     private val mAddress: String,
                                                     private val mEmail: String,
                                                     private val mPassword: String,
-                                                    private val mCheckPassword: String) : AsyncTask<Void, Void, Boolean>() {
+                                                    private val mCheckPassword: String) : AsyncTask<Void, Void, UserResponse>() {
 
         override fun onPreExecute() {
             // Reset errors.
@@ -267,16 +278,16 @@ class SignupActivity : AppCompatActivity() {
             }
         }
 
-        override fun doInBackground(vararg params: Void): Boolean? {
-            val ret = ClientHttpUtil.postRequest<ClientResponse, Signup>(ClientAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
-            return ret?.success ?: false
+        override fun doInBackground(vararg params: Void): UserResponse? {
+            return ClientHttpUtil.postRequest(UserAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
         }
 
-        override fun onPostExecute(success: Boolean?) {
+        override fun onPostExecute(res: UserResponse?) {
             mAuthTask = null
             showProgress(false)
 
-            if (success!!) {
+            if (res?.success == true) {
+                //TODO: Save details on User class
                 finish()
             } else {
                 email.error = getString(R.string.error_existing_user)
