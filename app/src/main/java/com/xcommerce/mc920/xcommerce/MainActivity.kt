@@ -7,8 +7,8 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
+import com.xcommerce.mc920.xcommerce.cart.CartActivity
 import com.xcommerce.mc920.xcommerce.home.TabPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -78,6 +78,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_login -> {
                 val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.nav_carrinho -> {
+                val intent = Intent(this, CartActivity::class.java)
                 startActivity(intent)
             }
         }

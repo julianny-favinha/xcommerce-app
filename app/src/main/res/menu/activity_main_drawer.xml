@@ -12,8 +12,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_meuspedidos"
-            android:icon="@drawable/ic_menu_shoppingcart_black"
+            android:icon="@drawable/ic_menu_myorders_black"
             android:title="Meus pedidos" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_carrinho"
+            android:icon="@drawable/ic_menu_shoppingcart_black"
+            android:title="Meu carrinho" />
     </group>
 
     <item android:title="SAC">

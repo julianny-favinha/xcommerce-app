@@ -15,11 +15,11 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
         setSupportActionBar(toolbar)
 
-//        // back button
-//        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
-//        toolbar.setNavigationOnClickListener {
-//            startActivity(Intent(applicationContext, CheckoutActivity::class.java))
-//        }
+        // back button
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
+        toolbar.setNavigationOnClickListener {
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+        }
 
         // search button clicked
 //        search_button.setOnClickListener{
