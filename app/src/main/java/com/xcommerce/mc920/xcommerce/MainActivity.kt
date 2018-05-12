@@ -72,6 +72,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_login -> {
                 val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+
             R.id.nav_carrinho -> {
                 val intent = Intent(this, CartActivity::class.java)
                 startActivity(intent)

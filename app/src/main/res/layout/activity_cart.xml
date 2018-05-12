@@ -52,8 +52,6 @@
                     android:textColor="@color/cardview_light_background"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-                />
-
 
                 <TextView
                     android:id="@+id/total_value"
@@ -68,11 +66,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/cart_button_next"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Prosseguir"
+                    android:text="@string/next"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent" />
 

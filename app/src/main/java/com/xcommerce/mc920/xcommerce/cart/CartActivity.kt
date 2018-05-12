@@ -1,10 +1,12 @@
 package com.xcommerce.mc920.xcommerce.cart
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.xcommerce.mc920.xcommerce.CheckoutActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.CartItem
 import com.xcommerce.mc920.xcommerce.model.Product
@@ -71,6 +73,11 @@ class CartActivity : AppCompatActivity() {
         val adapter = CartViewAdapter(this, cartItems)
         list_view.adapter = adapter
 
+        // next button clicked
+        cart_button_next.setOnClickListener {
+            val intent = Intent(this, CheckoutActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }

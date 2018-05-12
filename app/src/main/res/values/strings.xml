@@ -6,7 +6,6 @@
 
     <string name="action_settings">Configurações</string>
 
-    <string name="title_activity_product_detail">Detalhe do produto</string>
     <string name="title_activity_checkout">Finalizar compra</string>
     <string name="title_activity_info_credit_cart">Infromações do cartão de crédito</string>
     <string name="title_activity_address">Adicionar novo endereço</string>
@@ -75,4 +74,6 @@
 
     <string name="title_activity_product_detail">ProductDetailActivity</string>
     <string name="title_activity_cart">CartActivity</string>
+
+    <string name="next">Prosseguir</string>
 </resources>
