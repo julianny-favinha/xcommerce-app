@@ -28,6 +28,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         configureTabLayout()
+
+        main_search_button.setOnClickListener{
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun configureTabLayout() {
@@ -65,7 +70,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation item item clicks here.
         when (item.itemId) {
             R.id.nav_meuspedidos -> {
-
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_sac -> {
 
