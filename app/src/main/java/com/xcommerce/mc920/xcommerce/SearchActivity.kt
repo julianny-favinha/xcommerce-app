@@ -20,11 +20,6 @@ class SearchActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             startActivity(Intent(applicationContext, MainActivity::class.java))
         }
-
-        // search button clicked
-//        search_button.setOnClickListener{
-//
-//        }
     }
 
 }
