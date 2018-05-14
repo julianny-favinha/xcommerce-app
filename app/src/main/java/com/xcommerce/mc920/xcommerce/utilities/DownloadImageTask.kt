@@ -6,7 +6,7 @@ import android.os.AsyncTask
 import android.util.Log
 import android.widget.ImageView
 
-public class DownloadImageTask(internal var bmImage: ImageView) : AsyncTask<String, Void, Bitmap>() {
+class DownloadImageTask(internal var bmImage: ImageView) : AsyncTask<String, Void, Bitmap>() {
 
     override fun doInBackground(vararg urls: String): Bitmap? {
         val urldisplay = urls[0]

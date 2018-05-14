@@ -24,33 +24,11 @@ class ClientHttpUtil {
             val response = client.newCall(request).execute()
             Log.d("[CLIENT HTTP]", "Received: " + response.toString())
 
-//            if (!response.isSuccessful) {
-//                return null
-//            }
+            if (!response.isSuccessful) {
+                return null
+            }
 
-            // TODO("change backend to conform with Product")
-            val jsonExample = """{
-              "highlights": [
-                {
-                  "id": 1,
-                  "name": "GOOGLE",
-                  "brand": "Google",
-                  "category": "Internet",
-                  "description": "HAHAHAHA",
-                  "price": 1000,
-                  "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
-                }, {
-                  "id": 1,
-                  "name": "GOOGLE",
-                  "brand": "Google",
-                  "category": "Internet",
-                  "description": "HAHAHAHA",
-                  "price": 1000,
-                  "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
-              }]
-            }"""
-
-            return objectMapper.readValue(jsonExample)
+            return objectMapper.readValue<T>(response.body()!!.byteStream())
 
         }
 
