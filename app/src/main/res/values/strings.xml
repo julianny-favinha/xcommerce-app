@@ -44,6 +44,8 @@
     <string name="error_badcheck_password">Senhas devem ser iguais</string>
     <string name="error_field_required">Campo Obrigatório</string>
     <string name="error_existing_user">Já existe usuário com este email</string>
+    <string name="error_edit">Ocorreu um erro</string>
+
     <string name="title_activity_user_profile">Detalhes de Perfil</string>
     <string name="action_edit_profile">Editar perfil</string>
 

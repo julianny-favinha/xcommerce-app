@@ -7,5 +7,5 @@
     <item
         android:id="@+id/action_edit"
         android:title="@string/action_edit_profile"
-        app:showAction="never" />
+        app:showAsAction="never" />
 </menu>
