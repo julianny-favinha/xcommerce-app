@@ -38,14 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onResume() {
         super.onResume()
 
-        /**val usr = UserHelper.retrieveUser()
-        if (usr != null){
-            findViewById<TextView>(R.id.nav_header_name).apply { text = usr.name }
-            findViewById<TextView>(R.id.nav_header_email).apply { text = usr.email }
-        } else if (optmenu != null) {
-            findViewById<TextView>(R.id.nav_header_name).apply { text = "" }
-            findViewById<TextView>(R.id.nav_header_email).apply { text = "" }
-        }*/
+        invalidateOptionsMenu()
     }
 
     private fun configureTabLayout() {
@@ -116,7 +109,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             //TODO: Remove when backend integration is done
             R.id.debug_login -> {
-                UserHelper.updateUser(User("Ronaldo Prata Amorim", "35028504812", "13083705", "R. Ruberlei Boareto da Silva, 350", "roroprata@gmail.com"))
+                UserHelper.updateUser(User("Ronaldo Prata Amorim", "35028504812", "13083705", "R. Dr. Ruberlei Boareto da Silva, 350", "roroprata@gmail.com"))
                 invalidateOptionsMenu()
             }
         }

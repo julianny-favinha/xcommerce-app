@@ -24,6 +24,13 @@
             android:title="Meus pedidos" />
     </group>
 
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/icons8_logout"
+            android:title="Logout" />
+    </group>
+
     <item android:title="SAC">
         <menu>
             <item
@@ -38,13 +45,6 @@
         <item
             android:id="@+id/debug_login"
             android:title="Login debug" />
-    </group>
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/icons8_logout"
-            android:title="Logout" />
     </group>
 
 </menu>
