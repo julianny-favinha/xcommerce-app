@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xcommerce.mc920.xcommerce">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -52,6 +53,14 @@
         <activity
             android:name=".AddressActivity"
             android:label="@string/title_activity_address"/>
+        <activity
+            android:name=".UserProfileActivity"
+            android:label="@string/title_activity_user_profile"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/action_edit_profile"
+            android:parentActivityName=".UserProfileActivity"/>
     </application>
 
 </manifest>

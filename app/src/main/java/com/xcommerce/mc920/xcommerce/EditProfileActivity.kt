@@ -3,71 +3,40 @@ package com.xcommerce.mc920.xcommerce
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.AsyncTask
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.model.*
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
-import kotlinx.android.synthetic.main.activity_signup.*
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 
-/**
- * A login screen that offers login via email/password.
- */
-class SignupActivity : AppCompatActivity() {
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private var mAuthTask: UserSignupTask? = null
+class EditProfileActivity : AppCompatActivity() {
+
+    private var mAuthTask: UserEditTask? = null
     private var mCepTask: CepTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
+        setContentView(R.layout.activity_edit_profile)
 
-        val emailStr = intent.getStringExtra(EMAIL)
-        val passwordStr = intent.getStringExtra(PASSWORD)
-
-        findViewById<TextView>(R.id.email).apply { text = emailStr }
-        findViewById<TextView>(R.id.password).apply { text = passwordStr }
-
-        email_sign_up_button.setOnClickListener { attemptSignup() }
+        edit_profile_button.setOnClickListener { attemptEdit() }
         cep_validate_button.setOnClickListener { completeWithCep() }
     }
 
     override fun onResume() {
         super.onResume()
 
-        if (UserHelper.retrieveUser() != null){
-            finish()
-        }
-    }
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private fun attemptSignup() {
-        // Store values at the time of the login attempt.
-        val nameStr = name.text.toString()
-        val cpfStr = cpf.text.toString()
-        val cepStr = cep.text.toString()
-        val addressStr = address.text.toString()
-        val emailStr = email.text.toString()
-        val passwordStr = password.text.toString()
-        val checkPasswordStr = password_check.text.toString()
-
-        if (mAuthTask != null) {
-            return
+        var usr = UserHelper.retrieveUser()
+        if (usr != null){
+            findViewById<TextView>(R.id.name).apply { text = usr.name }
+            findViewById<TextView>(R.id.email).apply { text = usr.email }
+            findViewById<TextView>(R.id.cep).apply { text = usr.cep }
+            findViewById<TextView>(R.id.address).apply { text = usr.address }
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user signup attempt.
-            showProgress(true)
-            mAuthTask = UserSignupTask(nameStr, cpfStr, cepStr, addressStr, emailStr, passwordStr, checkPasswordStr)
-            mAuthTask!!.execute(null as Void?)
+            finish()
         }
     }
 
@@ -88,24 +57,6 @@ class SignupActivity : AppCompatActivity() {
         return cep.error == null
     }
 
-    private fun isCpfValid(cpf: String): Boolean {
-        if (cpf.toFloatOrNull() == null || cpf.length != 11){
-            return false
-        }
-
-        var firstvalue =  0
-        var secondvalue = 0
-
-        for (i in 0..8){
-            firstvalue += (cpf[i] - '0')*(10-i)
-            secondvalue += (cpf[i] - '0')*(11-i)
-        }
-        firstvalue = (firstvalue*10)%11
-        secondvalue = ((secondvalue+2*(cpf[9] - '0'))*10)%11
-
-        return (firstvalue%10 == cpf[9] - '0' && secondvalue%10 == cpf[10] - '0' )
-    }
-
     private fun isEmailValid(email: String): Boolean {
         //TODO: Replace this with your own email logic
         return email.contains("@")
@@ -117,6 +68,31 @@ class SignupActivity : AppCompatActivity() {
     }
 
     /**
+     * Attempts to sign in or register the account specified by the login form.
+     * If there are form errors (invalid email, missing fields, etc.), the
+     * errors are presented and no actual login attempt is made.
+     */
+    private fun attemptEdit() {
+        // Store values at the time of the login attempt.
+        val nameStr = name.text.toString()
+        val cepStr = cep.text.toString()
+        val addressStr = address.text.toString()
+        val emailStr = email.text.toString()
+        val passwordStr = password.text.toString()
+        val checkPasswordStr = password_check.text.toString()
+
+        if (mAuthTask != null) {
+            return
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user signup attempt.
+            showProgress(true)
+            mAuthTask = UserEditTask(nameStr, cepStr, addressStr, emailStr, passwordStr, checkPasswordStr)
+            mAuthTask!!.execute(null as Void?)
+        }
+    }
+
+    /**
      * Shows the progress UI and hides the signup form.
      */
     private fun showProgress(show: Boolean) {
@@ -125,23 +101,23 @@ class SignupActivity : AppCompatActivity() {
         // the progress spinner.
         val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
-        signup_form.visibility = if (show) View.GONE else View.VISIBLE
-        signup_form.animate()
+        edit_form.visibility = if (show) View.GONE else View.VISIBLE
+        edit_form.animate()
                 .setDuration(shortAnimTime)
                 .alpha((if (show) 0 else 1).toFloat())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        signup_form.visibility = if (show) View.GONE else View.VISIBLE
+                        edit_form.visibility = if (show) View.GONE else View.VISIBLE
                     }
                 })
 
-        signup_progress.visibility = if (show) View.VISIBLE else View.GONE
-        signup_progress.animate()
+        edit_progress.visibility = if (show) View.VISIBLE else View.GONE
+        edit_progress.animate()
                 .setDuration(shortAnimTime)
                 .alpha((if (show) 1 else 0).toFloat())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        signup_progress.visibility = if (show) View.VISIBLE else View.GONE
+                        edit_progress.visibility = if (show) View.VISIBLE else View.GONE
                     }
                 })
     }
@@ -180,18 +156,16 @@ class SignupActivity : AppCompatActivity() {
      * Represents an asynchronous registration task used to authenticate
      * the user.
      */
-    inner class UserSignupTask internal constructor(private val mName: String,
-                                                    private val mCPF: String,
-                                                    private val mCep: String,
-                                                    private val mAddress: String,
-                                                    private val mEmail: String,
-                                                    private val mPassword: String,
-                                                    private val mCheckPassword: String) : AsyncTask<Void, Void, UserResponse>() {
+    inner class UserEditTask internal constructor(private val mName: String,
+                                                  private val mCep: String,
+                                                  private val mAddress: String,
+                                                  private val mEmail: String,
+                                                  private val mPassword: String,
+                                                  private val mCheckPassword: String) : AsyncTask<Void, Void, UserResponse>() {
 
         override fun onPreExecute() {
             // Reset errors.
             name.error = null
-            cpf.error = null
             cep.error = null
             address.error = null
             email.error = null
@@ -248,17 +222,6 @@ class SignupActivity : AppCompatActivity() {
                 cancel = true
             }
 
-            // Check for valid cpf.
-            if(TextUtils.isEmpty(mCPF)) {
-                cpf.error = getString(R.string.error_field_required)
-                focusView = cpf
-                cancel = true
-            } else if (!isCpfValid(mCPF)) {
-                cpf.error = getString(R.string.error_invalid_cpf)
-                focusView = cpf
-                cancel = true
-            }
-
             // Check for name.
             if(TextUtils.isEmpty(mName)) {
                 name.error = getString(R.string.error_field_required)
@@ -279,7 +242,7 @@ class SignupActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg params: Void): UserResponse? {
-            return ClientHttpUtil.postRequest(UserAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
+            return ClientHttpUtil.postRequest(UserAPI.Edit.PATH, Edit(mName, mCep, mAddress, mEmail, mPassword))
         }
 
         override fun onPostExecute(res: UserResponse?) {
@@ -290,7 +253,7 @@ class SignupActivity : AppCompatActivity() {
                 UserHelper.updateUser(User(res.name, res.cpf, res.cep, res.address, res.email))
                 finish()
             } else {
-                email.error = getString(R.string.error_existing_user)
+                email.error = getString(R.string.error_edit)
                 email.requestFocus()
             }
         }
@@ -300,5 +263,4 @@ class SignupActivity : AppCompatActivity() {
             showProgress(false)
         }
     }
-
 }
