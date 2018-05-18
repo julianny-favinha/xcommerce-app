@@ -9,9 +9,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.home.TabPagerAdapter
+import com.xcommerce.mc920.xcommerce.model.User
+import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -28,6 +33,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         configureTabLayout()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        /**val usr = UserHelper.retrieveUser()
+        if (usr != null){
+            findViewById<TextView>(R.id.nav_header_name).apply { text = usr.name }
+            findViewById<TextView>(R.id.nav_header_email).apply { text = usr.email }
+        } else if (optmenu != null) {
+            findViewById<TextView>(R.id.nav_header_name).apply { text = "" }
+            findViewById<TextView>(R.id.nav_header_email).apply { text = "" }
+        }*/
     }
 
     private fun configureTabLayout() {
@@ -61,6 +79,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        val usr = UserHelper.retrieveUser()
+        if (usr != null){
+            findViewById<TextView>(R.id.nav_header_name).apply { text = usr.name }
+            findViewById<TextView>(R.id.nav_header_email).apply { text = usr.email }
+        } else {
+            findViewById<TextView>(R.id.nav_header_name).apply { text = "" }
+            findViewById<TextView>(R.id.nav_header_email).apply { text = "" }
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation item item clicks here.
         when (item.itemId) {
@@ -77,6 +109,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_profile -> {
                 val intent = Intent(this, UserProfileActivity::class.java)
                 startActivity(intent)
+            }
+            R.id.nav_logout -> {
+                UserHelper.logOut()
+                invalidateOptionsMenu()
+            }
+            //TODO: Remove when backend integration is done
+            R.id.debug_login -> {
+                UserHelper.updateUser(User("Ronaldo Prata Amorim", "35028504812", "13083705", "R. Ruberlei Boareto da Silva, 350", "roroprata@gmail.com"))
+                invalidateOptionsMenu()
             }
         }
 

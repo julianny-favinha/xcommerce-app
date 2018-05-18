@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.model.*
+import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
@@ -28,16 +29,15 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        /**TODO: Fill user information
-        if (User.id != null){
-            findViewById<TextView>(R.id.name).apply { text = User.name }
-            findViewById<TextView>(R.id.email).apply { text = User.email }
-            findViewById<TextView>(R.id.cep).apply { text = User.cep }
-            findViewById<TextView>(R.id.address).apply { text = User.address }
-            findViewById<TextView>(R.id.password).apply { text = User.password }
+        var usr = UserHelper.retrieveUser()
+        if (usr != null){
+            findViewById<TextView>(R.id.name).apply { text = usr.name }
+            findViewById<TextView>(R.id.email).apply { text = usr.email }
+            findViewById<TextView>(R.id.cep).apply { text = usr.cep }
+            findViewById<TextView>(R.id.address).apply { text = usr.address }
         } else {
             finish()
-        }*/
+        }
     }
 
     /**
@@ -250,7 +250,7 @@ class EditProfileActivity : AppCompatActivity() {
             showProgress(false)
 
             if (res?.success == true) {
-                //TODO: Save details on User class
+                UserHelper.updateUser(User(res.name, res.cpf, res.cep, res.address, res.email))
                 finish()
             } else {
                 email.error = getString(R.string.error_edit)

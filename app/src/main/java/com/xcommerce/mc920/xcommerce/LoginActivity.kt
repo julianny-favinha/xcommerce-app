@@ -11,7 +11,9 @@ import android.view.View
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.model.UserAPI
 import com.xcommerce.mc920.xcommerce.model.Login
+import com.xcommerce.mc920.xcommerce.model.User
 import com.xcommerce.mc920.xcommerce.model.UserResponse
+import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -38,10 +40,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        /**TODO: Find if user is logged in
-        if (User.logged == true){
+        if (UserHelper.retrieveUser() != null){
             finish()
-        }*/
+        }
     }
 
     /**
@@ -168,7 +169,7 @@ class LoginActivity : AppCompatActivity() {
             showProgress(false)
 
             if (res?.success == true) {
-                //TODO: Save details on User class
+                UserHelper.updateUser(User(res.name, res.cpf, res.cep, res.address, res.email))
                 finish()
             } else {
                 password.error = getString(R.string.error_incorrect_password)

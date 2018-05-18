@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toolbar
+import com.xcommerce.mc920.xcommerce.user.UserHelper
 
 class UserProfileActivity : AppCompatActivity() {
 
@@ -17,16 +19,16 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        /**TODO: Check if user is logged in
-        if (User.id != null){
-            findViewById<TextView>(R.id.name).apply { text = User.name }
-            findViewById<TextView>(R.id.email).apply { text = User.email }
-            findViewById<TextView>(R.id.cpf).apply { text = User.cpf }
-            findViewById<TextView>(R.id.cep).apply { text = User.cep }
-            findViewById<TextView>(R.id.address).apply { text = User.address }
+        val usr = UserHelper.retrieveUser()
+        if (usr != null){
+            findViewById<TextView>(R.id.name).apply { text = usr.name }
+            findViewById<TextView>(R.id.email).apply { text = usr.email }
+            findViewById<TextView>(R.id.cpf).apply { text = usr.cpf }
+            findViewById<TextView>(R.id.cep).apply { text = usr.cep }
+            findViewById<TextView>(R.id.address).apply { text = usr.address }
         } else {
             finish()
-        }*/
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
