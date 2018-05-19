@@ -4,4 +4,8 @@ class ProductAPI {
     object Highlights {
         const val PATH = "/product/highlights"
     }
+
+    object Search {
+        const val PATH = "/product/search"
+    }
 }
