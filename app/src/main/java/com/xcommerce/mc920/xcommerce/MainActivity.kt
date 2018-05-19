@@ -7,13 +7,11 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
 import android.view.MenuItem
-<<<<<<< HEAD
 import com.xcommerce.mc920.xcommerce.cart.CartActivity
-=======
 import android.view.View
 import android.widget.TextView
->>>>>>> user-profile
 import com.xcommerce.mc920.xcommerce.home.TabPagerAdapter
 import com.xcommerce.mc920.xcommerce.model.User
 import com.xcommerce.mc920.xcommerce.user.UserHelper
@@ -102,17 +100,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
-<<<<<<< HEAD
 
             R.id.nav_carrinho -> {
                 val intent = Intent(this, CartActivity::class.java)
                 startActivity(intent)
             }
-=======
+
             R.id.nav_profile -> {
                 val intent = Intent(this, UserProfileActivity::class.java)
                 startActivity(intent)
             }
+
             R.id.nav_logout -> {
                 UserHelper.logOut()
                 invalidateOptionsMenu()
@@ -122,7 +120,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 UserHelper.updateUser(User("Ronaldo Prata Amorim", "35028504812", "13083705", "R. Dr. Ruberlei Boareto da Silva, 350", "roroprata@gmail.com"))
                 invalidateOptionsMenu()
             }
->>>>>>> user-profile
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
