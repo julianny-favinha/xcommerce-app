@@ -1,5 +1,6 @@
 package com.xcommerce.mc920.xcommerce
 
+import android.app.Activity
 import android.content.Intent
 import android.opengl.Visibility
 import android.os.Bundle
@@ -29,7 +30,14 @@ class AddressActivity : AppCompatActivity() {
 
         // save address
         address_button_save.setOnClickListener {
+            if (address_checkbox_default.isChecked) {
 
+            }
+
+            val returnIntent = Intent()
+            returnIntent.putExtra("cep", address_edit_text_cep.text.toString())
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
         }
     }
 

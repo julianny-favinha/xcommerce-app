@@ -147,7 +147,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
     /**
-     * Represents an asynchronous registration task used to authenticate
+     * Repdresents an asynchronous registration task use to authenticate
      * the cep.
      */
     inner class CepTask internal constructor(private val mCep: String) : AsyncTask<Void, Void, CEPAddress>() {

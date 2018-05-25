@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.CartItem
+import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 import kotlinx.android.synthetic.main.adapter_cart_view.view.*
 import kotlinx.android.synthetic.main.content_cart.*
 
@@ -31,6 +32,7 @@ class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapte
         newView.note_item_name.text = product.name
         newView.note_item_val.text = quantity.toString()
         newView.note_item_price.text = "R$" + product.price.toString()
+        DownloadImageTask(newView.note_item_image).execute(product.imageUrl)
 
         newView.btn_inc.setOnClickListener {
             Toast.makeText(context, "Quantidade atualizada.", Toast.LENGTH_SHORT).show()
