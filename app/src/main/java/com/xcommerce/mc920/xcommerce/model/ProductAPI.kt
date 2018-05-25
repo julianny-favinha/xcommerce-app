@@ -8,4 +8,8 @@ class ProductAPI {
     object Search {
         const val PATH = "/product/search"
     }
+
+    object Categories {
+        const val PATH = "/category/"
+    }
 }

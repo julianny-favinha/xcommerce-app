@@ -24,7 +24,6 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="delivery_address">Endereço de entrega</string>
     <string name="add_address">Adicionar endereço</string>
-    <string name="address">Endereço</string>
     <string name="delivery_options">Opções de entrega</string>
     <string name="payment_method">Modo de pagamento</string>
     <string name="checkout">Finalizar compra</string>
@@ -73,6 +72,15 @@
     <string name="error_existing_user">Já existe usuário com este email</string>
     <string name="title_activity_search">SearchActivity</string>
 
+    <string name="error_edit">Ocorreu um erro</string>
+
+    <string name="title_activity_user_profile">Detalhes de Perfil</string>
+    <string name="action_edit_profile">Editar perfil</string>
+
+    <string name="name">Nome</string>
+    <string name="cpf">CPF</string>
+    <string name="address">Endereço</string>
+    <string name="email">Email</string>
 
     <string name="search">Buscar</string>
     <string name="title_activity_product_detail">ProductDetailActivity</string>

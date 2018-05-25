@@ -24,33 +24,11 @@ class ClientHttpUtil {
             val response = client.newCall(request).execute()
             Log.d("[CLIENT HTTP]", "Received: " + response.toString())
 
-//            if (!response.isSuccessful) {
-//                return null
-//            }
+            if (!response.isSuccessful) {
+                return null
+            }
 
-            // TODO("change backend to conform with Product")
-            val jsonExample = """{
-              "highlights": [
-                {
-                  "id": 1,
-                  "name": "GOOGLE",
-                  "brand": "Google",
-                  "category": "Internet",
-                  "description": "HAHAHAHA",
-                  "price": 1000,
-                  "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
-                }, {
-                  "id": 1,
-                  "name": "GOOGLE",
-                  "brand": "Google",
-                  "category": "Internet",
-                  "description": "HAHAHAHA",
-                  "price": 1000,
-                  "imageUrl": "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
-              }]
-            }"""
-
-            return objectMapper.readValue(jsonExample)
+            return objectMapper.readValue<T>(response.body()!!.byteStream())
 
         }
 
@@ -60,6 +38,24 @@ class ClientHttpUtil {
 
             val requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), objectMapper.writeValueAsString(body))
             val request = Request.Builder().url(BASE + path).post(requestBody).build()
+
+            Log.d("[CLIENT HTTP]", "About to do request to " + request.toString())
+            val response = client.newCall(request).execute()
+            Log.d("[CLIENT HTTP]", "Received: " + response.toString())
+
+            if (!response.isSuccessful) {
+                return null
+            }
+
+            return objectMapper.readValue(response.body()!!.byteStream())
+        }
+
+        inline fun <reified T : Any, K> putRequest(path: String, body: K): T? {
+            val client = OkHttpClient()
+            val objectMapper = jacksonObjectMapper()
+
+            val requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), objectMapper.writeValueAsString(body))
+            val request = Request.Builder().url(BASE + path).put(requestBody).build()
 
             Log.d("[CLIENT HTTP]", "About to do request to " + request.toString())
             val response = client.newCall(request).execute()
