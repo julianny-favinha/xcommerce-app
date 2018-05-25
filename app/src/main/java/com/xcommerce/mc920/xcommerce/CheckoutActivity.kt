@@ -1,5 +1,6 @@
 package com.xcommerce.mc920.xcommerce
 
+import android.app.Activity
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
@@ -7,19 +8,34 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.checkout.ShipmentPriceFetchTask
 import com.xcommerce.mc920.xcommerce.model.ShipmentIn
+import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
 
 class CheckoutActivity : AppCompatActivity() {
+    companion object {
+        const val RETURN_CODE = 1
+    }
+
     var prices: Map<String, Int> = emptyMap()
     private var task: ShipmentPriceFetchTask? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RETURN_CODE && resultCode == Activity.RESULT_OK) {
+            checkout_delivery_address.text = data?.extras?.getString("cep") ?: ""
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
         setSupportActionBar(toolbar)
+
+        val user = UserHelper.retrieveUser() ?: throw IllegalStateException ("Usuario deveria estar logado para chegar na tela de Checkout")
+        checkout_delivery_address.text = user.cep
 
         checkout_radio_payment.setOnCheckedChangeListener{ _, optionId ->
             val button = findViewById<Button>(R.id.checkout_button_add_info_card)
@@ -38,15 +54,21 @@ class CheckoutActivity : AppCompatActivity() {
         // add new address
         checkout_button_add_address.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, RETURN_CODE)
         }
 
         // calculate shipping rates
         checkout_button_calculate_shipping.setOnClickListener {
+            val cartItems = CartHelper.retrieveListCart()
+            val items = cartItems.map {cartItem ->
+                (0..cartItem.quantity).map {
+                    cartItem.product
+                }
+            }.flatten()
+            val shipIn = ShipmentIn(items, "17020510", user.cep)
+
             task = ShipmentPriceFetchTask(this)
-            //val p = ShipmentIn("PAC", "17020510", "13083730", 1,"Caixa",1, 1,1)
-            //task?.execute(p)
-            task?.execute()
+            task?.execute(shipIn)
         }
 
         // add credit card info
@@ -72,8 +94,8 @@ class CheckoutActivity : AppCompatActivity() {
 //    }
 
     fun populateResult(prices: Map<String, Int>) {
-        checkout_price_pac.text = prices["pac"].toString()
-        checkout_price_sedex.text = prices["sedex"].toString()
+        checkout_price_pac.text = prices["PAC"].toString()
+        checkout_price_sedex.text = prices["Sedex"].toString()
         checkout_price_pac.visibility = View.VISIBLE
         checkout_price_sedex.visibility = View.VISIBLE
 
