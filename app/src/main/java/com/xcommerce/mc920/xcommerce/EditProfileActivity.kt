@@ -30,7 +30,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onResume()
 
         var usr = UserHelper.retrieveUser()
-        if (usr != null){
+        if (usr != null) {
             findViewById<TextView>(R.id.name).apply { text = usr.name }
             findViewById<TextView>(R.id.email).apply { text = usr.email }
             findViewById<TextView>(R.id.cep).apply { text = usr.cep }
@@ -135,7 +135,7 @@ class EditProfileActivity : AppCompatActivity() {
         override fun onPostExecute(add: CEPAddress?) {
             mCepTask = null
 
-            if (add?.success == true){
+            if (add?.success == true) {
                 if (TextUtils.isEmpty(address.text.toString())) {
                     findViewById<TextView>(R.id.address).apply { text = add.logradouro }
                 }
@@ -176,14 +176,14 @@ class EditProfileActivity : AppCompatActivity() {
             var focusView: View? = null
 
             // Check for valid check password.
-            if(mPassword != mCheckPassword){
+            if (mPassword != mCheckPassword) {
                 password_check.error = getString(R.string.error_badcheck_password)
                 focusView = password_check
                 cancel = true
             }
 
             // Check for a valid password, if the user entered one.
-            if (TextUtils.isEmpty(mPassword)){
+            if (TextUtils.isEmpty(mPassword)) {
                 password.error = getString(R.string.error_field_required)
                 focusView = password
                 cancel = true
@@ -205,14 +205,14 @@ class EditProfileActivity : AppCompatActivity() {
             }
 
             // Check for valid address.
-            if(TextUtils.isEmpty(mAddress)) {
+            if (TextUtils.isEmpty(mAddress)) {
                 address.error = getString(R.string.error_field_required)
                 focusView = address
                 cancel = true
             }
 
             // Check for valid cep.
-            if(TextUtils.isEmpty(mCep)) {
+            if (TextUtils.isEmpty(mCep)) {
                 cep.error = getString(R.string.error_field_required)
                 focusView = cep
                 cancel = true
@@ -223,7 +223,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
 
             // Check for name.
-            if(TextUtils.isEmpty(mName)) {
+            if (TextUtils.isEmpty(mName)) {
                 name.error = getString(R.string.error_field_required)
                 focusView = name
                 cancel = true
@@ -249,13 +249,14 @@ class EditProfileActivity : AppCompatActivity() {
             mAuthTask = null
             showProgress(false)
 
-            if (res?.success == true) {
-                UserHelper.updateUser(User(res.name, res.cpf, res.cep, res.address, res.email))
+            if (res != null) {
+                UserHelper.updateUser(res.user)
                 finish()
-            } else {
-                email.error = getString(R.string.error_edit)
-                email.requestFocus()
             }
+
+            email.error = getString(R.string.error_edit)
+            email.requestFocus()
+
         }
 
         override fun onCancelled() {
