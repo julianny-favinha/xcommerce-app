@@ -10,10 +10,18 @@ import android.view.View
 import android.widget.Button
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.checkout.ShipmentPriceFetchTask
+import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.model.ShipmentIn
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
+import android.widget.ArrayAdapter
+import com.xcommerce.mc920.xcommerce.checkout.CheckoutSummaryProductsAdapter
+import com.xcommerce.mc920.xcommerce.model.LightProduct
+import android.support.v7.widget.CardView
+
+
+
 
 class CheckoutActivity : AppCompatActivity() {
     companion object {
@@ -21,6 +29,7 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     var prices: Map<String, Int> = emptyMap()
+    var products: List<Product> = emptyList()
     private var task: ShipmentPriceFetchTask? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -34,20 +43,29 @@ class CheckoutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_checkout)
         setSupportActionBar(toolbar)
 
+        // get info from user
         val user = UserHelper.retrieveUser() ?: throw IllegalStateException ("Usuario deveria estar logado para chegar na tela de Checkout")
         checkout_delivery_address.text = user.cep
 
         // calculate shipment prices
         val cartItems = CartHelper.retrieveListCart()
-        val items = cartItems.map {cartItem ->
+        products = cartItems.map {cartItem ->
             (0..cartItem.quantity).map {
                 cartItem.product
             }
         }.flatten()
-        val shipIn = ShipmentIn(items, user.cep)
-
+        val shipIn = ShipmentIn(products, user.cep)
         task = ShipmentPriceFetchTask(this)
         task?.execute(shipIn)
+
+        // set list of products adapter
+        val lightProducts = products.map {
+            LightProduct(it.id, it.name, it.price, it.imageUrl)
+        }
+        val adapter = CheckoutSummaryProductsAdapter(this, lightProducts)
+        checkout_list_products.adapter = adapter
+
+        checkout_list_products.isExpanded = true
 
         // set payment method
         checkout_radio_payment.setOnCheckedChangeListener{ _, optionId ->
@@ -81,16 +99,6 @@ class CheckoutActivity : AppCompatActivity() {
 
         }
     }
-
-//    fun showProgressBar(){
-//        progressbar.visibility = View.VISIBLE
-//        recycler_view_categories.visibility = View.GONE
-//    }
-//
-//    fun hideProgressBar(){
-//        progressbar.visibility = View.GONE
-//        recycler_view_categories.visibility = View.VISIBLE
-//    }
 
     fun populateResult(prices: Map<String, Int>) {
         checkout_price_pac.text = prices["PAC"].toString()

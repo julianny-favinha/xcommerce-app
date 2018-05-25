@@ -197,6 +197,7 @@
                 android:layout_height="15sp" />
 
             <android.support.v7.widget.CardView
+                android:id="@+id/checkout_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -214,11 +215,11 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"/>
 
-                    <ListView
+                    <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
                         android:id="@+id/checkout_list_products"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                    </ListView>
+                    </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
