@@ -37,6 +37,19 @@ class CheckoutActivity : AppCompatActivity() {
         val user = UserHelper.retrieveUser() ?: throw IllegalStateException ("Usuario deveria estar logado para chegar na tela de Checkout")
         checkout_delivery_address.text = user.cep
 
+        // calculate shipment prices
+        val cartItems = CartHelper.retrieveListCart()
+        val items = cartItems.map {cartItem ->
+            (0..cartItem.quantity).map {
+                cartItem.product
+            }
+        }.flatten()
+        val shipIn = ShipmentIn(items, user.cep)
+
+        task = ShipmentPriceFetchTask(this)
+        task?.execute(shipIn)
+
+        // set payment method
         checkout_radio_payment.setOnCheckedChangeListener{ _, optionId ->
             val button = findViewById<Button>(R.id.checkout_button_add_info_card)
 
@@ -55,20 +68,6 @@ class CheckoutActivity : AppCompatActivity() {
         checkout_button_add_address.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java)
             startActivityForResult(intent, RETURN_CODE)
-        }
-
-        // calculate shipping rates
-        checkout_button_calculate_shipping.setOnClickListener {
-            val cartItems = CartHelper.retrieveListCart()
-            val items = cartItems.map {cartItem ->
-                (0..cartItem.quantity).map {
-                    cartItem.product
-                }
-            }.flatten()
-            val shipIn = ShipmentIn(items, "17020510", user.cep)
-
-            task = ShipmentPriceFetchTask(this)
-            task?.execute(shipIn)
         }
 
         // add credit card info
