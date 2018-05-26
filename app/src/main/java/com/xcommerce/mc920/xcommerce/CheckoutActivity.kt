@@ -121,8 +121,10 @@ class CheckoutActivity : AppCompatActivity() {
     fun populateResult(prices: Map<String, Int>) {
         shipmentPrices = prices
 
-        checkout_price_pac.text = (prices["PAC"]!! / 100.0).toString()
-        checkout_price_sedex.text = (prices["Sedex"]!! / 100.0).toString()
+        val pacString = "R$ " + ("%.2f".format((prices["PAC"]!! / 100.0))).toString()
+        checkout_price_pac.text = pacString
+        val sedexString = "R$ " + ("%.2f".format((prices["Sedex"]!! / 100.0))).toString()
+        checkout_price_sedex.text = sedexString
         checkout_price_pac.visibility = View.VISIBLE
         checkout_price_sedex.visibility = View.VISIBLE
 
@@ -136,15 +138,18 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun populateShipment() {
-        checkout_shipment.text = "R$ " + (shipment / 100.0).toString()
+        val priceString = "R$" + ("%.2f".format(shipment / 100.0)).toString()
+        checkout_shipment.text = priceString
     }
 
     private fun populateSubtotal() {
-        checkout_subtotal.text = "R$" + (subtotal / 100.0)
+        val priceString = "R$" + ("%.2f".format(subtotal / 100.0)).toString()
+        checkout_subtotal.text = priceString
     }
 
     private fun populateTotal() {
-        checkout_total.text = "R$ " + ((subtotal + shipment) / 100.0).toString()
+        val priceString = "R$ " + ("%.2f".format((subtotal + shipment) / 100.0)).toString()
+        checkout_total.text = priceString
     }
 
     private fun isTaskRunning(task: ShipmentPriceFetchTask?): Boolean {
