@@ -18,6 +18,11 @@ import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
+import kotlinx.android.synthetic.main.address.*
+import kotlinx.android.synthetic.main.payment_method.*
+import kotlinx.android.synthetic.main.shipment_options.*
+import kotlinx.android.synthetic.main.summary_price_checkout.*
+import kotlinx.android.synthetic.main.summary_products.*
 
 class CheckoutActivity : AppCompatActivity() {
     companion object {
