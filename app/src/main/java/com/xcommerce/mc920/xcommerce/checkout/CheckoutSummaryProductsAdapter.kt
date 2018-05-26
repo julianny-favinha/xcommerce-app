@@ -20,7 +20,7 @@ class CheckoutSummaryProductsAdapter(context: Context, lightProducts: List<Light
         val ctx = context as Activity
         val newView = convertView ?: LayoutInflater.from(context).inflate(R.layout.adapter_summary_product, parent, false)
         newView.product_name.text = product.name
-        newView.product_price.text = "R$"+ product.price.toString()
+        newView.product_price.text = "R$"+ (product.price / 100.0).toString()
         DownloadImageTask(newView.product_image).execute(product.imageUrl)
 
         return newView

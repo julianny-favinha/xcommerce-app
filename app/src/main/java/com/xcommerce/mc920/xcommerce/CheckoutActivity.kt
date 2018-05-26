@@ -15,22 +15,22 @@ import com.xcommerce.mc920.xcommerce.model.ShipmentIn
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
-import android.widget.ArrayAdapter
 import com.xcommerce.mc920.xcommerce.checkout.CheckoutSummaryProductsAdapter
 import com.xcommerce.mc920.xcommerce.model.LightProduct
-import android.support.v7.widget.CardView
-
-
-
 
 class CheckoutActivity : AppCompatActivity() {
     companion object {
         const val RETURN_CODE = 1
     }
 
-    var prices: Map<String, Int> = emptyMap()
     var products: List<Product> = emptyList()
     private var task: ShipmentPriceFetchTask? = null
+
+    var shipmentPrices: Map<String, Int> = emptyMap()
+
+    var subtotal: Int = 0
+    var shipment: Int = 0
+    var total: Int = 0
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RETURN_CODE && resultCode == Activity.RESULT_OK) {
@@ -42,6 +42,10 @@ class CheckoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
         setSupportActionBar(toolbar)
+
+        // set subtotal
+        subtotal = CartHelper.retrieveCart().totalPrice
+        populateSubtotal()
 
         // get info from user
         val user = UserHelper.retrieveUser() ?: throw IllegalStateException ("Usuario deveria estar logado para chegar na tela de Checkout")
@@ -64,7 +68,6 @@ class CheckoutActivity : AppCompatActivity() {
         }
         val adapter = CheckoutSummaryProductsAdapter(this, lightProducts)
         checkout_list_products.adapter = adapter
-
         checkout_list_products.isExpanded = true
 
         // set payment method
@@ -75,11 +78,25 @@ class CheckoutActivity : AppCompatActivity() {
                 R.id.checkout_radio_button_credit_card -> {
                     button.isEnabled = true
                 }
-
                 R.id.checkout_radio_button_boleto -> {
                     button.isEnabled = false
                 }
             }
+        }
+
+        // set shipment price
+        checkout_radio_pac_sedex.setOnCheckedChangeListener { _, optionId ->
+            when (optionId) {
+                R.id.checkout_pac -> {
+                    shipment = shipmentPrices["PAC"]!!
+                }
+                R.id.checkout_sedex -> {
+                    shipment = shipmentPrices["Sedex"]!!
+                }
+            }
+
+            populateSubtotal()
+            populateTotal()
         }
 
         // add new address
@@ -101,12 +118,27 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     fun populateResult(prices: Map<String, Int>) {
-        checkout_price_pac.text = prices["PAC"].toString()
-        checkout_price_sedex.text = prices["Sedex"].toString()
+        shipmentPrices = prices
+
+        checkout_price_pac.text = (prices["PAC"]!! / 100.0).toString()
+        checkout_price_sedex.text = (prices["Sedex"]!! / 100.0).toString()
         checkout_price_pac.visibility = View.VISIBLE
         checkout_price_sedex.visibility = View.VISIBLE
 
+        shipment = if (checkout_pac.isChecked) prices["PAC"]!! else prices["Sedex"]!!
+
+        populateSubtotal()
+        populateTotal()
+
         Log.d("Calculate shipment", prices.toString())
+    }
+
+    private fun populateSubtotal() {
+        checkout_shipment.text = "R$ " + (shipment / 100.0).toString()
+    }
+
+    private fun populateTotal() {
+        checkout_total.text = "R$ " + ((subtotal + shipment) / 100.0).toString()
     }
 
     private fun isTaskRunning(task: ShipmentPriceFetchTask?): Boolean {

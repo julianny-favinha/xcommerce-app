@@ -101,7 +101,8 @@
                                     android:id="@+id/checkout_pac"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/pac" />
+                                    android:text="@string/pac"
+                                    android:checked="true"/>
 
                                 <RadioButton
                                     android:id="@+id/checkout_sedex"
@@ -179,7 +180,8 @@
                             android:id="@+id/checkout_radio_button_boleto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/boleto" />
+                            android:text="@string/boleto"
+                            android:checked="true"/>
 
                     </RadioGroup>
 

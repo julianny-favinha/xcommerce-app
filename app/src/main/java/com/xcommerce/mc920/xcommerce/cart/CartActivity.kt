@@ -30,10 +30,9 @@ class CartActivity : AppCompatActivity() {
         } else {
             empty_cart_txt.setVisibility(View.GONE)
             list_view.setVisibility(View.VISIBLE)
-            total_value.setText("R$" + CartHelper.retrieveCart().totalPrice)
+            total_value.setText("R$" + (CartHelper.retrieveCart().totalPrice / 100.0))
         }
 
-//
 //        val values = listOf(CartItem(product = Product(
 //                id = 1,
 //                name = "blabal",

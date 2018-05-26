@@ -31,7 +31,7 @@ class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapte
 
         newView.note_item_name.text = product.name
         newView.note_item_val.text = quantity.toString()
-        newView.note_item_price.text = "R$" + product.price.toString()
+        newView.note_item_price.text = "R$" + (product.price / 100.0).toString()
         DownloadImageTask(newView.note_item_image).execute(product.imageUrl)
 
         newView.btn_inc.setOnClickListener {

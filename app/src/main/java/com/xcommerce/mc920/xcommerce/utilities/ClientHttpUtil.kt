@@ -36,6 +36,8 @@ class ClientHttpUtil {
             val client = OkHttpClient()
             val objectMapper = jacksonObjectMapper()
 
+            Log.d("[CLIENT HTTP]", "Request body: " + objectMapper.writeValueAsString(body))
+
             val requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), objectMapper.writeValueAsString(body))
             val request = Request.Builder().url(BASE + path).post(requestBody).build()
 
