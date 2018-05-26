@@ -15,6 +15,7 @@ import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.model.ShipmentIn
 import com.xcommerce.mc920.xcommerce.user.UserHelper
+import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
@@ -74,7 +75,7 @@ class CheckoutActivity : AppCompatActivity() {
         val products = cart.map { it.product }
         val adapter = CheckoutSummaryProductsAdapter(this, products)
         checkout_list_products.adapter = adapter
-        checkout_list_products.isExpanded = true
+        UIUtils.setListViewHeightBasedOnItems(checkout_list_products)
 
         // set payment method
         checkout_radio_payment.setOnCheckedChangeListener{ _, optionId ->

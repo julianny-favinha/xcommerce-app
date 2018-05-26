@@ -22,11 +22,11 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
 
-            <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+            <ListView
                 android:id="@+id/checkout_list_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
+            </ListView>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>
