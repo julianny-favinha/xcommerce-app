@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import com.xcommerce.mc920.xcommerce.AddressActivity
 import com.xcommerce.mc920.xcommerce.InfoCreditCardActivity
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import kotlinx.android.synthetic.main.address.*
+import kotlinx.android.synthetic.main.credit_card.*
 import kotlinx.android.synthetic.main.payment_method.*
 import kotlinx.android.synthetic.main.shipment_options.*
 import kotlinx.android.synthetic.main.summary_price_checkout.*
@@ -38,6 +40,8 @@ class CheckoutActivity : AppCompatActivity() {
     var subtotal: Int = 0
     var shipment: Int = 0
     var total: Int = 0
+
+    var parcelas: MutableList<String> = mutableListOf()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RETURN_CODE && resultCode == Activity.RESULT_OK) {
@@ -79,17 +83,19 @@ class CheckoutActivity : AppCompatActivity() {
 
         // set payment method
         checkout_radio_payment.setOnCheckedChangeListener{ _, optionId ->
-            val button = findViewById<Button>(R.id.checkout_button_add_info_card)
-
             when (optionId) {
                 R.id.checkout_radio_button_credit_card -> {
-                    button.isEnabled = true
+                    payment_method_credit_card.visibility = View.VISIBLE
                 }
                 R.id.checkout_radio_button_boleto -> {
-                    button.isEnabled = false
+                    payment_method_credit_card.visibility = View.GONE
+
                 }
             }
         }
+
+        // set list of parcelas adapter
+        spinnerAdapter()
 
         // set shipment price
         checkout_radio_pac_sedex.setOnCheckedChangeListener { _, optionId ->
@@ -113,16 +119,17 @@ class CheckoutActivity : AppCompatActivity() {
             startActivityForResult(intent, RETURN_CODE)
         }
 
-        // add credit card info
-        checkout_button_add_info_card.setOnClickListener {
-            val intent = Intent(this, InfoCreditCardActivity::class.java)
-            startActivity(intent)
-        }
-
         // finish shopping
         checkout_button.setOnClickListener{
 
         }
+    }
+
+    private fun spinnerAdapter() {
+        val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, parcelas)
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        credit_card_spinner!!.setAdapter(aa)
+        credit_card_spinner!!.setSelection(0, true)
     }
 
     fun populateResult(prices: Map<String, Int>) {
@@ -157,6 +164,17 @@ class CheckoutActivity : AppCompatActivity() {
     private fun populateTotal() {
         val priceString = formatMoney(subtotal + shipment)
         checkout_total.text = priceString
+
+        populateSpinnerParcelas()
+    }
+
+    private fun populateSpinnerParcelas() {
+        parcelas.clear()
+        for (i in 1..5) {
+            val text = i.toString() + "x de " + formatMoney((subtotal + shipment) / i)
+            parcelas.add(text)
+        }
+        spinnerAdapter()
     }
 
     private fun isTaskRunning(task: ShipmentPriceFetchTask?): Boolean {
