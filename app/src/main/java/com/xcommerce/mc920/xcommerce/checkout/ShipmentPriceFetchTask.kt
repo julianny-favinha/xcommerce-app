@@ -1,7 +1,6 @@
 package com.xcommerce.mc920.xcommerce.checkout
 
 import android.os.AsyncTask
-import com.xcommerce.mc920.xcommerce.CheckoutActivity
 import com.xcommerce.mc920.xcommerce.model.LogisticAPI
 import com.xcommerce.mc920.xcommerce.model.ShipmentIn
 import com.xcommerce.mc920.xcommerce.model.ShipmentOut

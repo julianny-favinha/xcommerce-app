@@ -2,10 +2,10 @@ package com.xcommerce.mc920.xcommerce
 
 import android.app.Activity
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.xcommerce.mc920.xcommerce.checkout.CheckoutActivity
 
 import kotlinx.android.synthetic.main.activity_address.*
 import kotlinx.android.synthetic.main.content_address.*

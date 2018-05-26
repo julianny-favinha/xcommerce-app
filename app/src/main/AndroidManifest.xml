@@ -43,7 +43,7 @@
             android:label="@string/title_activity_info_credit_cart"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CheckoutActivity"
+            android:name=".checkout.CheckoutActivity"
             android:label="@string/title_activity_checkout"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

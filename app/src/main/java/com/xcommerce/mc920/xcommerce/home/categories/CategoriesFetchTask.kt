@@ -24,7 +24,7 @@ class CategoriesFetchTask(private var container: CategoriesFragment?) : AsyncTas
 
     override fun onPostExecute(result: Categories?) {
         super.onPostExecute(result)
-        if (result != null) container?.populateResult(result.categories)
+        if (result != null) container?.populateResult(result.categories.distinct())
         container?.hideProgressBar()
         this.container = null
     }

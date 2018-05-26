@@ -1,4 +1,4 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.checkout
 
 import android.app.Activity
 import android.content.Intent
@@ -8,15 +8,17 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import com.xcommerce.mc920.xcommerce.AddressActivity
+import com.xcommerce.mc920.xcommerce.InfoCreditCardActivity
+import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
-import com.xcommerce.mc920.xcommerce.checkout.ShipmentPriceFetchTask
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.model.ShipmentIn
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
-import com.xcommerce.mc920.xcommerce.checkout.CheckoutSummaryProductsAdapter
 import com.xcommerce.mc920.xcommerce.model.LightProduct
+import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 
 class CheckoutActivity : AppCompatActivity() {
     companion object {
@@ -52,7 +54,7 @@ class CheckoutActivity : AppCompatActivity() {
         checkout_delivery_address.text = user.cep
 
         // calculate shipment prices
-        val cartItems = CartHelper.retrieveListCart()
+                val cartItems = CartHelper.retrieveListCart()
         products = cartItems.map {cartItem ->
             (0..cartItem.quantity).map {
                 cartItem.product
@@ -121,9 +123,9 @@ class CheckoutActivity : AppCompatActivity() {
     fun populateResult(prices: Map<String, Int>) {
         shipmentPrices = prices
 
-        val pacString = "R$ " + ("%.2f".format((prices["PAC"]!! / 100.0))).toString()
+        val pacString = formatMoney(prices["PAC"]!!)
         checkout_price_pac.text = pacString
-        val sedexString = "R$ " + ("%.2f".format((prices["Sedex"]!! / 100.0))).toString()
+        val sedexString = formatMoney(prices["Sedex"]!!)
         checkout_price_sedex.text = sedexString
         checkout_price_pac.visibility = View.VISIBLE
         checkout_price_sedex.visibility = View.VISIBLE
@@ -138,17 +140,17 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun populateShipment() {
-        val priceString = "R$" + ("%.2f".format(shipment / 100.0)).toString()
+        val priceString = formatMoney(shipment)
         checkout_shipment.text = priceString
     }
 
     private fun populateSubtotal() {
-        val priceString = "R$" + ("%.2f".format(subtotal / 100.0)).toString()
+        val priceString = formatMoney(subtotal)
         checkout_subtotal.text = priceString
     }
 
     private fun populateTotal() {
-        val priceString = "R$ " + ("%.2f".format((subtotal + shipment) / 100.0)).toString()
+        val priceString = formatMoney(subtotal + shipment)
         checkout_total.text = priceString
     }
 
