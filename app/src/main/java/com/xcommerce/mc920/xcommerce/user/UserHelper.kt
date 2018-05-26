@@ -6,8 +6,12 @@ class UserHelper {
     companion object {
         private var user: User? = null
 
-        fun retrieveUser(): User? {
+        fun retrieveNullableUser(): User? {
             return user
+        }
+
+        fun retrieveUser(): User {
+            return user ?: throw IllegalStateException("User must be logged in!")
         }
 
         fun updateUser(nUser: User?) {

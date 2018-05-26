@@ -17,7 +17,6 @@ import com.xcommerce.mc920.xcommerce.model.ShipmentIn
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
-import com.xcommerce.mc920.xcommerce.model.LightProduct
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 
 class CheckoutActivity : AppCompatActivity() {
@@ -50,25 +49,25 @@ class CheckoutActivity : AppCompatActivity() {
         populateSubtotal()
 
         // get info from user
-        val user = UserHelper.retrieveUser() ?: throw IllegalStateException ("Usuario deveria estar logado para chegar na tela de Checkout")
+        val user = UserHelper.retrieveUser()
         checkout_delivery_address.text = user.cep
 
+        val cart = CartHelper.retrieveListCart()
+
         // calculate shipment prices
-                val cartItems = CartHelper.retrieveListCart()
-        products = cartItems.map {cartItem ->
+        val shipmentProducts = cart.map {cartItem ->
             (0..cartItem.quantity).map {
                 cartItem.product
             }
         }.flatten()
-        val shipIn = ShipmentIn(products, user.cep)
+
+        val shipIn = ShipmentIn(shipmentProducts, user.cep)
         task = ShipmentPriceFetchTask(this)
         task?.execute(shipIn)
 
         // set list of products adapter
-        val lightProducts = products.map {
-            LightProduct(it.id, it.name, it.price, it.imageUrl)
-        }
-        val adapter = CheckoutSummaryProductsAdapter(this, lightProducts)
+        val products = cart.map { it.product }
+        val adapter = CheckoutSummaryProductsAdapter(this, products)
         checkout_list_products.adapter = adapter
         checkout_list_products.isExpanded = true
 

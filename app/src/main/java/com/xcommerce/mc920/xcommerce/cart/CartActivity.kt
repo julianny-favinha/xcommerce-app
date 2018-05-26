@@ -20,13 +20,15 @@ class CartActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         // Set the visibility of empty cart message
-        if(CartHelper.retrieveCart().isEmpty()) {
+        if (CartHelper.retrieveCart().isEmpty()) {
             empty_cart_txt.visibility = View.VISIBLE
             list_view.visibility = View.GONE
             total_value.text = formatMoney(0)
+            cart_button_next.isEnabled = false
         } else {
             empty_cart_txt.visibility = View.GONE
             list_view.visibility = View.VISIBLE
+            cart_button_next.isEnabled = true
             total_value.text = formatMoney(CartHelper.retrieveCart().totalPrice)
         }
 
