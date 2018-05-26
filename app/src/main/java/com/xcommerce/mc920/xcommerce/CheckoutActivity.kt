@@ -95,6 +95,7 @@ class CheckoutActivity : AppCompatActivity() {
                 }
             }
 
+            populateShipment()
             populateSubtotal()
             populateTotal()
         }
@@ -127,14 +128,19 @@ class CheckoutActivity : AppCompatActivity() {
 
         shipment = if (checkout_pac.isChecked) prices["PAC"]!! else prices["Sedex"]!!
 
+        populateShipment()
         populateSubtotal()
         populateTotal()
 
         Log.d("Calculate shipment", prices.toString())
     }
 
-    private fun populateSubtotal() {
+    private fun populateShipment() {
         checkout_shipment.text = "R$ " + (shipment / 100.0).toString()
+    }
+
+    private fun populateSubtotal() {
+        checkout_subtotal.text = "R$" + (subtotal / 100.0)
     }
 
     private fun populateTotal() {
