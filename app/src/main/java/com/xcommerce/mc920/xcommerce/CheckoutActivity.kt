@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
+import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_address.*
 import kotlinx.android.synthetic.main.content_checkout.*
@@ -51,6 +52,14 @@ class CheckoutActivity : AppCompatActivity() {
         // finish shopping
         checkout_button.setOnClickListener{
 
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (UserHelper.retrieveUser() == null){
+            finish()
         }
     }
 

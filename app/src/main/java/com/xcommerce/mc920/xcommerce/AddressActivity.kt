@@ -19,7 +19,7 @@ class AddressActivity : AppCompatActivity() {
         // back button
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
         toolbar.setNavigationOnClickListener {
-            startActivity(Intent(applicationContext, CheckoutActivity::class.java))
+            finish()
         }
 
         // validate CEP
