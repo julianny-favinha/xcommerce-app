@@ -29,8 +29,8 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        var usr = UserHelper.retrieveUser()
-        if (usr != null) {
+        var usr = UserHelper.retrieveNullableUser()
+        if (usr != null){
             findViewById<TextView>(R.id.name).apply { text = usr.name }
             findViewById<TextView>(R.id.email).apply { text = usr.email }
             findViewById<TextView>(R.id.cep).apply { text = usr.cep }

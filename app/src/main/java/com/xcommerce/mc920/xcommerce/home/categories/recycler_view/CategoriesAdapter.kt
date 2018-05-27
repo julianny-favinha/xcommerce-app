@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.adapter_category_view.view.*
 
 class CategoryViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
-    var id = itemView.category_id
     var name = itemView.category_name
 
     // TODO: clique na categoria vai para tela que lista todos os produtos da categoria
@@ -39,11 +38,9 @@ class CategoriesAdapter(private val categories: List<Category>, private val frag
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder?, position: Int) {
-        val (id, name) = categories[position]
+        val (name) = categories[position]
         holder?.let {
-            val codeString = "(" + id.toString() + ")"
-            it.id.text = codeString
-            it.name.text = name
+            it.name.text = name.toLowerCase().capitalize()
         }
     }
 }

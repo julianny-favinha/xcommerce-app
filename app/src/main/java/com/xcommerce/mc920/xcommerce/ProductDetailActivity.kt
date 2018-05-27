@@ -13,6 +13,7 @@ import com.xcommerce.mc920.xcommerce.R.id.toolbar
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
+import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.content_product_detail.*
@@ -43,7 +44,7 @@ class ProductDetailActivity : AppCompatActivity() {
             this.product_detail_id.text = codeString
             this.product_detail_name.text = product.name
             this.product_detail_brand.text = product.brand
-            val priceString = "R$" + ("%.2f".format(product.price / 100.0)).toString()
+            val priceString = formatMoney(product.price)
             this.product_detail_price.text = priceString
             this.product_detail_category.text = product.category
             this.product_detail_description.text = product.description

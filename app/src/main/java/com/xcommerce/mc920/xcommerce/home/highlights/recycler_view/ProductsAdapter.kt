@@ -11,6 +11,7 @@ import android.view.View
 import com.xcommerce.mc920.xcommerce.ProductDetailActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
+import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import kotlinx.android.synthetic.main.adapter_product_view.view.*
 
 class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
@@ -32,7 +33,7 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         name.text = product.name
         brand.text = product.brand
         category.text = product.category
-        val priceString = "R$" + ("%.2f".format(product.price / 100.0))
+        val priceString = formatMoney(product.price)
         price.text = priceString
         product.imageUrl?.let { DownloadImageTask(image).execute(product.imageUrl) }
                 ?: image.setImageResource(R.drawable.image_placeholder)
