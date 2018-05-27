@@ -167,13 +167,14 @@ class LoginActivity : AppCompatActivity() {
             mAuthTask = null
             showProgress(false)
 
-            if (res?.success == true) {
-                UserHelper.updateUser(User(res.name, res.cpf, res.cep, res.address, res.email))
+            if(res != null){
+                UserHelper.updateUser(res.user)
+                // Session.addToken(res.token)
                 finish()
-            } else {
-                password.error = getString(R.string.error_incorrect_password)
-                password.requestFocus()
             }
+
+            password.error = getString(R.string.error_incorrect_password)
+            password.requestFocus()
         }
 
         override fun onCancelled() {

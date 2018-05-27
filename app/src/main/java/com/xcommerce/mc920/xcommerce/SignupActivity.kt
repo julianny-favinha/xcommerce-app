@@ -279,20 +279,20 @@ class SignupActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg params: Void): UserResponse? {
-            return ClientHttpUtil.postRequest(UserAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
+            return ClientHttpUtil.putRequest(UserAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
         }
 
         override fun onPostExecute(res: UserResponse?) {
             mAuthTask = null
             showProgress(false)
 
-            if (res?.success == true) {
-                UserHelper.updateUser(User(res.name, res.cpf, res.cep, res.address, res.email))
+            if(res != null){
+                UserHelper.updateUser(res.user)
                 finish()
-            } else {
-                email.error = getString(R.string.error_existing_user)
-                email.requestFocus()
             }
+
+            email.error = getString(R.string.error_existing_user)
+            email.requestFocus()
         }
 
         override fun onCancelled() {
