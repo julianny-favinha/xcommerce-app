@@ -10,6 +10,7 @@ import com.xcommerce.mc920.xcommerce.home.search.recycler_view.ProductsAdapter
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.model.ProductAPI
 import com.xcommerce.mc920.xcommerce.model.Search
+import com.xcommerce.mc920.xcommerce.model.SearchIn
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 
 import kotlinx.android.synthetic.main.activity_search.*
@@ -28,7 +29,6 @@ class SearchActivity : AppCompatActivity() {
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
         toolbar.setNavigationOnClickListener {
             finish()
-            //startActivity(Intent(applicationContext, MainActivity::class.java))
         }
 
         search_recycler_view.layoutManager = LinearLayoutManager(this)
@@ -69,50 +69,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg p0: Void?): Search? {
-            return ClientHttpUtil.postRequest(ProductAPI.Search.PATH, query)?: Search(emptyList())
-            /*return Search(listOf(
-                    Product(
-                        id=16,
-                        name="Sofá1",
-                        brand="Marca de um sofá",
-                        price=100,
-                        category = "Eletrodomésticos",
-                        description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                        imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png"),
-                    Product(
-                        id=17,
-                        name="Sofá2",
-                        brand="Marca de um sofá",
-                        price=10000,
-                        category = "Eletrodomésticos",
-                        description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                        imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png"),
-                    Product(
-                            id=18,
-                            name="Sofá3",
-                            brand="Marca de um sofáa",
-                            price=100000,
-                            category = "Eletrodomésticos",
-                            description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                            imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png"),
-                    Product(
-                            id=19,
-                            name="Sofá4",
-                            brand="Marca de um sofá",
-                            price=100000,
-                            category = "Eletrodomésticos",
-                            description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                            imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png"),
-                    Product(
-                            id=20,
-                            name="Sofá5",
-                            brand="Marca de um sofáa",
-                            price=1000000,
-                            category = "Eletrodomésticos",
-                            description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                            imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png")
-            ))*/
-            //return Search(emptyList())
+            return ClientHttpUtil.postRequest(ProductAPI.Search.PATH, SearchIn(query))?: Search(emptyList())
         }
 
         override fun onPostExecute(result: Search?) {
