@@ -8,11 +8,11 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Button
-import com.xcommerce.mc920.xcommerce.AddressActivity
-import com.xcommerce.mc920.xcommerce.InfoCreditCardActivity
+import com.xcommerce.mc920.xcommerce.user.AddressActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
+import com.xcommerce.mc920.xcommerce.model.Address
+import com.xcommerce.mc920.xcommerce.model.AddressFull
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.model.ShipmentIn
 import com.xcommerce.mc920.xcommerce.user.UserHelper
@@ -45,8 +45,20 @@ class CheckoutActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RETURN_CODE && resultCode == Activity.RESULT_OK) {
-            checkout_delivery_address.text = data?.extras?.getString("cep") ?: ""
+
+            val address = data?.getSerializableExtra("address")
+
+            if (address is AddressFull) {
+                populateAddress(address)
+            }
         }
+    }
+
+    private fun populateAddress(address: AddressFull) {
+        val complemento = if (address.complement != "") "Complemento " + address.complement else ""
+        address_text_view_logradouro.text = address.address.logradouro + ", " + address.number + " " + complemento
+        address_text_view_neighborhood.text = address.address.neighborhood
+        address_text_view_city_state.text = address.address.city + ", " + address.address.state
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +72,7 @@ class CheckoutActivity : AppCompatActivity() {
 
         // get info from user
         val user = UserHelper.retrieveUser()
-        checkout_delivery_address.text = user.cep
+        // TODO: populate address view
 
         val cart = CartHelper.retrieveListCart()
 
