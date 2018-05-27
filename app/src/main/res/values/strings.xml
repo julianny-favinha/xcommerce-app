@@ -23,7 +23,7 @@
 
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="delivery_address">Endereço de entrega</string>
-    <string name="add_address">Adicionar endereço</string>
+    <string name="new_address">Novo endereço</string>
     <string name="delivery_options">Opções de entrega</string>
     <string name="payment_method">Modo de pagamento</string>
     <string name="checkout">Finalizar compra</string>
