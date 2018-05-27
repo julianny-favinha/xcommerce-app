@@ -9,21 +9,20 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import com.xcommerce.mc920.xcommerce.R
+import com.xcommerce.mc920.xcommerce.SearchActivity
 import com.xcommerce.mc920.xcommerce.model.Category
 import kotlinx.android.synthetic.main.adapter_category_view.view.*
 
 class CategoryViewHolder(item: View) : RecyclerView.ViewHolder(item) {
-
     var name = itemView.category_name
 
-    // TODO: clique na categoria vai para tela que lista todos os produtos da categoria
-//    val item = itemView.setOnClickListener(object: View.OnClickListener {
-//        override fun onClick(p0: View?) {
-//            val intent = Intent(p0?.context, ListProductsByCategoryActivity::class.java)
-//            intent.putExtra("id", id.text)
-//            p0?.context?.startActivity(intent)
-//        }
-//    })
+    fun bindClick(listener: View.OnClickListener) {
+        itemView.setOnClickListener(listener)
+    }
+
+    fun bindData(categoryName: String) {
+        name.text = categoryName
+    }
 }
 
 class CategoriesAdapter(private val categories: List<Category>, private val fragment: Fragment) : RecyclerView.Adapter<CategoryViewHolder>() {
@@ -39,8 +38,13 @@ class CategoriesAdapter(private val categories: List<Category>, private val frag
 
     override fun onBindViewHolder(holder: CategoryViewHolder?, position: Int) {
         val (name) = categories[position]
-        holder?.let {
-            it.name.text = name.toLowerCase().capitalize()
-        }
+
+        holder?.bindClick(View.OnClickListener { p0 ->
+            val intent = Intent(p0?.context, SearchActivity::class.java)
+            intent.putExtra("categoryName", name)
+            p0?.context?.startActivity(intent)
+        })
+
+        holder?.bindData(name.toLowerCase().capitalize())
     }
 }

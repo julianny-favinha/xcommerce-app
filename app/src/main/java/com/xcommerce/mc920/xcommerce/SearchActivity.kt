@@ -25,6 +25,12 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
         setSupportActionBar(toolbar)
 
+        val category = intent.getStringExtra("categoryName")
+        if (category != null) {
+            search_field.text.append(category)
+            SearchTask(category, this).execute()
+        }
+
         // back button
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
         toolbar.setNavigationOnClickListener {
