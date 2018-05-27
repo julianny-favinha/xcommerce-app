@@ -14,7 +14,7 @@ import com.xcommerce.mc920.xcommerce.model.CartItem
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import kotlinx.android.synthetic.main.adapter_cart_view.view.*
-import kotlinx.android.synthetic.main.content_cart.*
+import kotlinx.android.synthetic.main.old_content_cart.*
 
 class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapter<CartItem>(context, 0, cartItems) {
 

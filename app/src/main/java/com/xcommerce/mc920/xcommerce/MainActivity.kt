@@ -9,8 +9,9 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.xcommerce.mc920.xcommerce.cart.CartActivity
+import com.xcommerce.mc920.xcommerce.cart.OldCartActivity
 import android.widget.TextView
+import com.xcommerce.mc920.xcommerce.cart.CartActivity
 import com.xcommerce.mc920.xcommerce.home.TabPagerAdapter
 import com.xcommerce.mc920.xcommerce.model.User
 import com.xcommerce.mc920.xcommerce.user.UserHelper

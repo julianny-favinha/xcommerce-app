@@ -7,7 +7,7 @@
     <string name="action_settings">Configurações</string>
 
     <string name="title_activity_checkout">Finalizar compra</string>
-    <string name="title_activity_info_credit_cart">Infromações do cartão de crédito</string>
+    <string name="title_activity_info_credit_cart">Informações do cartão de crédito</string>
     <string name="title_activity_address">Novo endereço</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -70,7 +70,7 @@
     <string name="error_badcheck_password">Senhas devem ser iguais</string>
     <string name="error_field_required">Campo Obrigatório</string>
     <string name="error_existing_user">Já existe usuário com este email</string>
-    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_search">Busca</string>
 
     <string name="error_edit">Ocorreu um erro</string>
 
@@ -83,8 +83,8 @@
     <string name="email">Email</string>
 
     <string name="search">Buscar</string>
-    <string name="title_activity_product_detail">ProductDetailActivity</string>
-    <string name="title_activity_cart">CartActivity</string>
+    <string name="title_activity_product_detail">Produto</string>
+    <string name="title_activity_cart">Meu carrinho</string>
     <string name="next">Prosseguir</string>
 
     <string name="default_address">Tornar endereço padrão</string>
