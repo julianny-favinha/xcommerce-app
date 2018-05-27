@@ -8,7 +8,19 @@
     tools:context=".cart.CartActivity"
     tools:showIn="@layout/activity_cart">
 
+    <TextView
+        android:id="@+id/text_view_no_items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_items"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,24 +30,23 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
-            android:visibility="visible">
-        </ListView>
+            android:visibility="visible"></ListView>
 
         <LinearLayout
             android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_weight="0"
             android:background="@color/cardview_dark_background"
-            android:orientation="horizontal"
-            android:layout_weight="0">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/total_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total: "
-                android:textStyle="bold"
-                android:textColor="@color/cardview_light_background" />
+                android:textColor="@color/cardview_light_background"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/total_value"

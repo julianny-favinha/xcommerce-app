@@ -94,5 +94,8 @@
 
     <string name="year">Ano</string>
     <string name="month">Mês</string>
+
+    <string name="no_results">Sem resultados.</string>
+    <string name="no_items">Sem itens no carrinho.</string>
 </resources>
 
