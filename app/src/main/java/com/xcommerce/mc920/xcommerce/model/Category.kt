@@ -1,3 +1,6 @@
 package com.xcommerce.mc920.xcommerce.model
 
-data class Category(val id: Int, val name: String)
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class Category(val name: String)

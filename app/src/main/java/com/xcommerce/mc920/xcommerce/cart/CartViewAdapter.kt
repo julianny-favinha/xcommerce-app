@@ -12,11 +12,11 @@ import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.CartItem
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
+import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import kotlinx.android.synthetic.main.adapter_cart_view.view.*
-import kotlinx.android.synthetic.main.content_cart.*
+import kotlinx.android.synthetic.main.old_content_cart.*
 
 class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapter<CartItem>(context, 0, cartItems) {
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val cartItem= getItem(position)
 
@@ -31,14 +31,15 @@ class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapte
 
         newView.note_item_name.text = product.name
         newView.note_item_val.text = quantity.toString()
-        newView.note_item_price.text = "R$" + product.price.toString()
-        DownloadImageTask(newView.note_item_image).execute(product.imageUrl)
+        newView.note_item_price.text = formatMoney(product.price)
+        product.imageUrl?.let { DownloadImageTask(newView.note_item_image).execute(product.imageUrl) }
+                ?: newView.note_item_image.setImageResource(R.drawable.image_noimage)
 
         newView.btn_inc.setOnClickListener {
             Toast.makeText(context, "Quantidade atualizada.", Toast.LENGTH_SHORT).show()
             CartHelper.retrieveCart().add(product, 1)
             newView.note_item_val.text = CartHelper.retrieveProduct(product)!!.quantity.toString()
-            totalValue.setText("R$" + CartHelper.retrieveCart().totalPrice)
+            totalValue.text = formatMoney(CartHelper.retrieveCart().totalPrice)
             Log.d("[CART]", CartHelper.retrieveCart().cartItemMap.toString())
         }
 
@@ -47,7 +48,7 @@ class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapte
                 Toast.makeText(context, "Quantidade atualizada.", Toast.LENGTH_SHORT).show()
                 CartHelper.retrieveCart().sub(product, 1)
                 newView.note_item_val.text = CartHelper.retrieveProduct(product)!!.quantity.toString()
-                totalValue.setText("R$" + CartHelper.retrieveCart().totalPrice)
+                totalValue.text = formatMoney(CartHelper.retrieveCart().totalPrice)
                 Log.d("[CART]", CartHelper.retrieveCart().cartItemMap.toString())
             }
         }
@@ -55,7 +56,7 @@ class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapte
         newView.btn_remove.setOnClickListener {
             remove(cartItem)
             CartHelper.retrieveCart().remove(product)
-            totalValue.setText("R$0,00")
+            totalValue.text = formatMoney(0)
             this.notifyDataSetChanged()
         }
 

@@ -7,23 +7,21 @@
     <string name="action_settings">Configurações</string>
 
     <string name="title_activity_checkout">Finalizar compra</string>
-    <string name="title_activity_info_credit_cart">Infromações do cartão de crédito</string>
+    <string name="title_activity_info_credit_cart">Informações do cartão de crédito</string>
     <string name="title_activity_address">Novo endereço</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="categorias">Categorias</string>
-    <string name="destaques">Destaques</string>
-
-
+    <string name="categories">Categorias</string>
     <string name="category">Categoria</string>
+
+    <string name="highlights">Destaques</string>
+
     <string name="description">Descrição</string>
     <string name="save">Salvar</string>
     <string name="text_description_photo">Foto do produto</string>
 
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="delivery_address">Endereço de entrega</string>
-    <string name="add_address">Adicionar endereço</string>
+    <string name="new_address">Novo endereço</string>
     <string name="delivery_options">Opções de entrega</string>
     <string name="payment_method">Modo de pagamento</string>
     <string name="checkout">Finalizar compra</string>
@@ -49,11 +47,8 @@
     <string name="title_activity_signup">Cadastrar</string>
 
     <string name="prompt_name">Nome Completo</string>
-    <string name="prompt_cpf">CPF (Só Números)</string>
-    <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_password_check">Senha (Verificação)</string>
-    <string name="prompt_cep">CEP (Só Números)</string>
     <string name="prompt_address">Endereço</string>
 
     <string name="action_sign_in">Fazer login</string>
@@ -70,6 +65,8 @@
     <string name="error_badcheck_password">Senhas devem ser iguais</string>
     <string name="error_field_required">Campo Obrigatório</string>
     <string name="error_existing_user">Já existe usuário com este email</string>
+    <string name="title_activity_search">Busca</string>
+
     <string name="error_edit">Ocorreu um erro</string>
 
     <string name="title_activity_user_profile">Detalhes de Perfil</string>
@@ -80,9 +77,9 @@
     <string name="address">Endereço</string>
     <string name="email">Email</string>
 
-    <string name="title_activity_product_detail">ProductDetailActivity</string>
-    <string name="title_activity_cart">CartActivity</string>
-
+    <string name="search">Buscar</string>
+    <string name="title_activity_product_detail">Produto</string>
+    <string name="title_activity_cart">Meu carrinho</string>
     <string name="next">Prosseguir</string>
 
     <string name="default_address">Tornar endereço padrão</string>
@@ -90,5 +87,11 @@
     <string name="subtotal">Subtotal de produtos</string>
     <string name="shipment">Frete</string>
     <string name="title_activity_my_orders">MyOrdersActivity</string>
+
+    <string name="year">Ano</string>
+    <string name="month">Mês</string>
+
+    <string name="no_results">Sem resultados.</string>
+    <string name="no_items">Sem itens no carrinho.</string>
 </resources>
 

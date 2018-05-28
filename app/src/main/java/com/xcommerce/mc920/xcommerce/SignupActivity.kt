@@ -40,7 +40,7 @@ class SignupActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (UserHelper.retrieveUser() != null){
+        if (UserHelper.retrieveNullableUser() != null){
             finish()
         }
     }

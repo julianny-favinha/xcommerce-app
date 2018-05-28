@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".AddressActivity"
+    tools:context=".user.AddressActivity"
     tools:showIn="@layout/activity_address">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
@@ -24,30 +25,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cep"
-                    android:textStyle="bold"
-                    android:textSize="25sp"/>
-
                 <EditText
                     android:id="@+id/address_edit_text_cep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/number"
-                    android:inputType="number"
-                    android:paddingRight="100dp"/>
-
-                <Space
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent" />
+                    android:layout_weight="1"
+                    android:hint="@string/cep"
+                    android:inputType="number" />
 
                 <Button
                     android:id="@+id/address_button_validate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/validate"/>
+                    android:text="@string/validate" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,51 +52,54 @@
                     android:layout_height="20dp" />
 
                 <TextView
-                    android:id="@+id/address_text_view_address"
+                    android:id="@+id/address_text_view_logradouro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="Depois de clicar em validar, o endereço aparecerá aqui"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:text="Nome da rua"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/address_text_view_neighborhood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bairro"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/address_text_view_city_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cidade, UF"
+                    android:textSize="15sp" />
 
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/number"
-                    android:textStyle="bold"
-                    android:textSize="25sp"/>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/address_edit_text_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/number"
-                    android:inputType="number"
-                    android:paddingRight="100dp"/>
+                        <EditText
+                            android:id="@+id/address_edit_text_number"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/number"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:singleLine="true"/>
+                    </android.support.design.widget.TextInputLayout>
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="20dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/complement"
-                    android:textStyle="bold"
-                    android:textSize="25sp"/>
+                    android:layout_height="15dp" />
 
                 <EditText
                     android:id="@+id/address_edit_text_complement"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/complement"
-                    android:inputType="text"
-                    android:paddingRight="100dp"/>
+                    android:inputType="text" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -116,7 +109,7 @@
                     android:id="@+id/address_checkbox_default"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/default_address"/>
+                    android:text="@string/default_address" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -126,12 +119,23 @@
                     android:id="@+id/address_button_save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/save_address"/>
+                    android:text="@string/save_address" />
             </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2"
+        android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>

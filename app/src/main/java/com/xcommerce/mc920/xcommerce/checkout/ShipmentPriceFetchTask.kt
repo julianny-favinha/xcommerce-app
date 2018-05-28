@@ -1,7 +1,6 @@
 package com.xcommerce.mc920.xcommerce.checkout
 
 import android.os.AsyncTask
-import com.xcommerce.mc920.xcommerce.CheckoutActivity
 import com.xcommerce.mc920.xcommerce.model.LogisticAPI
 import com.xcommerce.mc920.xcommerce.model.ShipmentIn
 import com.xcommerce.mc920.xcommerce.model.ShipmentOut
@@ -11,7 +10,7 @@ class ShipmentPriceFetchTask(private var container: CheckoutActivity?): AsyncTas
 
     override fun doInBackground(vararg p0: ShipmentIn): ShipmentOut {
         try {
-            return ClientHttpUtil.postRequest(LogisticAPI.ShipmentPrice.PATH, p0)
+            return ClientHttpUtil.postRequest(LogisticAPI.ShipmentPrice.PATH, p0.first())
                     ?: ShipmentOut(emptyMap())
         } catch (e: Exception) {
             return ShipmentOut(emptyMap())

@@ -4,69 +4,32 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import com.xcommerce.mc920.xcommerce.CheckoutActivity
 import com.xcommerce.mc920.xcommerce.R
-import com.xcommerce.mc920.xcommerce.model.CartItem
-import com.xcommerce.mc920.xcommerce.model.Product
-
+import com.xcommerce.mc920.xcommerce.checkout.CheckoutActivity
+import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.content_cart.*
 
 class CartActivity : AppCompatActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
         setSupportActionBar(toolbar)
 
         // Set the visibility of empty cart message
-        if(CartHelper.retrieveCart().isEmpty()) {
-            empty_cart_txt.setVisibility(View.VISIBLE)
-            list_view.setVisibility(View.GONE)
-            total_value.setText("0")
+        if (CartHelper.retrieveCart().isEmpty()) {
+            text_view_no_items.visibility = View.VISIBLE
+            list_view.visibility = View.GONE
+            linear_layout.visibility = View.GONE
+            total_value.text = formatMoney(0)
+            cart_button_next.isEnabled = false
         } else {
-            empty_cart_txt.setVisibility(View.GONE)
-            list_view.setVisibility(View.VISIBLE)
-            total_value.setText("R$" + CartHelper.retrieveCart().totalPrice)
+            text_view_no_items.visibility = View.GONE
+            list_view.visibility = View.VISIBLE
+            linear_layout.visibility = View.VISIBLE
+            cart_button_next.isEnabled = true
+            total_value.text = formatMoney(CartHelper.retrieveCart().totalPrice)
         }
-
-//
-//        val values = listOf(CartItem(product = Product(
-//                id = 1,
-//                name = "blabal",
-//                brand = "balbal",
-//                price = 3000,
-//                category = "blablba",
-//                description = "blablba",
-//                imageUrl = null
-//        ), quantity = 3), CartItem(product = Product(
-//                id = 1,
-//                name = "blabal",
-//                brand = "balbal",
-//                price = 3000,
-//                category = "blablba",
-//                description = "blablba",
-//                imageUrl = null
-//        ), quantity = 2), CartItem(product = Product(
-//                id = 1,
-//                name = "blabal",
-//                brand = "balbal",
-//                price = 3000,
-//                category = "blablba",
-//                description = "blablba",
-//                imageUrl = null
-//        ), quantity = 1), CartItem(product = Product(
-//                id = 1,
-//                name = "blabal",
-//                brand = "balbal",
-//                price = 3000,
-//                category = "blablba",
-//                description = "blablba",
-//                imageUrl = null
-//        ), quantity = 7))
 
         val cartItems = CartHelper.retrieveListCart()
 
@@ -79,5 +42,4 @@ class CartActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 }

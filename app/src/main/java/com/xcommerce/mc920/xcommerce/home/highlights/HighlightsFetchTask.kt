@@ -5,9 +5,7 @@ import com.xcommerce.mc920.xcommerce.model.Highlights
 import com.xcommerce.mc920.xcommerce.model.ProductAPI
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 
-
 class HighlightsFetchTask(private var container: HighlightsFragment?) : AsyncTask<String, Void, Highlights>() {
-
     override fun doInBackground(vararg p0: String?): Highlights {
         try {
             return ClientHttpUtil.getRequest(ProductAPI.Highlights.PATH)

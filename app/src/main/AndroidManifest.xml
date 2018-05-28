@@ -38,19 +38,28 @@
             android:label="@string/title_activity_product_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".SearchActivity"
+            android:label="@string/title_activity_search"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
             android:name=".InfoCreditCardActivity"
             android:label="@string/title_activity_info_credit_cart"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CheckoutActivity"
+            android:name=".checkout.CheckoutActivity"
             android:label="@string/title_activity_checkout"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".cart.CartActivity"
+            android:name=".cart.OldCartActivity"
             android:label="@string/title_activity_cart"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddressActivity"
+            android:name=".user.AddressActivity"
             android:label="@string/title_activity_address"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -64,6 +73,8 @@
         <activity
             android:name=".MyOrdersActivity"
             android:label="@string/title_activity_my_orders"
+            android:name=".cart.CartActivity"
+            android:label="@string/title_activity_cart"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

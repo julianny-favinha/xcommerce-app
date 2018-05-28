@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
-import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.model.UserAPI
 import com.xcommerce.mc920.xcommerce.model.Login
 import com.xcommerce.mc920.xcommerce.model.User
@@ -40,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (UserHelper.retrieveUser() != null){
+        if (UserHelper.retrieveNullableUser() != null){
             finish()
         }
     }

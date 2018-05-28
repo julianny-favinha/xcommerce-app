@@ -9,15 +9,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.xcommerce.mc920.xcommerce.cart.CartActivity
-import android.view.View
+import com.xcommerce.mc920.xcommerce.cart.OldCartActivity
 import android.widget.TextView
+import com.xcommerce.mc920.xcommerce.cart.CartActivity
 import com.xcommerce.mc920.xcommerce.home.TabPagerAdapter
 import com.xcommerce.mc920.xcommerce.model.User
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,6 +33,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         configureTabLayout()
+
+        main_search_button.setOnClickListener{
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {
@@ -75,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        val usr = UserHelper.retrieveUser()
+        val usr = UserHelper.retrieveNullableUser()
         if (usr != null){
             findViewById<TextView>(R.id.nav_header_name).apply { text = usr.name }
             findViewById<TextView>(R.id.nav_header_email).apply { text = usr.email }
@@ -91,7 +95,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation item item clicks here.
         when (item.itemId) {
             R.id.nav_meuspedidos -> {
-
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_sac -> {
 
