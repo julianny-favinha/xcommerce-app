@@ -89,5 +89,6 @@
     <string name="checkout_summary">Revisão do pedido</string>
     <string name="subtotal">Subtotal de produtos</string>
     <string name="shipment">Frete</string>
+    <string name="title_activity_my_orders">MyOrdersActivity</string>
 </resources>
 

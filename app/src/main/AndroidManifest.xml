@@ -3,7 +3,6 @@
     package="com.xcommerce.mc920.xcommerce">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -61,7 +60,11 @@
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/action_edit_profile"
-            android:parentActivityName=".UserProfileActivity"/>
+            android:parentActivityName=".UserProfileActivity" />
+        <activity
+            android:name=".MyOrdersActivity"
+            android:label="@string/title_activity_my_orders"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
