@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
 import android.view.View
 import com.xcommerce.mc920.xcommerce.home.search.recycler_view.ProductsAdapter
 import com.xcommerce.mc920.xcommerce.model.Product
@@ -15,6 +16,10 @@ import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.content_search.*
+import android.widget.Toast
+import android.view.KeyEvent.KEYCODE_ENTER
+
+
 
 class SearchActivity : AppCompatActivity() {
 
@@ -40,7 +45,20 @@ class SearchActivity : AppCompatActivity() {
         search_recycler_view.layoutManager = LinearLayoutManager(this)
         search_recycler_view.adapter = ProductsAdapter(emptyResults, this)
 
-        search_button.setOnClickListener{searchOnClick()}
+        // search button
+        search_button.setOnClickListener{
+            searchOnClick()
+        }
+
+        // keyboard done button
+        search_field.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    searchOnClick()
+                }
+                return false
+            }
+        })
     }
 
     fun searchOnClick(){
