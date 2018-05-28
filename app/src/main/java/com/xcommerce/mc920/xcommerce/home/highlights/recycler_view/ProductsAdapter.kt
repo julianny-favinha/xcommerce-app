@@ -32,7 +32,7 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val priceString = formatMoney(product.price)
         price.text = priceString
         product.imageUrl?.let { DownloadImageTask(image).execute(product.imageUrl) }
-                ?: image.setImageResource(R.drawable.image_placeholder)
+                ?: image.setImageResource(R.drawable.image_noimage)
     }
 }
 

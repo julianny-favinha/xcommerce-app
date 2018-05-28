@@ -30,7 +30,8 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         category.text = product.category
         val priceString = "R$" + ("%.2f".format(product.price / 100.0))
         price.text = priceString
-        DownloadImageTask(image).execute(product.imageUrl)
+        product.imageUrl?.let { DownloadImageTask(image).execute(product.imageUrl) }
+                ?: image.setImageResource(R.drawable.image_noimage)
     }
 }
 

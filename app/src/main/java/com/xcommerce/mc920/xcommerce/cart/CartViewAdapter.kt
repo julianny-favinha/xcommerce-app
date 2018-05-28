@@ -32,7 +32,8 @@ class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapte
         newView.note_item_name.text = product.name
         newView.note_item_val.text = quantity.toString()
         newView.note_item_price.text = formatMoney(product.price)
-        DownloadImageTask(newView.note_item_image).execute(product.imageUrl)
+        product.imageUrl?.let { DownloadImageTask(newView.note_item_image).execute(product.imageUrl) }
+                ?: newView.note_item_image.setImageResource(R.drawable.image_noimage)
 
         newView.btn_inc.setOnClickListener {
             Toast.makeText(context, "Quantidade atualizada.", Toast.LENGTH_SHORT).show()

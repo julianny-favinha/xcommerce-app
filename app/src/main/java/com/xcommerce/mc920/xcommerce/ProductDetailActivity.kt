@@ -7,9 +7,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
-import com.xcommerce.mc920.xcommerce.R.id.toolbar
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
@@ -48,7 +45,8 @@ class ProductDetailActivity : AppCompatActivity() {
             this.product_detail_price.text = priceString
             this.product_detail_category.text = product.category
             this.product_detail_description.text = product.description
-            DownloadImageTask(this.product_detail_image).execute(product.imageUrl)
+            product.imageUrl?.let { DownloadImageTask(this.product_detail_image).execute(product.imageUrl) }
+                    ?: this.product_detail_image.setImageResource(R.drawable.image_noimage)
         }
     }
 
