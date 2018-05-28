@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.adapter_cart_view.view.*
 import kotlinx.android.synthetic.main.old_content_cart.*
 
 class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapter<CartItem>(context, 0, cartItems) {
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val cartItem= getItem(position)
 

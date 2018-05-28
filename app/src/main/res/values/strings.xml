@@ -9,14 +9,12 @@
     <string name="title_activity_checkout">Finalizar compra</string>
     <string name="title_activity_info_credit_cart">Informações do cartão de crédito</string>
     <string name="title_activity_address">Novo endereço</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="categorias">Categorias</string>
-    <string name="destaques">Destaques</string>
-
-
+    <string name="categories">Categorias</string>
     <string name="category">Categoria</string>
+
+    <string name="highlights">Destaques</string>
+
     <string name="description">Descrição</string>
     <string name="save">Salvar</string>
     <string name="text_description_photo">Foto do produto</string>
@@ -49,11 +47,8 @@
     <string name="title_activity_signup">Cadastrar</string>
 
     <string name="prompt_name">Nome Completo</string>
-    <string name="prompt_cpf">CPF (Só Números)</string>
-    <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_password_check">Senha (Verificação)</string>
-    <string name="prompt_cep">CEP (Só Números)</string>
     <string name="prompt_address">Endereço</string>
 
     <string name="action_sign_in">Fazer login</string>

@@ -7,13 +7,10 @@ import android.view.View
 import com.xcommerce.mc920.xcommerce.checkout.CheckoutActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
-
 import kotlinx.android.synthetic.main.old_activity_cart.*
 import kotlinx.android.synthetic.main.old_content_cart.*
 
 class OldCartActivity : AppCompatActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
             setContentView(R.layout.old_activity_cart)
@@ -43,5 +40,4 @@ class OldCartActivity : AppCompatActivity() {
                 startActivity(intent)
         }
     }
-
 }

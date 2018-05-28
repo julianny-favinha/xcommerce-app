@@ -7,7 +7,6 @@ import com.xcommerce.mc920.xcommerce.model.ProductAPI
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 
 class CategoriesFetchTask(private var container: CategoriesFragment?): AsyncTask<String, Void, Categories>() {
-
     override fun doInBackground(vararg p0: String?): Categories {
         try {
             return ClientHttpUtil.getRequest(ProductAPI.Categories.PATH)

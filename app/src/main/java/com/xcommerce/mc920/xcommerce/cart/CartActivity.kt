@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.content_cart.*
 
 class CartActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
@@ -43,5 +42,4 @@ class CartActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 }

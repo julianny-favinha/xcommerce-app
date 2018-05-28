@@ -2,8 +2,6 @@ package com.xcommerce.mc920.xcommerce.home.categories.recycler_view
 
 import android.content.Intent
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.startActivity
-import android.support.v7.widget.RecyclerView.Adapter
 import android.view.ViewGroup
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

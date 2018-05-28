@@ -12,7 +12,7 @@ import com.xcommerce.mc920.xcommerce.home.highlights.recycler_view.ProductsAdapt
 import com.xcommerce.mc920.xcommerce.model.Product
 import kotlinx.android.synthetic.main.fragment_highlights.*
 
-class HighlightsFragment : Fragment() {
+class HighlightsFragment: Fragment() {
 
     private var highlights = emptyList<Product>().toMutableList()
     private var task: HighlightsFetchTask? = null
@@ -31,25 +31,25 @@ class HighlightsFragment : Fragment() {
         task = HighlightsFetchTask(this)
         task?.execute()
 
-        if(isTaskRunning(task)){
+        if (isTaskRunning(task)) {
             showProgressBar()
         } else {
             hideProgressBar()
         }
 
-        if(highlights.isNotEmpty()) {
+        if (highlights.isNotEmpty()) {
             populateResult(highlights)
         }
 
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun showProgressBar(){
+    fun showProgressBar() {
         progressbar.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
     }
 
-    fun hideProgressBar(){
+    fun hideProgressBar() {
         progressbar.visibility = View.GONE
         recycler_view.visibility = View.VISIBLE
     }
@@ -63,5 +63,4 @@ class HighlightsFragment : Fragment() {
     private fun isTaskRunning(task: HighlightsFetchTask?): Boolean {
         return task?.status != AsyncTask.Status.FINISHED
     }
-
 }

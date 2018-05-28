@@ -55,8 +55,8 @@
                     android:id="@+id/cpf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_cpf"
-                    android:inputType="text|date"
+                    android:hint="@string/cpf"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -77,8 +77,8 @@
                         android:id="@+id/cep"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_cep"
-                        android:inputType="textPostalAddress"
+                        android:hint="@string/cep"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:singleLine="true" />
 
@@ -118,7 +118,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />

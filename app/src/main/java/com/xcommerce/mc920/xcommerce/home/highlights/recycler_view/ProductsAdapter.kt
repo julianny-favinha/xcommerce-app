@@ -15,8 +15,6 @@ import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import kotlinx.android.synthetic.main.adapter_product_view.view.*
 
 class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
-
-    private val id = itemView.note_item_id
     private val name = itemView.note_item_name
     private val brand = itemView.note_item_brand
     private val price = itemView.note_item_price
@@ -28,8 +26,6 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
     }
 
     fun bindData(product: Product) {
-        val codeString = "Código " + product.id.toString()
-        id.text = codeString
         name.text = product.name
         brand.text = product.brand
         category.text = product.category
@@ -37,9 +33,7 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         price.text = priceString
         product.imageUrl?.let { DownloadImageTask(image).execute(product.imageUrl) }
                 ?: image.setImageResource(R.drawable.image_placeholder)
-
     }
-
 }
 
 class ProductsAdapter(private val products: List<Product>, private val fragment: Fragment) : Adapter<ProductViewHolder>() {
@@ -64,6 +58,4 @@ class ProductsAdapter(private val products: List<Product>, private val fragment:
 
         holder?.bindData(product)
     }
-
-
 }
