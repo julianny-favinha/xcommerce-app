@@ -1,8 +1,8 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.myorders
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import com.xcommerce.mc920.xcommerce.R
 
 import kotlinx.android.synthetic.main.activity_my_orders.*
 
@@ -13,10 +13,6 @@ class MyOrdersActivity : AppCompatActivity() {
         setContentView(R.layout.activity_my_orders)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
     }
 
 }
