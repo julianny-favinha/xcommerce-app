@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".myorders.OrderDetailActivity"
+    tools:showIn="@layout/activity_order_detail">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp">
+
+            <!--Header - Prod Detail-->
+            <include
+                layout="@layout/order_detail"
+                tools:ignore="ResourceCycle" />
+            <!--End of Prod Detail-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <!--Header - Payment method-->
+            <include
+                layout="@layout/order_payment_method"
+                tools:ignore="ResourceCycle" />
+            <!--End of Payment Method-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <!--Header - Products-->
+            <include
+                layout="@layout/order_products"
+                tools:ignore="ResourceCycle" />
+            <!--End of Products-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <!--Header - Shipping -->
+            <include
+                layout="@layout/order_shipping"
+                tools:ignore="ResourceCycle" />
+            <!--End of Payment Method-->
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
