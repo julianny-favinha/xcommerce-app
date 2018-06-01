@@ -110,5 +110,8 @@
     <string name="cart_o_de_cr_dito">Cartão de Crédito</string>
     <string name="compra_efetuada_com_sucesso">Compra efetuada com sucesso</string>
     <string name="produtos_comprados">Produtos Comprados</string>
+
+    <string name="unit">unidade</string>
+    <string name="units">unidades</string>
 </resources>
 

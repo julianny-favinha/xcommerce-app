@@ -28,10 +28,10 @@ class CompletedPurchaseActivity: AppCompatActivity() {
     private fun isSuccessful(): Boolean {
         return true
     }
-    private fun getSubtotal(cart : List<CartItem>): Int {
+    private fun getSubtotal(cart: List<CartItem>): Int {
         var total = 0
 
-        for(i in cart.indices){
+        for(i in cart.indices) {
             total += (cart[i].quantity*cart[i].product.price)
         }
 
@@ -44,7 +44,7 @@ class CompletedPurchaseActivity: AppCompatActivity() {
 
     private fun getPaymentType(): String {
         return "Boleto"
-        // return "Cartão"
+        //return "Cartão de crédito"
     }
 
     private fun getBoletoInfo(price: Int): Pair<String, String> {
@@ -155,10 +155,10 @@ class CompletedPurchaseActivity: AppCompatActivity() {
             val newView = convertView
                     ?: LayoutInflater.from(context).inflate(R.layout.adapter_cart_view_completed, parent, false)
 
-            if(quantity > 1){
-                newView.note_item_quantidade.text = "unidades"
+            if (quantity > 1) {
+                newView.note_item_quantidade.text = R.string.units.toString()
             } else {
-                newView.note_item_quantidade.text = "unidade"
+                newView.note_item_quantidade.text = R.string.unit.toString()
             }
 
             newView.note_item_name.text = product.name
