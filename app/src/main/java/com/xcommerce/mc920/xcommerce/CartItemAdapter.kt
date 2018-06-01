@@ -21,9 +21,9 @@ class CartItemAdapter(context: Context, cartItems: List<CartItem>): ArrayAdapter
                 ?: LayoutInflater.from(context).inflate(R.layout.adapter_cart_item, parent, false)
 
         if (quantity > 1) {
-            newView.note_item_quantidade.text = "unidades"
+            newView.note_item_quantidade.text = context.getString(R.string.units_product)
         } else {
-            newView.note_item_quantidade.text = "unidade"
+            newView.note_item_quantidade.text = context.getString(R.string.unit_product)
         }
 
         newView.note_item_name.text = product.name
