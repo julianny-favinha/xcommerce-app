@@ -17,6 +17,7 @@ import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.CartItem
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
+import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import kotlinx.android.synthetic.main.adapter_cart_view_completed.view.*
 import kotlinx.android.synthetic.main.content_completed_purchase.*
@@ -70,38 +71,6 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("copy", text)
         clipboard.primaryClip = clip
-    }
-
-    private fun setListViewHeightBasedOnItems(listView: ListView): Boolean {
-
-        val listAdapter = listView.adapter
-        if (listAdapter != null) {
-
-            val numberOfItems = listAdapter.count
-
-            // Get total height of all items.
-            var totalItemsHeight = 0
-            for (itemPos in 0 until numberOfItems) {
-                val item = listAdapter.getView(itemPos, null, listView)
-                item.measure(0, 0)
-                totalItemsHeight += item.measuredHeight
-            }
-
-            // Get total height of all item dividers.
-            val totalDividersHeight = listView.dividerHeight * (numberOfItems - 1)
-
-            // Set list height.
-            val params = listView.layoutParams
-            params.height = totalItemsHeight + totalDividersHeight
-            listView.layoutParams = params
-            listView.requestLayout()
-
-            return true
-
-        } else {
-            return false
-        }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -164,7 +133,7 @@ class CompletedPurchaseActivity: AppCompatActivity() {
             // --- resumo da compra ---
             val adapter = CompletedCartViewAdapter(this, cartItems)
             list_view_completed.adapter = adapter
-            setListViewHeightBasedOnItems(list_view_completed)
+            UIUtils.setListViewHeightBasedOnItems(list_view_completed)
 
             findViewById<TextView>(R.id.price_ship).apply { text = formatMoney(shipmentPrice) }
             findViewById<TextView>(R.id.price_cart).apply { text = formatMoney(subtotal) }
