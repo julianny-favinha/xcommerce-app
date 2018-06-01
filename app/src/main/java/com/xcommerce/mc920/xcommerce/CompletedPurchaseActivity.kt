@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.CartItem
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
@@ -21,13 +22,12 @@ import kotlinx.android.synthetic.main.adapter_cart_view_completed.view.*
 import kotlinx.android.synthetic.main.content_completed_purchase.*
 
 
-class CompletedPurchaseActivity : AppCompatActivity() {
+class CompletedPurchaseActivity: AppCompatActivity() {
 
-    private fun isSuccessful() : Boolean{
+    private fun isSuccessful(): Boolean {
         return true
-        //return false
     }
-    private fun getSubtotal(cart : List<CartItem>) : Int{
+    private fun getSubtotal(cart : List<CartItem>): Int {
         var total = 0
 
         for(i in cart.indices){
@@ -37,98 +37,33 @@ class CompletedPurchaseActivity : AppCompatActivity() {
         return total
     }
 
-    private fun getShipmentPrice() : Int{
+    private fun getShipmentPrice(): Int {
         return 1499
     }
 
-    private fun getPaymentType() : String{
+    private fun getPaymentType(): String {
         return "Boleto"
         // return "Cartão"
     }
 
-    private fun getBoletoInfo(price: Int) : Pair<String, String>{
+    private fun getBoletoInfo(price: Int): Pair<String, String> {
         return Pair("34191790010104351004791020150008775410026000", "01/07/2018")
     }
 
-    private fun getCardEnd() : String{
+    private fun getCardEnd(): String {
         return "3419"
     }
 
-    private fun getParcelas() : Pair<String, String>{
+    private fun getParcelas(): Pair<String, String> {
         return Pair("3", "1499")
     }
 
-    private fun getShipmentInfo() : Pair<String, String>{
+    private fun getShipmentInfo(): Pair<String, String> {
         return Pair("SEDEX", "01/07/2018")
     }
 
-    private fun getAddressInfo() : Pair<String, String>{
+    private fun getAddressInfo(): Pair<String, String> {
         return Pair("13.214-717", "Rua Alceu de Toledo Pontes, 510")
-    }
-
-    private fun getCart() : List<CartItem>{
-        return listOf(
-                CartItem(Product(
-                        id=16,
-                        name="Sofá1",
-                        brand="Marca de um sofá",
-                        price=100,
-                        category = "Eletrodomésticos",
-                        description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                        imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png",
-                        weight = 1000,
-                        length = 10,
-                        width = 1000,
-                        height = 100), 10),
-                CartItem(Product(
-                        id=17,
-                        name="Sofá1",
-                        brand="Marca de um sofá",
-                        price=100,
-                        category = "Eletrodomésticos",
-                        description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                        imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png",
-                        weight = 1000,
-                        length = 10,
-                        width = 1000,
-                        height = 100), 10),
-                CartItem(Product(
-                        id=18,
-                        name="Sofá1",
-                        brand="Marca de um sofá",
-                        price=100,
-                        category = "Eletrodomésticos",
-                        description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                        imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png",
-                        weight = 1000,
-                        length = 10,
-                        width = 1000,
-                        height = 100), 10),
-                CartItem(Product(
-                        id=19,
-                        name="Sofá1",
-                        brand="Marca de um sofá",
-                        price=100,
-                        category = "Eletrodomésticos",
-                        description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                        imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png",
-                        weight = 1000,
-                        length = 10,
-                        width = 1000,
-                        height = 100), 10),
-                CartItem(Product(
-                        id=20,
-                        name="Sofá1",
-                        brand="Marca de um sofá",
-                        price=100,
-                        category = "Eletrodomésticos",
-                        description = "Sofá marrom de 2 lugares que abre para deitar. Ou seja, trata-se de um sofá-cama de 2 (dois) lugares.",
-                        imageUrl="http://www.ic.unicamp.br/~helio/imagens_inclinadas_png/neg_4.png",
-                        weight = 1000,
-                        length = 10,
-                        width = 1000,
-                        height = 100), 10))
-
     }
 
     private fun copyToClipboard(activity: Activity, text: String) {
@@ -173,7 +108,7 @@ class CompletedPurchaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_purchase)
 
-        val cartItems = getCart() // itens da compra
+        val cartItems = CartHelper.retrieveListCart() // itens da compra
 
         // dados mockados
         val subtotal = getSubtotal(cartItems)
@@ -182,7 +117,7 @@ class CompletedPurchaseActivity : AppCompatActivity() {
 
         val purchaseSucessful: Boolean = isSuccessful()
 
-        if(purchaseSucessful) {
+        if (purchaseSucessful) {
             completed_scroll_view.visibility = View.VISIBLE
             purchase_failed.visibility = View.GONE
 
@@ -266,6 +201,4 @@ class CompletedPurchaseActivity : AppCompatActivity() {
             return newView
         }
     }
-
-
 }
