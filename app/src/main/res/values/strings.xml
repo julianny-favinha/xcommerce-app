@@ -111,7 +111,8 @@
     <string name="compra_efetuada_com_sucesso">Compra efetuada com sucesso</string>
     <string name="produtos_comprados">Produtos Comprados</string>
 
-    <string name="unit">unidade</string>
-    <string name="units">unidades</string>
+    <string name="unit_product">unidade</string>
+    <string name="units_product">unidades</string>
+    <string name="copy_boleto_number">Número de Boleto copiado.</string>
 </resources>
 

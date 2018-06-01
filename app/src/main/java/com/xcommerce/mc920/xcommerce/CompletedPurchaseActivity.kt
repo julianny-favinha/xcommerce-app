@@ -24,23 +24,94 @@ import kotlinx.android.synthetic.main.content_completed_purchase.*
 
 
 class CompletedPurchaseActivity: AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_completed_purchase)
 
+        // TODO: receber intent
+
+        val cartItems = CartHelper.retrieveListCart() // itens da compra
+
+        // dados mockados
+        val total = 0
+
+        val purchaseSuccessful: Boolean = isSuccessful()
+
+        if (purchaseSuccessful) {
+            completed_scroll_view.visibility = View.VISIBLE
+            purchase_failed.visibility = View.GONE
+
+            // método de pagamento
+            val paymentType = getPaymentType() // Boleto ou Cartao
+
+            if (paymentType == "Boleto") {
+                val (boletoNumber, vencimento) = getBoletoInfo(total)
+                boleto_vencimento_date.text = vencimento
+                boleto_number.text = boletoNumber
+
+                card_view_payment_boleto.visibility = View.VISIBLE
+                card_view_payment_card.visibility = View.GONE
+
+                button_copy.setOnClickListener{
+                    copyToClipboard(this, boletoNumber)
+
+                    val duration = Toast.LENGTH_SHORT
+                    val toast = Toast.makeText(applicationContext, R.string.copy_boleto_number, duration)
+                    toast.show()
+                }
+
+            } else { // Pagamento por Cartão
+                val cardEnd = getCardEnd()
+                card_end.text = cardEnd
+
+                val (parcelaNum, parcelaValue) = getParcelas()
+                val parcelas = parcelaNum + "x " + formatMoney(parcelaValue.toInt())
+                card_parcelas.text = parcelas
+
+                card_view_payment_card.visibility = View.VISIBLE
+                card_view_payment_boleto.visibility = View.GONE
+            }
+
+            // --- entrega ---
+            val (shipmentType, prazo) = getShipmentInfo() // SEDEX ou PAC
+            ship_type.text = shipmentType
+            ship_date.text = prazo
+
+            val (cep, address) = getAddressInfo()
+            ship_address.text = address
+            ship_cep.text = cep
+
+            // --- resumo da compra ---
+            val adapter = CompletedCartViewAdapter(this, cartItems)
+            list_view_completed.adapter = adapter
+            UIUtils.setListViewHeightBasedOnItems(list_view_completed)
+
+            price_total.text = formatMoney(total)
+
+        } else {
+            completed_scroll_view.visibility = View.GONE
+            purchase_failed.visibility = View.VISIBLE
+        }
+    }
+
+    // TODO: definir o que é isSuccessful"
     private fun isSuccessful(): Boolean {
         return true
     }
-    private fun getSubtotal(cart: List<CartItem>): Int {
-        var total = 0
 
-        for(i in cart.indices) {
-            total += (cart[i].quantity*cart[i].product.price)
-        }
-
-        return total
-    }
-
-    private fun getShipmentPrice(): Int {
-        return 1499
-    }
+//    private fun getSubtotal(cart: List<CartItem>): Int {
+//        var total = 0
+//
+//        for(i in cart.indices) {
+//            total += (cart[i].quantity*cart[i].product.price)
+//        }
+//
+//        return total
+//    }
+//
+//    private fun getShipmentPrice(): Int {
+//        return 1499
+//    }
 
     private fun getPaymentType(): String {
         return "Boleto"
@@ -73,79 +144,7 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         clipboard.primaryClip = clip
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed_purchase)
-
-        val cartItems = CartHelper.retrieveListCart() // itens da compra
-
-        // dados mockados
-        val subtotal = getSubtotal(cartItems)
-        val shipmentPrice = getShipmentPrice() // preço de frete
-        val total = subtotal + shipmentPrice
-
-        val purchaseSucessful: Boolean = isSuccessful()
-
-        if (purchaseSucessful) {
-            completed_scroll_view.visibility = View.VISIBLE
-            purchase_failed.visibility = View.GONE
-
-            // método de pagamento
-            val paymentType = getPaymentType() // Boleto ou Cartao
-
-            if (paymentType == "Boleto") {
-                val (boletoNumber, vencimento) = getBoletoInfo(total)
-                findViewById<TextView>(R.id.boleto_vencimento_date).apply { text = vencimento }
-                findViewById<TextView>(R.id.boleto_number).apply { text = boletoNumber }
-
-                card_view_payment_boleto.visibility = View.VISIBLE
-                card_view_payment_card.visibility = View.GONE
-
-                button_copy.setOnClickListener{
-                    copyToClipboard(this, boletoNumber)
-
-                    val duration = Toast.LENGTH_SHORT
-                    val toast = Toast.makeText(applicationContext, "Número de Boleto copiado.", duration)
-                    toast.show()
-                }
-
-            } else { // Pagamento por Cartão
-                val cardEnd = getCardEnd()
-                findViewById<TextView>(R.id.card_end).apply { text = cardEnd }
-
-                val (parcelaNum, parcelaValue) = getParcelas()
-                val parcelas = parcelaNum + "x " + formatMoney(parcelaValue.toInt())
-                findViewById<TextView>(R.id.card_parcelas).apply { text = parcelas }
-
-                card_view_payment_card.visibility = View.VISIBLE
-                card_view_payment_boleto.visibility = View.GONE
-            }
-
-            // --- entrega ---
-            val (shipmentType, prazo) = getShipmentInfo() // SEDEX ou PAC
-            findViewById<TextView>(R.id.ship_type).apply { text = shipmentType }
-            findViewById<TextView>(R.id.ship_date).apply { text = prazo }
-
-            val (cep, address) = getAddressInfo()
-            findViewById<TextView>(R.id.ship_address).apply { text = address }
-            findViewById<TextView>(R.id.ship_cep).apply { text = cep }
-
-            // --- resumo da compra ---
-            val adapter = CompletedCartViewAdapter(this, cartItems)
-            list_view_completed.adapter = adapter
-            UIUtils.setListViewHeightBasedOnItems(list_view_completed)
-
-            findViewById<TextView>(R.id.price_ship).apply { text = formatMoney(shipmentPrice) }
-            findViewById<TextView>(R.id.price_cart).apply { text = formatMoney(subtotal) }
-            findViewById<TextView>(R.id.price_total).apply { text = formatMoney(total) }
-
-        } else {
-            completed_scroll_view.visibility = View.GONE
-            purchase_failed.visibility = View.VISIBLE
-        }
-    }
-
-    inner class CompletedCartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapter<CartItem>(context, 0, cartItems) {
+    inner class CompletedCartViewAdapter(context: Context, cartItems: List<CartItem>): ArrayAdapter<CartItem>(context, 0, cartItems) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val cartItem= getItem(position)
 
@@ -156,9 +155,9 @@ class CompletedPurchaseActivity: AppCompatActivity() {
                     ?: LayoutInflater.from(context).inflate(R.layout.adapter_cart_view_completed, parent, false)
 
             if (quantity > 1) {
-                newView.note_item_quantidade.text = R.string.units.toString()
+                newView.note_item_quantidade.text = "unidades"
             } else {
-                newView.note_item_quantidade.text = R.string.unit.toString()
+                newView.note_item_quantidade.text = "unidade"
             }
 
             newView.note_item_name.text = product.name

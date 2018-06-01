@@ -143,6 +143,7 @@ class CheckoutActivity : AppCompatActivity() {
         // finish shopping
         checkout_button.setOnClickListener{
             val intent = Intent(this, CompletedPurchaseActivity::class.java)
+            // TODO: enviar endereço, método de entrega (PAC ou Sedex), Método de pagamento (Boleto ou cartão), valor total da compra
             startActivity(intent)
         }
     }
