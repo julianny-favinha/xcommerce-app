@@ -55,6 +55,10 @@
             android:label="@string/title_activity_checkout"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".CompletedPurchaseActivity"
+            android:label="@string/title_completed_purchase"
+            android:parentActivityName=".checkout.CheckoutActivity" />
+        <activity
             android:name=".cart.OldCartActivity"
             android:label="@string/title_activity_cart"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -74,10 +78,6 @@
             android:name=".cart.CartActivity"
             android:label="@string/title_activity_cart"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".CompletedPurchaseActivity"
-            android:label="@string/title_completed_purchase"
-            android:parentActivityName=".MainActivity" /> <!-- TODO: alterar parent -->
     </application>
 
 </manifest>
