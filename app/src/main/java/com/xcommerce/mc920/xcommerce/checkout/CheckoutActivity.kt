@@ -33,16 +33,15 @@ class CheckoutActivity : AppCompatActivity() {
         const val RETURN_CODE = 1
     }
 
-    var products: List<Product> = emptyList()
     private var task: ShipmentPriceFetchTask? = null
 
-    var shipmentPrices: Map<String, Int> = emptyMap()
+    private var shipmentPrices: Map<String, Int> = emptyMap()
 
     var subtotal: Int = 0
     var shipment: Int = 0
     var total: Int = 0
 
-    var parcelas: MutableList<String> = mutableListOf()
+    private var parcelas: MutableList<String> = mutableListOf()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RETURN_CODE && resultCode == Activity.RESULT_OK) {
@@ -56,10 +55,13 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun populateAddress(address: AddressFull) {
-        val complemento = if (address.complement != "") "Complemento " + address.complement else ""
-        address_text_view_logradouro.text = address.address.logradouro + ", " + address.number + " " + complemento
+        val complemento = (if (address.complement != "") "Complemento " + address.complement else "")
+        val logradouro = address.address.logradouro + ", " + address.number + " " + complemento
+        val cityState = address.address.city + ", " + address.address.state
+
+        address_text_view_logradouro.text = logradouro
         address_text_view_neighborhood.text = address.address.neighborhood
-        address_text_view_city_state.text = address.address.city + ", " + address.address.state
+        address_text_view_city_state.text = cityState
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +89,12 @@ class CheckoutActivity : AppCompatActivity() {
         val shipIn = ShipmentIn(shipmentProducts, user.cep)
         task = ShipmentPriceFetchTask(this)
         task?.execute(shipIn)
+
+        if (isTaskRunning(task)) {
+            showShipmentOptionsProgressBar()
+        } else {
+            hideShipmentOptionsProgressBar()
+        }
 
         // set list of products adapter
         val products = cart.map { it.product }
@@ -142,7 +150,7 @@ class CheckoutActivity : AppCompatActivity() {
     private fun spinnerAdapter() {
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, parcelas)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        credit_card_spinner!!.setAdapter(aa)
+        credit_card_spinner!!.adapter = aa
         credit_card_spinner!!.setSelection(0, true)
     }
 
@@ -161,6 +169,8 @@ class CheckoutActivity : AppCompatActivity() {
         populateShipment()
         populateSubtotal()
         populateTotal()
+
+        hideShipmentOptionsProgressBar()
 
         Log.d("Calculate shipment", prices.toString())
     }
@@ -195,4 +205,13 @@ class CheckoutActivity : AppCompatActivity() {
         return task?.status != AsyncTask.Status.FINISHED
     }
 
+    fun showShipmentOptionsProgressBar() {
+        progress_bar_shipment_options.visibility = View.VISIBLE
+        linear_layout_shipment_options.visibility = View.GONE
+    }
+
+    fun hideShipmentOptionsProgressBar() {
+        progress_bar_shipment_options.visibility = View.GONE
+        linear_layout_shipment_options.visibility = View.VISIBLE
+    }
 }
