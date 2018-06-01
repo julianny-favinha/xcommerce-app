@@ -6,22 +6,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
-import com.xcommerce.mc920.xcommerce.model.CartItem
-import com.xcommerce.mc920.xcommerce.model.Product
-import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
-import kotlinx.android.synthetic.main.adapter_cart_view_completed.view.*
 import kotlinx.android.synthetic.main.content_completed_purchase.*
-
 
 class CompletedPurchaseActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +72,7 @@ class CompletedPurchaseActivity: AppCompatActivity() {
             ship_cep.text = cep
 
             // --- resumo da compra ---
-            val adapter = CompletedCartViewAdapter(this, cartItems)
+            val adapter = CartItemAdapter(this, cartItems)
             list_view_completed.adapter = adapter
             UIUtils.setListViewHeightBasedOnItems(list_view_completed)
 
@@ -144,29 +134,29 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         clipboard.primaryClip = clip
     }
 
-    inner class CompletedCartViewAdapter(context: Context, cartItems: List<CartItem>): ArrayAdapter<CartItem>(context, 0, cartItems) {
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val cartItem= getItem(position)
-
-            val product = cartItem.product
-            val quantity = cartItem.quantity
-
-            val newView = convertView
-                    ?: LayoutInflater.from(context).inflate(R.layout.adapter_cart_view_completed, parent, false)
-
-            if (quantity > 1) {
-                newView.note_item_quantidade.text = "unidades"
-            } else {
-                newView.note_item_quantidade.text = "unidade"
-            }
-
-            newView.note_item_name.text = product.name
-            newView.note_item_val.text = quantity.toString()
-            newView.note_item_price.text = formatMoney(product.price)
-            product.imageUrl?.let { DownloadImageTask(newView.note_item_image).execute(product.imageUrl) }
-                    ?: newView.note_item_image.setImageResource(R.drawable.image_noimage)
-
-            return newView
-        }
-    }
+//    inner class CompletedCartViewAdapter(context: Context, cartItems: List<CartItem>): ArrayAdapter<CartItem>(context, 0, cartItems) {
+//        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+//            val cartItem= getItem(position)
+//
+//            val product = cartItem.product
+//            val quantity = cartItem.quantity
+//
+//            val newView = convertView
+//                    ?: LayoutInflater.from(context).inflate(R.layout.adapter_cart_item, parent, false)
+//
+//            if (quantity > 1) {
+//                newView.note_item_quantidade.text = "unidades"
+//            } else {
+//                newView.note_item_quantidade.text = "unidade"
+//            }
+//
+//            newView.note_item_name.text = product.name
+//            newView.note_item_val.text = quantity.toString()
+//            newView.note_item_price.text = formatMoney(product.price)
+//            product.imageUrl?.let { DownloadImageTask(newView.note_item_image).execute(product.imageUrl) }
+//                    ?: newView.note_item_image.setImageResource(R.drawable.image_noimage)
+//
+//            return newView
+//        }
+//    }
 }

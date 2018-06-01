@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import com.xcommerce.mc920.xcommerce.CartItemAdapter
 import com.xcommerce.mc920.xcommerce.CompletedPurchaseActivity
 import com.xcommerce.mc920.xcommerce.user.AddressActivity
 import com.xcommerce.mc920.xcommerce.R
@@ -97,8 +98,7 @@ class CheckoutActivity : AppCompatActivity() {
         }
 
         // set list of products adapter
-        val products = cart.map { it.product }
-        val adapter = CheckoutSummaryProductsAdapter(this, products)
+        val adapter = CartItemAdapter(this, cart)
         checkout_list_products.adapter = adapter
         UIUtils.setListViewHeightBasedOnItems(checkout_list_products)
 
