@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_items">
+        <item>1x de </item>
+        <item>2x de </item>
+        <item>3x de</item>
+        <item>4x de</item>
+    </string-array>
+</resources>

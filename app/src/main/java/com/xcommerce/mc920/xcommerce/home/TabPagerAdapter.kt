@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter
 import com.xcommerce.mc920.xcommerce.categories.CategoriesFragment
 import com.xcommerce.mc920.xcommerce.home.highlights.HighlightsFragment
 
-
 class TabPagerAdapter(fm: FragmentManager, private var tabCount: Int) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment? {
         return when (position) {

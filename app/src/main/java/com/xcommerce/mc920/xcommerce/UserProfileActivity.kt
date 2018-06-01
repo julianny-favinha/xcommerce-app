@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toolbar
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 
 class UserProfileActivity : AppCompatActivity() {
@@ -19,7 +18,7 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val usr = UserHelper.retrieveUser()
+        val usr = UserHelper.retrieveNullableUser()
         if (usr != null){
             findViewById<TextView>(R.id.name).apply { text = usr.name }
             findViewById<TextView>(R.id.email).apply { text = usr.email }

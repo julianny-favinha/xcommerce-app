@@ -31,25 +31,28 @@ class CategoriesFragment : Fragment() {
         task = CategoriesFetchTask(this)
         task?.execute()
 
-        if(isTaskRunning(task)){
+        if (isTaskRunning(task)){
             showProgressBar()
         } else {
             hideProgressBar()
         }
 
-        if(categories.isNotEmpty()) {
-            populateResult(categories)
+        if (categories.isNotEmpty()) {
+            populateResult(categories.sortedBy({selector(it)}))
         }
 
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun showProgressBar(){
+    // function to sort categories by name
+    fun selector(c: Category): String = c.name
+
+    fun showProgressBar() {
         progressbar.visibility = View.VISIBLE
         recycler_view_categories.visibility = View.GONE
     }
 
-    fun hideProgressBar(){
+    fun hideProgressBar() {
         progressbar.visibility = View.GONE
         recycler_view_categories.visibility = View.VISIBLE
     }
@@ -65,5 +68,4 @@ class CategoriesFragment : Fragment() {
     private fun isTaskRunning(task: CategoriesFetchTask?): Boolean {
         return task?.status != AsyncTask.Status.FINISHED
     }
-
 }

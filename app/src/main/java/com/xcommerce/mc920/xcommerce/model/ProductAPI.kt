@@ -5,6 +5,10 @@ class ProductAPI {
         const val PATH = "/product/highlights"
     }
 
+    object Search {
+        const val PATH = "/product/search"
+    }
+
     object Categories {
         const val PATH = "/category/"
     }

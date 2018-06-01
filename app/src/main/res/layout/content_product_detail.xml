@@ -21,7 +21,7 @@
                 android:id="@+id/product_detail_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8sp"
+                android:padding="10sp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/image_placeholder"
                 android:contentDescription="@string/text_description_photo" />
@@ -32,8 +32,9 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 tools:text="Código" />
+
 
             <TextView
                 android:id="@+id/product_detail_price"
@@ -86,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:text="@string/category"
                 tools:text="Categoria" />
 
@@ -96,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 tools:text="Categoria texto" />
 
             <Space
@@ -109,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:text="@string/description"
                 tools:text="Descrição" />
 
@@ -119,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 tools:text="Descrição texto" />
 
             <Space

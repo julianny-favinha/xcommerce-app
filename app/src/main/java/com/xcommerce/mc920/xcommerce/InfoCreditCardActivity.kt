@@ -5,8 +5,7 @@ import android.support.v7.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_info_credit_card.*
 import android.content.Intent
-import android.view.View
-import com.xcommerce.mc920.xcommerce.R.id.toolbar
+import com.xcommerce.mc920.xcommerce.checkout.CheckoutActivity
 import kotlinx.android.synthetic.main.content_info_credit_card.*
 
 
