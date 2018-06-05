@@ -18,8 +18,8 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val usr = UserHelper.retrieveNullableUser()
-        if (usr != null){
+        if (UserHelper.isLoggedIn()){
+            val usr = UserHelper.retrieveUser()
             findViewById<TextView>(R.id.name).apply { text = usr.name }
             findViewById<TextView>(R.id.email).apply { text = usr.email }
             findViewById<TextView>(R.id.cpf).apply { text = usr.cpf }

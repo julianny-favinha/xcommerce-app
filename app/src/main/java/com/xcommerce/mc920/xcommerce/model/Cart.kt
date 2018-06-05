@@ -20,7 +20,7 @@ class Cart {
         task?.execute()
     }
 
-    fun sub(product: Product, quantity: Int, task: CartActivity.UnreserveTask) {
+    fun sub(product: Product, quantity: Int, task: CartActivity.ReleaseTask?) {
         if(!cartItemMap.containsKey(product)) throw IllegalStateException("Product not found in cart!")
         val currentQuantity = cartItemMap[product]!!
 
@@ -35,7 +35,7 @@ class Cart {
         totalPrice -= product.price * quantity
         totalQuantity -= quantity
 
-        //TODO: Add task for unreserve
+        task?.execute()
     }
 
     fun remove(product: Product) {

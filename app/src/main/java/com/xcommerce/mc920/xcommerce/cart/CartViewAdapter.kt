@@ -37,7 +37,7 @@ class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapte
 
         newView.btn_inc.setOnClickListener {
             Toast.makeText(context, "Quantidade atualizada.", Toast.LENGTH_SHORT).show()
-            CartHelper.retrieveCart().add(product, 1)
+            CartHelper.retrieveCart().add(product, 1, ReserveTask(CartItem(product,1)))
             newView.note_item_val.text = CartHelper.retrieveProduct(product)!!.quantity.toString()
             totalValue.text = formatMoney(CartHelper.retrieveCart().totalPrice)
             Log.d("[CART]", CartHelper.retrieveCart().cartItemMap.toString())
@@ -46,7 +46,7 @@ class CartViewAdapter(context: Context, cartItems: List<CartItem>) : ArrayAdapte
         newView.btn_dec.setOnClickListener {
             if (CartHelper.retrieveCart().isPositive(product)) {
                 Toast.makeText(context, "Quantidade atualizada.", Toast.LENGTH_SHORT).show()
-                CartHelper.retrieveCart().sub(product, 1)
+                CartHelper.retrieveCart().sub(product, 1, ReleaseTask(CartItem(product, 1)))
                 newView.note_item_val.text = CartHelper.retrieveProduct(product)!!.quantity.toString()
                 totalValue.text = formatMoney(CartHelper.retrieveCart().totalPrice)
                 Log.d("[CART]", CartHelper.retrieveCart().cartItemMap.toString())

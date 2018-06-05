@@ -79,8 +79,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        val usr = UserHelper.retrieveNullableUser()
-        if (usr != null){
+        if (UserHelper.isLoggedIn()){
+            val usr = UserHelper.retrieveUser()
             findViewById<TextView>(R.id.nav_header_name).apply { text = usr.name }
             findViewById<TextView>(R.id.nav_header_email).apply { text = usr.email }
         } else {

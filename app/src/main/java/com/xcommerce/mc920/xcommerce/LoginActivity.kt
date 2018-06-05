@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (UserHelper.retrieveNullableUser() != null){
+        if (UserHelper.isLoggedIn()){
             finish()
         }
     }

@@ -49,7 +49,7 @@ class CartActivity : AppCompatActivity() {
 
         // next button clicked
         cart_button_next.setOnClickListener {
-            if (UserHelper.retrieveNullableUser() == null) {
+            if (!UserHelper.isLoggedIn()) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             } else {
@@ -59,18 +59,4 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    inner class ReserveTask internal constructor(val cartItem: CartItem) : AsyncTask<Void, Void, Boolean>() {
-
-        override fun doInBackground(vararg p0: Void?): Boolean {
-            return ClientHttpUtil.postRequest(ProductAPI.Reserve.PATH, cartItem) ?: false
-        }
-
-        override fun onPostExecute(result: Boolean?) {
-            super.onPostExecute(result)
-
-            if (result == false){
-                CartHelper.retrieveCart().sub(cartItem.product, cartItem.quantity, null)
-            }
-        }
-    }
 }

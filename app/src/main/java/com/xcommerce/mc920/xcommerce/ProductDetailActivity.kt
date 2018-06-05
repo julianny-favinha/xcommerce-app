@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.xcommerce.mc920.xcommerce.cart.CartActivity
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
+import com.xcommerce.mc920.xcommerce.cart.ReserveTask
+import com.xcommerce.mc920.xcommerce.model.CartItem
 import com.xcommerce.mc920.xcommerce.model.Product
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
@@ -32,7 +35,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
         if (product is Product) {
             fab.setOnClickListener { _ ->
-                CartHelper.retrieveCart().add(product, 1)
+                CartHelper.retrieveCart().add(product, 1, ReserveTask(CartItem(product, 1)))
                 finish()
             }
 
