@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import com.xcommerce.mc920.xcommerce.CartItemAdapter
+import com.xcommerce.mc920.xcommerce.CompletedPurchaseActivity
 import com.xcommerce.mc920.xcommerce.user.AddressActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
@@ -32,16 +34,15 @@ class CheckoutActivity : AppCompatActivity() {
         const val RETURN_CODE = 1
     }
 
-    var products: List<Product> = emptyList()
     private var task: ShipmentPriceFetchTask? = null
 
-    var shipmentPrices: Map<String, Int> = emptyMap()
+    private var shipmentPrices: Map<String, Int> = emptyMap()
 
     var subtotal: Int = 0
     var shipment: Int = 0
     var total: Int = 0
 
-    var parcelas: MutableList<String> = mutableListOf()
+    private var parcelas: MutableList<String> = mutableListOf()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RETURN_CODE && resultCode == Activity.RESULT_OK) {
@@ -55,10 +56,13 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun populateAddress(address: AddressFull) {
-        val complemento = if (address.complement != "") "Complemento " + address.complement else ""
-        address_text_view_logradouro.text = address.address.logradouro + ", " + address.number + " " + complemento
+        val complemento = (if (address.complement != "") "Complemento " + address.complement else "")
+        val logradouro = address.address.logradouro + ", " + address.number + " " + complemento
+        val cityState = address.address.city + ", " + address.address.state
+
+        address_text_view_logradouro.text = logradouro
         address_text_view_neighborhood.text = address.address.neighborhood
-        address_text_view_city_state.text = address.address.city + ", " + address.address.state
+        address_text_view_city_state.text = cityState
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,9 +91,14 @@ class CheckoutActivity : AppCompatActivity() {
         task = ShipmentPriceFetchTask(this)
         task?.execute(shipIn)
 
+        if (isTaskRunning(task)) {
+            showShipmentOptionsProgressBar()
+        } else {
+            hideShipmentOptionsProgressBar()
+        }
+
         // set list of products adapter
-        val products = cart.map { it.product }
-        val adapter = CheckoutSummaryProductsAdapter(this, products)
+        val adapter = CartItemAdapter(this, cart)
         checkout_list_products.adapter = adapter
         UIUtils.setListViewHeightBasedOnItems(checkout_list_products)
 
@@ -133,14 +142,16 @@ class CheckoutActivity : AppCompatActivity() {
 
         // finish shopping
         checkout_button.setOnClickListener{
-
+            val intent = Intent(this, CompletedPurchaseActivity::class.java)
+            // TODO: enviar endereço, método de entrega (PAC ou Sedex), Método de pagamento (Boleto ou cartão), valor total da compra
+            startActivity(intent)
         }
     }
 
     private fun spinnerAdapter() {
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, parcelas)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        credit_card_spinner!!.setAdapter(aa)
+        credit_card_spinner!!.adapter = aa
         credit_card_spinner!!.setSelection(0, true)
     }
 
@@ -159,6 +170,8 @@ class CheckoutActivity : AppCompatActivity() {
         populateShipment()
         populateSubtotal()
         populateTotal()
+
+        hideShipmentOptionsProgressBar()
 
         Log.d("Calculate shipment", prices.toString())
     }
@@ -193,4 +206,13 @@ class CheckoutActivity : AppCompatActivity() {
         return task?.status != AsyncTask.Status.FINISHED
     }
 
+    fun showShipmentOptionsProgressBar() {
+        progress_bar_shipment_options.visibility = View.VISIBLE
+        linear_layout_shipment_options.visibility = View.GONE
+    }
+
+    fun hideShipmentOptionsProgressBar() {
+        progress_bar_shipment_options.visibility = View.GONE
+        linear_layout_shipment_options.visibility = View.VISIBLE
+    }
 }
