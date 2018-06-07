@@ -12,7 +12,13 @@ class MyOrdersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_orders)
         setSupportActionBar(toolbar)
-
+        
+        // back button
+        this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }
