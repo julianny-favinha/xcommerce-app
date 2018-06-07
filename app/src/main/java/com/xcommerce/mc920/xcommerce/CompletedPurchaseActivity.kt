@@ -22,22 +22,6 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_purchase)
 
-        // recebe intent de delivery
-        val delivery = intent.getSerializableExtra("delivery")
-        if (delivery is Delivery) {
-            ship_type.text = delivery.type
-            val prazoString = delivery.prazo.toString() + utilDays(delivery.prazo)
-            ship_date.text = prazoString
-        }
-
-        // recebe intent de endereco
-        val address = intent.getSerializableExtra("address")
-        if (address is AddressFull) {
-            populateAddress(address)
-        }
-
-        val cartItems = CartHelper.retrieveListCart() // itens da compra
-
         // dados mockados
         val total = 0
 
@@ -46,6 +30,22 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         if (purchaseSuccessful) {
             completed_scroll_view.visibility = View.VISIBLE
             purchase_failed.visibility = View.GONE
+
+            // recebe intent de delivery
+            val delivery = intent.getSerializableExtra("delivery")
+            if (delivery is Delivery) {
+                ship_type.text = delivery.type
+                val prazoString = delivery.prazo.toString() + utilDays(delivery.prazo)
+                ship_date.text = prazoString
+            }
+
+            // recebe intent de endereco
+            val address = intent.getSerializableExtra("address")
+            if (address is AddressFull) {
+                populateAddress(address)
+            }
+
+            val cartItems = CartHelper.retrieveListCart() // itens da compra
 
             // método de pagamento
             val paymentType = getPaymentType() // Boleto ou Cartao
