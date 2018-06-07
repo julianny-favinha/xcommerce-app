@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.provider.Telephony
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -37,6 +38,8 @@ class CheckoutActivity : AppCompatActivity() {
     private var shipmentPrices: Map<String, Int> = emptyMap()
     private var shipmentPrazos: Map<String, Int> = emptyMap()
 
+    private var address: AddressFull? = null
+
     var subtotal: Int = 0
     var shipment: Int = 0
     var total: Int = 0
@@ -49,6 +52,7 @@ class CheckoutActivity : AppCompatActivity() {
             val address = data?.getSerializableExtra("address")
 
             if (address is AddressFull) {
+                this.address = address
                 populateAddress(address)
             }
         }
@@ -147,6 +151,9 @@ class CheckoutActivity : AppCompatActivity() {
             // delivery
             intent.putExtra("delivery", getDelivery())
 
+            // address
+            intent.putExtra("address", getAddress())
+
             startActivity(intent)
         }
     }
@@ -157,6 +164,10 @@ class CheckoutActivity : AppCompatActivity() {
         }
 
         return Delivery("Sedex", shipmentPrices["Sedex"]!!, shipmentPrazos["Sedex"]!!)
+    }
+
+    private fun getAddress(): AddressFull {
+        return address!!
     }
 
     private fun spinnerAdapter() {

@@ -299,17 +299,22 @@
                         android:text="@string/endere_o_de_entrega"/>
 
                     <TextView
-                        android:id="@+id/ship_address"
+                        android:id="@+id/ship_logradouro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/ship_cep"
+                        android:id="@+id/ship_neighborhood"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"/>
 
+                    <TextView
+                        android:id="@+id/ship_city_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
