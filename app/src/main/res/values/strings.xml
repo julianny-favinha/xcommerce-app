@@ -86,12 +86,15 @@
     <string name="checkout_summary">Revisão do pedido</string>
     <string name="subtotal">Subtotal de produtos</string>
     <string name="shipment">Frete</string>
+    <string name="title_activity_my_orders">Meus pedidos</string>
 
     <string name="year">Ano</string>
     <string name="month">Mês</string>
 
     <string name="no_results">Sem resultados.</string>
     <string name="no_items">Sem itens no carrinho.</string>
+    <string name="title_activity_order_detail">OrderDetailActivity</string>
+
     <string name="title_completed_purchase">Finalização de Pedido</string>
     <string name="erro_compra_n_o_efetuada">Erro: Compra não efetuada.</string>
     <string name="frete">Frete</string>

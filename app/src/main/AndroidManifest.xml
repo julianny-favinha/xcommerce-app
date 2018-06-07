@@ -75,9 +75,17 @@
             android:label="@string/action_edit_profile"
             android:parentActivityName=".UserProfileActivity" />
         <activity
+            android:name=".myorders.MyOrdersActivity"
+            android:label="@string/title_activity_my_orders"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".cart.CartActivity"
             android:label="@string/title_activity_cart"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".myorders.OrderDetailActivity"
+            android:label="@string/title_activity_order_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
