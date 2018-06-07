@@ -155,15 +155,25 @@ class CheckoutActivity : AppCompatActivity() {
         credit_card_spinner!!.setSelection(0, true)
     }
 
-    fun populateResult(prices: Map<String, Int>) {
+    fun populateResult(prices: Map<String, Int>, prazos: Map<String, Int>) {
         shipmentPrices = prices
 
-        val pacString = formatMoney(prices["PAC"]!!)
-        checkout_price_pac.text = pacString
-        val sedexString = formatMoney(prices["Sedex"]!!)
-        checkout_price_sedex.text = sedexString
+        val pricePacString = formatMoney(prices["PAC"]!!)
+        checkout_price_pac.text = pricePacString
+        val priceSedexString = formatMoney(prices["Sedex"]!!)
+        checkout_price_sedex.text = priceSedexString
+
+        val prazoPac = prazos["PAC"]!!
+        val prazoPacString = prazoPac.toString() + (if (prazoPac == 1) " dia útil" else "dias úteis")
+        checkout_prazo_pac.text = prazoPacString
+        val prazoSedex = prazos["Sedex"]!!
+        val prazoSedexString = prazoSedex.toString() + (if (prazoSedex == 1) " dia útil" else "dias úteis")
+        checkout_prazo_sedex.text = prazoSedexString
+
         checkout_price_pac.visibility = View.VISIBLE
         checkout_price_sedex.visibility = View.VISIBLE
+        checkout_prazo_pac.visibility = View.VISIBLE
+        checkout_prazo_sedex.visibility = View.VISIBLE
 
         shipment = if (checkout_pac.isChecked) prices["PAC"]!! else prices["Sedex"]!!
 

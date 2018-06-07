@@ -27,7 +27,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/product_order_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
@@ -49,7 +48,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/product_nitems_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
@@ -80,7 +78,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/product_date_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
@@ -102,7 +99,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/product_price_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
@@ -119,5 +115,3 @@
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
-
-

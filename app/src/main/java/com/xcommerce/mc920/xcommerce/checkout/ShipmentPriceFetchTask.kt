@@ -11,9 +11,9 @@ class ShipmentPriceFetchTask(private var container: CheckoutActivity?): AsyncTas
     override fun doInBackground(vararg p0: ShipmentIn): ShipmentOut {
         try {
             return ClientHttpUtil.postRequest(LogisticAPI.ShipmentPrice.PATH, p0.first())
-                    ?: ShipmentOut(emptyMap())
+                    ?: ShipmentOut(emptyMap(), emptyMap())
         } catch (e: Exception) {
-            return ShipmentOut(emptyMap())
+            return ShipmentOut(emptyMap(), emptyMap())
         }
     }
 
@@ -24,7 +24,7 @@ class ShipmentPriceFetchTask(private var container: CheckoutActivity?): AsyncTas
 
     override fun onPostExecute(result: ShipmentOut?) {
         super.onPostExecute(result)
-        if (result != null) container?.populateResult(result.prices)
+        if (result != null) container?.populateResult(result.prices, result.prazos)
         //container?.hideProgressBar()
         this.container = null
     }
