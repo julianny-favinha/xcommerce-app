@@ -12,6 +12,7 @@ import com.xcommerce.mc920.xcommerce.model.*
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_signup.*
+import org.w3c.dom.Text
 
 /**
  * A login screen that offers login via email/password.
@@ -55,7 +56,9 @@ class SignupActivity : AppCompatActivity() {
         val nameStr = name.text.toString()
         val cpfStr = cpf.text.toString()
         val cepStr = cep.text.toString()
-        val addressStr = address.text.toString()
+        val logradouroStr = logradouro.text.toString()
+        val neighborhoodStr = neighborhood.text.toString()
+        val cityStateStr = city_state.text.toString()
         val emailStr = email.text.toString()
         val passwordStr = password.text.toString()
         val checkPasswordStr = password_check.text.toString()
@@ -66,7 +69,7 @@ class SignupActivity : AppCompatActivity() {
             // Show a progress spinner, and kick off a background task to
             // perform the user signup attempt.
             showProgress(true)
-            mAuthTask = UserSignupTask(nameStr, cpfStr, cepStr, addressStr, emailStr, passwordStr, checkPasswordStr)
+            mAuthTask = UserSignupTask(nameStr, cpfStr, cepStr, logradouroStr, neighborhoodStr, cityStateStr, emailStr, passwordStr, checkPasswordStr)
             mAuthTask!!.execute(null as Void?)
         }
     }
@@ -150,17 +153,19 @@ class SignupActivity : AppCompatActivity() {
      * Repdresents an asynchronous registration task use to authenticate
      * the cep.
      */
-    inner class CepTask internal constructor(private val mCep: String) : AsyncTask<Void, Void, CEPAddress>() {
+    inner class CepTask internal constructor(private val mCep: String) : AsyncTask<Void, Void, Address>() {
 
-        override fun doInBackground(vararg params: Void): CEPAddress? {
-            return ClientHttpUtil.postRequest(CEPApi.CheckCEP.PATH, CEP(mCep))
+        override fun doInBackground(vararg params: Void): Address? {
+            return ClientHttpUtil.getRequest(AddressAPI.CheckCep.of(mCep))
         }
 
-        override fun onPostExecute(add: CEPAddress?) {
+        override fun onPostExecute(add: Address?) {
             mCepTask = null
 
-            if (add?.success == true){
-                if (TextUtils.isEmpty(address.text.toString())) {
+            if (add != null){
+                findViewById<TextView>(R.id.neighborhood).apply { text = add.neighborhood }
+                findViewById<TextView>(R.id.city_state).apply { text = add.city + ", " + add.state }
+                if (TextUtils.isEmpty(logradouro.text.toString())) {
                     findViewById<TextView>(R.id.address).apply { text = add.logradouro }
                 }
             } else {
@@ -184,6 +189,8 @@ class SignupActivity : AppCompatActivity() {
                                                     private val mCPF: String,
                                                     private val mCep: String,
                                                     private val mAddress: String,
+                                                    private val mNeighborhood: String,
+                                                    private val mCityState: String,
                                                     private val mEmail: String,
                                                     private val mPassword: String,
                                                     private val mCheckPassword: String) : AsyncTask<Void, Void, UserResponse>() {
@@ -193,7 +200,9 @@ class SignupActivity : AppCompatActivity() {
             name.error = null
             cpf.error = null
             cep.error = null
-            address.error = null
+            logradouro.error = null
+            neighborhood.error = null
+            city_state.error = null
             email.error = null
             password.error = null
             password_check.error = null
@@ -232,8 +241,18 @@ class SignupActivity : AppCompatActivity() {
 
             // Check for valid address.
             if(TextUtils.isEmpty(mAddress)) {
-                address.error = getString(R.string.error_field_required)
-                focusView = address
+                logradouro.error = getString(R.string.error_field_required)
+                focusView = logradouro
+                cancel = true
+            }
+            if(TextUtils.isEmpty(mNeighborhood)) {
+                neighborhood.error = getString(R.string.error_field_required)
+                focusView = neighborhood
+                cancel = true
+            }
+            if(TextUtils.isEmpty(mCityState)) {
+                city_state.error = getString(R.string.error_field_required)
+                focusView = city_state
                 cancel = true
             }
 
@@ -279,7 +298,7 @@ class SignupActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg params: Void): UserResponse? {
-            return ClientHttpUtil.putRequest(UserAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress, mEmail, mPassword))
+            return ClientHttpUtil.putRequest(UserAPI.Signup.PATH, Signup(mName, mCPF, mCep, mAddress + ", " + mNeighborhood + ", " + mCityState, mEmail, mPassword))
         }
 
         override fun onPostExecute(res: UserResponse?) {

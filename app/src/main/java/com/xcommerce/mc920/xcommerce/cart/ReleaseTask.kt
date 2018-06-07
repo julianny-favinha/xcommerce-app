@@ -1,14 +1,17 @@
 package com.xcommerce.mc920.xcommerce.cart
 
 import android.os.AsyncTask
+import com.xcommerce.mc920.xcommerce.model.Cart
 import com.xcommerce.mc920.xcommerce.model.CartItem
 import com.xcommerce.mc920.xcommerce.model.ProductAPI
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 
+class ReleaseTask() : AsyncTask<CartItem, Void, Boolean>() {
 
-class ReleaseTask internal constructor(val cartItem: CartItem) : AsyncTask<Void, Void, Boolean>() {
+    private var cartItem: CartItem? = null
 
-    override fun doInBackground(vararg params: Void?): Boolean {
+    override fun doInBackground(vararg p0: CartItem): Boolean {
+        cartItem = p0[0]
         return ClientHttpUtil.postRequest(ProductAPI.Release.PATH, cartItem) ?: false
     }
 
@@ -16,7 +19,7 @@ class ReleaseTask internal constructor(val cartItem: CartItem) : AsyncTask<Void,
         super.onPostExecute(result)
 
         if (result == false){
-            CartHelper.retrieveCart().add(cartItem.product, cartItem.quantity, null)
+            CartHelper.retrieveCart().add(cartItem!!.product, cartItem!!.quantity, null)
         }
     }
 

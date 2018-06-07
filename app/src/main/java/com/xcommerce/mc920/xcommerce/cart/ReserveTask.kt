@@ -1,13 +1,17 @@
 package com.xcommerce.mc920.xcommerce.cart
 
 import android.os.AsyncTask
+import com.xcommerce.mc920.xcommerce.model.Cart
 import com.xcommerce.mc920.xcommerce.model.CartItem
 import com.xcommerce.mc920.xcommerce.model.ProductAPI
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 
-class ReserveTask internal constructor(val cartItem: CartItem) : AsyncTask<Void, Void, Boolean>() {
+class ReserveTask : AsyncTask<CartItem, Void, Boolean>() {
 
-    override fun doInBackground(vararg p0: Void?): Boolean {
+    private var cartItem: CartItem? = null
+
+    override fun doInBackground(vararg p0: CartItem): Boolean {
+        cartItem = p0[0]
         return ClientHttpUtil.postRequest(ProductAPI.Reserve.PATH, cartItem) ?: false
     }
 
@@ -15,7 +19,7 @@ class ReserveTask internal constructor(val cartItem: CartItem) : AsyncTask<Void,
         super.onPostExecute(result)
 
         if (result == false){
-            CartHelper.retrieveCart().sub(cartItem.product, cartItem.quantity, null)
+            CartHelper.retrieveCart().sub(cartItem!!.product, cartItem!!.quantity, null)
         }
     }
 }

@@ -1,13 +1,15 @@
 package com.xcommerce.mc920.xcommerce.model
 
 import com.xcommerce.mc920.xcommerce.cart.CartActivity
+import com.xcommerce.mc920.xcommerce.cart.ReleaseTask
+import com.xcommerce.mc920.xcommerce.cart.ReserveTask
 
 class Cart {
     var cartItemMap = emptyMap<Product, Int>().toMutableMap()
     var totalPrice = 0
     var totalQuantity = 0
 
-    fun add(product: Product, quantity: Int, task: CartActivity.ReserveTask?) {
+    fun add(product: Product, quantity: Int, task: ReserveTask?) {
         if (cartItemMap.containsKey(product)) {
             cartItemMap[product] = cartItemMap[product]!! + quantity
         } else {
@@ -17,10 +19,10 @@ class Cart {
         totalPrice += product.price * quantity
         totalQuantity += quantity
 
-        task?.execute()
+        task?.execute(CartItem(product, quantity))
     }
 
-    fun sub(product: Product, quantity: Int, task: CartActivity.ReleaseTask?) {
+    fun sub(product: Product, quantity: Int, task: ReleaseTask?) {
         if(!cartItemMap.containsKey(product)) throw IllegalStateException("Product not found in cart!")
         val currentQuantity = cartItemMap[product]!!
 
@@ -35,7 +37,7 @@ class Cart {
         totalPrice -= product.price * quantity
         totalQuantity -= quantity
 
-        task?.execute()
+        task?.execute(CartItem(product, quantity))
     }
 
     fun remove(product: Product) {

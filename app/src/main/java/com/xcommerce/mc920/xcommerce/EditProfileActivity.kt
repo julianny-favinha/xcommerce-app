@@ -129,16 +129,14 @@ class EditProfileActivity : AppCompatActivity() {
     inner class CepTask internal constructor(private val mCep: String) : AsyncTask<Void, Void, CEPAddress>() {
 
         override fun doInBackground(vararg params: Void): CEPAddress? {
-            return ClientHttpUtil.postRequest(CEPApi.CheckCEP.PATH, CEP(mCep))
+            return ClientHttpUtil.getRequest(AddressAPI.CheckCep.of(mCep))
         }
 
         override fun onPostExecute(add: CEPAddress?) {
             mCepTask = null
 
             if (add?.success == true) {
-                if (TextUtils.isEmpty(address.text.toString())) {
-                    findViewById<TextView>(R.id.address).apply { text = add.logradouro }
-                }
+                findViewById<TextView>(R.id.address).apply { text = add.logradouro + ", " + add.neighborhood + ", " + add.city + ", " + add.state }
             } else {
                 cep.error = getString(R.string.error_invalid_cep)
                 cep.requestFocus()

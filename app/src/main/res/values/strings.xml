@@ -50,6 +50,9 @@
     <string name="prompt_password">Senha</string>
     <string name="prompt_password_check">Senha (Verificação)</string>
     <string name="prompt_address">Endereço</string>
+    <string name="prompt_logradouro">Logradouro</string>
+    <string name="prompt_neighborhood">Bairro</string>
+    <string name="prompt_city_state">Cidade, UF</string>
 
     <string name="action_sign_in">Fazer login</string>
     <string name="action_sign_in_short">Login</string>

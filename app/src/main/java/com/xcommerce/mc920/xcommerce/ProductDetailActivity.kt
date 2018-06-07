@@ -35,7 +35,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
         if (product is Product) {
             fab.setOnClickListener { _ ->
-                CartHelper.retrieveCart().add(product, 1, ReserveTask(CartItem(product, 1)))
+                CartHelper.retrieveCart().add(product, 1, ReserveTask())
                 finish()
             }
 
