@@ -42,7 +42,6 @@ class CheckoutActivity : AppCompatActivity() {
 
     var subtotal: Int = 0
     var shipment: Int = 0
-    var total: Int = 0
 
     private var parcelas: MutableList<String> = mutableListOf()
 
@@ -146,13 +145,19 @@ class CheckoutActivity : AppCompatActivity() {
         // finish shopping
         checkout_button.setOnClickListener{
             val intent = Intent(this, CompletedPurchaseActivity::class.java)
-            // TODO: enviar endereço, método de entrega (PAC ou Sedex), Método de pagamento (Boleto ou cartão), valor total da compra
+            // TODO:  Método de pagamento (Boleto ou cartão), valor total da compra
 
             // delivery
             intent.putExtra("delivery", getDelivery())
 
             // address
             intent.putExtra("address", getAddress())
+
+            // payment method
+
+
+            // total
+            intent.putExtra("total", subtotal + shipment)
 
             startActivity(intent)
         }

@@ -22,28 +22,30 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_purchase)
 
-        // dados mockados
-        val total = 0
-
         val purchaseSuccessful: Boolean = isSuccessful()
 
         if (purchaseSuccessful) {
             completed_scroll_view.visibility = View.VISIBLE
             purchase_failed.visibility = View.GONE
 
-            // recebe intent de delivery
+            // delivery intent
             val delivery = intent.getSerializableExtra("delivery")
             if (delivery is Delivery) {
                 ship_type.text = delivery.type
                 val prazoString = delivery.prazo.toString() + utilDays(delivery.prazo)
                 ship_date.text = prazoString
+                ship_price.text = formatMoney(delivery.price)
             }
 
-            // recebe intent de endereco
+            // address intent
             val address = intent.getSerializableExtra("address")
             if (address is AddressFull) {
                 populateAddress(address)
             }
+
+            // payment method intent
+            val total = intent.getIntExtra("total", 0)
+            price_total.text = formatMoney(total)
 
             val cartItems = CartHelper.retrieveListCart() // itens da compra
 
@@ -82,9 +84,6 @@ class CompletedPurchaseActivity: AppCompatActivity() {
             val adapter = CartItemAdapter(this, cartItems)
             list_view_completed.adapter = adapter
             UIUtils.setListViewHeightBasedOnItems(list_view_completed)
-
-            price_total.text = formatMoney(total)
-
         } else {
             completed_scroll_view.visibility = View.GONE
             purchase_failed.visibility = View.VISIBLE
