@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
+import com.xcommerce.mc920.xcommerce.model.Delivery
 import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
+import com.xcommerce.mc920.xcommerce.utilities.utilDays
 import kotlinx.android.synthetic.main.content_completed_purchase.*
 
 class CompletedPurchaseActivity: AppCompatActivity() {
@@ -18,7 +20,13 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_purchase)
 
-        // TODO: receber intent
+        // recebe intent de delivery
+        val delivery = intent.getSerializableExtra("delivery")
+        if (delivery is Delivery) {
+            ship_type.text = delivery.type
+            val prazoString = delivery.prazo.toString() + utilDays(delivery.prazo)
+            ship_date.text = prazoString
+        }
 
         val cartItems = CartHelper.retrieveListCart() // itens da compra
 
@@ -61,11 +69,6 @@ class CompletedPurchaseActivity: AppCompatActivity() {
                 card_view_payment_card.visibility = View.VISIBLE
                 card_view_payment_boleto.visibility = View.GONE
             }
-
-            // --- entrega ---
-            val (shipmentType, prazo) = getShipmentInfo() // SEDEX ou PAC
-            ship_type.text = shipmentType
-            ship_date.text = prazo
 
             val (cep, address) = getAddressInfo()
             ship_address.text = address
