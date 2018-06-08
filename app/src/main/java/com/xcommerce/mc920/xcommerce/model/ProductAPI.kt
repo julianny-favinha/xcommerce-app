@@ -14,10 +14,10 @@ class ProductAPI {
     }
 
     object Reserve {
-        const val PATH = "/reserve"
+        const val PATH = "/cart/reserve"
     }
 
     object Release {
-        const val PATH = "/release"
+        const val PATH = "/cart/release"
     }
 }
