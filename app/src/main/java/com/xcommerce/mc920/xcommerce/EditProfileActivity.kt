@@ -36,10 +36,10 @@ class EditProfileActivity : AppCompatActivity() {
             cep.setText(usr.cep, TextView.BufferType.EDITABLE)
             val complemento = (if (usr.address.complement != "") "Complemento " + usr.address.complement else "")
             val logradouro = usr.address.address.logradouro + ", " + usr.address.number + " " + complemento
-            edit_profile_logradouro.setText(logradouro, TextView.BufferType.EDITABLE)
-            edit_profile_neighborhood.setText(usr.address.address.neighborhood, TextView.BufferType.EDITABLE)
+            edit_profile_logradouro.text = logradouro
+            edit_profile_neighborhood.text = usr.address.address.neighborhood
             val cityStateString = usr.address.address.city + " " + usr.address.address.state
-            edit_profile_city_state.setText(cityStateString, TextView.BufferType.EDITABLE)
+            edit_profile_city_state.text = cityStateString
         } else {
             finish()
         }
@@ -145,6 +145,7 @@ class EditProfileActivity : AppCompatActivity() {
                 edit_profile_neighborhood.setText(add.neighborhood, TextView.BufferType.EDITABLE)
                 val cityStateString = add.city + " " + add.state
                 edit_profile_city_state.setText(cityStateString, TextView.BufferType.EDITABLE)
+                edit_profile_address.visibility = View.VISIBLE
             } else {
                 cep.error = getString(R.string.error_invalid_cep)
                 cep.requestFocus()

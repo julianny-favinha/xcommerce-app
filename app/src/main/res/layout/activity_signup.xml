@@ -95,16 +95,46 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/sign_up_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/sign_up_logradouro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_logradouro"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/sign_up_neighborhood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_neighborhood"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/sign_up_city_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_city_state"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/logradouro"
+                    android:id="@+id/sign_up_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_logradouro"
-                    android:inputType="textPostalAddress"
+                    android:hint="@string/prompt_residence"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -115,26 +145,11 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/neighborhood"
+                    android:id="@+id/sign_up_complement"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_neighborhood"
-                    android:inputType="textPostalAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/city-state"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_city_state"
-                    android:inputType="textPostalAddress"
+                    android:hint="@string/prompt_complement"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
 

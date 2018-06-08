@@ -7,7 +7,8 @@ data class Login(val email: String, val password: String) : Serializable
 data class Signup(val name: String,
                   val cpf: String,
                   val cep: String,
-                  val address: String,
+                  val number: String,
+                  val complement: String,
                   val email: String,
                   val password: String) : Serializable
 
