@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.AddressFull
 import com.xcommerce.mc920.xcommerce.model.Delivery
+import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import com.xcommerce.mc920.xcommerce.utilities.utilDays
@@ -39,10 +40,8 @@ class CompletedPurchaseActivity: AppCompatActivity() {
             }
 
             // address intent
-            val address = intent.getSerializableExtra("address")
-            if (address is AddressFull) {
-                populateAddress(address)
-            }
+            val user = UserHelper.retrieveUser()
+            populateAddress(user.address)
 
             // payment method intent
             val total = intent.getIntExtra("total", 0)
