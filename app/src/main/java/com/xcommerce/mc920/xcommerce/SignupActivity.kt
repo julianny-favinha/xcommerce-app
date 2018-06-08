@@ -166,7 +166,7 @@ class SignupActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.neighborhood).apply { text = add.neighborhood }
                 findViewById<TextView>(R.id.city_state).apply { text = add.city + ", " + add.state }
                 if (TextUtils.isEmpty(logradouro.text.toString())) {
-                    findViewById<TextView>(R.id.address).apply { text = add.logradouro }
+                    findViewById<TextView>(R.id.logradouro).apply { text = add.logradouro }
                 }
             } else {
                 cep.error = getString(R.string.error_invalid_cep)
