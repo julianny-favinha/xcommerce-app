@@ -11,6 +11,7 @@ import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.checkout.CheckoutActivity
 import com.xcommerce.mc920.xcommerce.model.Address
 import com.xcommerce.mc920.xcommerce.model.AddressFull
+import com.xcommerce.mc920.xcommerce.model.User
 
 import kotlinx.android.synthetic.main.activity_address.*
 import kotlinx.android.synthetic.main.content_address.*
@@ -18,7 +19,6 @@ import kotlinx.android.synthetic.main.content_address.*
 class AddressActivity : AppCompatActivity() {
     private var task: AddressFetchTask? = null
     private var address: Address? = null
-    private var newAddress: AddressFull? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +52,14 @@ class AddressActivity : AppCompatActivity() {
                 address_edit_text_number.requestFocus()
             }
             else {
-                newAddress = AddressFull(address!!, number.toInt(), address_edit_text_complement.text.toString())
+                val newAddress = AddressFull(address!!, number.toInt(), address_edit_text_complement.text.toString())
 
                 if (address_checkbox_default.isChecked) {
+                    val user = UserHelper.retrieveUser()
+                    val newUser = User(user.name, user.cpf, user.cep, newAddress, user.email)
+                    UserHelper.updateUser(newUser)
 
+                    // TODO: task para update do user
                 }
 
                 val returnIntent = Intent()

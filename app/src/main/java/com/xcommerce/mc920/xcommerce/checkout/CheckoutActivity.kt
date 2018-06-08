@@ -38,7 +38,7 @@ class CheckoutActivity : AppCompatActivity() {
     private var shipmentPrices: Map<String, Int> = emptyMap()
     private var shipmentPrazos: Map<String, Int> = emptyMap()
 
-    private var address: AddressFull? = null
+    var user: User? = null
 
     var subtotal: Int = 0
     var shipment: Int = 0
@@ -51,20 +51,9 @@ class CheckoutActivity : AppCompatActivity() {
             val address = data?.getSerializableExtra("address")
 
             if (address is AddressFull) {
-                this.address = address
                 populateAddress(address)
             }
         }
-    }
-
-    private fun populateAddress(address: AddressFull) {
-        val complemento = (if (address.complement != "") "Complemento " + address.complement else "")
-        val logradouro = address.address.logradouro + ", " + address.number + " " + complemento
-        val cityState = address.address.city + ", " + address.address.state
-
-        address_text_view_logradouro.text = logradouro
-        address_text_view_neighborhood.text = address.address.neighborhood
-        address_text_view_city_state.text = cityState
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +67,7 @@ class CheckoutActivity : AppCompatActivity() {
 
         // get info from user
         val user = UserHelper.retrieveUser()
+        this.user = user
         populateAddress(user.address)
 
         val cart = CartHelper.retrieveListCart()
@@ -156,10 +146,6 @@ class CheckoutActivity : AppCompatActivity() {
         return Delivery("Sedex", shipmentPrices["Sedex"]!!, shipmentPrazos["Sedex"]!!)
     }
 
-    private fun getAddress(): AddressFull {
-        return address!!
-    }
-
     private fun startCompletedPurchase(successful: Boolean) {
         val intent = Intent(this, CompletedPurchaseActivity::class.java)
 
@@ -168,9 +154,6 @@ class CheckoutActivity : AppCompatActivity() {
         if (successful) {
             // delivery
             intent.putExtra("delivery", getDelivery())
-
-            // address
-            intent.putExtra("address", getAddress())
 
             // TODO:  Método de pagamento (Boleto ou cartão)
 
@@ -235,6 +218,16 @@ class CheckoutActivity : AppCompatActivity() {
         checkout_total.text = priceString
 
         populateSpinnerParcelas()
+    }
+
+    private fun populateAddress(address: AddressFull) {
+        val complemento = (if (address.complement != "") "Complemento " + address.complement else "")
+        val logradouro = address.address.logradouro + ", " + address.number + " " + complemento
+        val cityState = address.address.city + ", " + address.address.state
+
+        address_text_view_logradouro.text = logradouro
+        address_text_view_neighborhood.text = address.address.neighborhood
+        address_text_view_city_state.text = cityState
     }
 
     private fun populateSpinnerParcelas() {

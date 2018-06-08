@@ -26,10 +26,9 @@ class UserHelper {
             if (user == null){
                 return false
             }
-            else {
-                user = null
-                return true
-            }
+
+            user = null
+            return true
         }
     }
 }
