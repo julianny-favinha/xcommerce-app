@@ -85,6 +85,10 @@
         <activity
             android:name=".myorders.OrderDetailActivity"
             android:label="@string/title_activity_order_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SACActivity"
+            android:label="@string/title_activity_sac"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
