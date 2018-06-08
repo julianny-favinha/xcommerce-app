@@ -78,8 +78,7 @@ class CheckoutActivity : AppCompatActivity() {
 
         // get info from user
         val user = UserHelper.retrieveUser()
-        // TODO: populate address view
-
+        populateAddress(user.address)
 
         val cart = CartHelper.retrieveListCart()
 
