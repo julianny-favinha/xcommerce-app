@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.user.UserHelper
+import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class UserProfileActivity : AppCompatActivity() {
 
@@ -20,11 +21,16 @@ class UserProfileActivity : AppCompatActivity() {
 
         if (UserHelper.isLoggedIn()){
             val usr = UserHelper.retrieveUser()
-            findViewById<TextView>(R.id.name).apply { text = usr.name }
-            findViewById<TextView>(R.id.email).apply { text = usr.email }
-            findViewById<TextView>(R.id.cpf).apply { text = usr.cpf }
-            findViewById<TextView>(R.id.cep).apply { text = usr.cep }
-            findViewById<TextView>(R.id.address).apply { text = usr.address }
+            name.setText(usr.name, TextView.BufferType.EDITABLE)
+            email.setText(usr.email, TextView.BufferType.EDITABLE)
+            cpf.setText(usr.cpf, TextView.BufferType.EDITABLE)
+            cep.setText(usr.cep, TextView.BufferType.EDITABLE)
+            val complemento = (if (usr.address.complement != "") "Complemento " + usr.address.complement else "")
+            val logradouro = usr.address.address.logradouro + ", " + usr.address.number + " " + complemento
+            profile_logradouro.setText(logradouro, TextView.BufferType.EDITABLE)
+            profile_neighborhood.setText(usr.address.address.neighborhood, TextView.BufferType.EDITABLE)
+            val cityStateString = usr.address.address.city + " " + usr.address.address.state
+            profile_city_state.setText(cityStateString, TextView.BufferType.EDITABLE)
         } else {
             finish()
         }

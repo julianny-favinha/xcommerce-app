@@ -9,8 +9,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
+import com.xcommerce.mc920.xcommerce.model.AddressFull
+import com.xcommerce.mc920.xcommerce.model.Delivery
 import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
+import com.xcommerce.mc920.xcommerce.utilities.utilDays
+import kotlinx.android.synthetic.main.content_address.*
 import kotlinx.android.synthetic.main.content_completed_purchase.*
 
 class CompletedPurchaseActivity: AppCompatActivity() {
@@ -18,18 +22,33 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_purchase)
 
-        // TODO: receber intent
+        // successful intent
+        val successful: Boolean = intent.getBooleanExtra("successful", false)
 
-        val cartItems = CartHelper.retrieveListCart() // itens da compra
-
-        // dados mockados
-        val total = 0
-
-        val purchaseSuccessful: Boolean = isSuccessful()
-
-        if (purchaseSuccessful) {
+        if (successful) {
             completed_scroll_view.visibility = View.VISIBLE
             purchase_failed.visibility = View.GONE
+
+            // delivery intent
+            val delivery = intent.getSerializableExtra("delivery")
+            if (delivery is Delivery) {
+                ship_type.text = delivery.type
+                val prazoString = delivery.prazo.toString() + utilDays(delivery.prazo)
+                ship_date.text = prazoString
+                ship_price.text = formatMoney(delivery.price)
+            }
+
+            // address intent
+            val address = intent.getSerializableExtra("address")
+            if (address is AddressFull) {
+                populateAddress(address)
+            }
+
+            // payment method intent
+            val total = intent.getIntExtra("total", 0)
+            price_total.text = formatMoney(total)
+
+            val cartItems = CartHelper.retrieveListCart() // itens da compra
 
             // método de pagamento
             val paymentType = getPaymentType() // Boleto ou Cartao
@@ -62,46 +81,25 @@ class CompletedPurchaseActivity: AppCompatActivity() {
                 card_view_payment_boleto.visibility = View.GONE
             }
 
-            // --- entrega ---
-            val (shipmentType, prazo) = getShipmentInfo() // SEDEX ou PAC
-            ship_type.text = shipmentType
-            ship_date.text = prazo
-
-            val (cep, address) = getAddressInfo()
-            ship_address.text = address
-            ship_cep.text = cep
-
             // --- resumo da compra ---
             val adapter = CartItemAdapter(this, cartItems)
             list_view_completed.adapter = adapter
             UIUtils.setListViewHeightBasedOnItems(list_view_completed)
-
-            price_total.text = formatMoney(total)
-
         } else {
             completed_scroll_view.visibility = View.GONE
             purchase_failed.visibility = View.VISIBLE
         }
     }
 
-    // TODO: definir o que é isSuccessful"
-    private fun isSuccessful(): Boolean {
-        return true
-    }
+    private fun populateAddress(address: AddressFull) {
+        val complemento = (if (address.complement != "") "Complemento " + address.complement else "")
+        val logradouro = address.address.logradouro + ", " + address.number + " " + complemento
+        val cityState = address.address.city + ", " + address.address.state
 
-//    private fun getSubtotal(cart: List<CartItem>): Int {
-//        var total = 0
-//
-//        for(i in cart.indices) {
-//            total += (cart[i].quantity*cart[i].product.price)
-//        }
-//
-//        return total
-//    }
-//
-//    private fun getShipmentPrice(): Int {
-//        return 1499
-//    }
+        ship_logradouro.text = logradouro
+        ship_neighborhood.text = address.address.neighborhood
+        ship_city_state.text = cityState
+    }
 
     private fun getPaymentType(): String {
         return "Boleto"
@@ -120,43 +118,9 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         return Pair("3", "1499")
     }
 
-    private fun getShipmentInfo(): Pair<String, String> {
-        return Pair("SEDEX", "01/07/2018")
-    }
-
-    private fun getAddressInfo(): Pair<String, String> {
-        return Pair("13.214-717", "Rua Alceu de Toledo Pontes, 510")
-    }
-
     private fun copyToClipboard(activity: Activity, text: String) {
         val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("copy", text)
         clipboard.primaryClip = clip
     }
-
-//    inner class CompletedCartViewAdapter(context: Context, cartItems: List<CartItem>): ArrayAdapter<CartItem>(context, 0, cartItems) {
-//        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-//            val cartItem= getItem(position)
-//
-//            val product = cartItem.product
-//            val quantity = cartItem.quantity
-//
-//            val newView = convertView
-//                    ?: LayoutInflater.from(context).inflate(R.layout.adapter_cart_item, parent, false)
-//
-//            if (quantity > 1) {
-//                newView.note_item_quantidade.text = "unidades"
-//            } else {
-//                newView.note_item_quantidade.text = "unidade"
-//            }
-//
-//            newView.note_item_name.text = product.name
-//            newView.note_item_val.text = quantity.toString()
-//            newView.note_item_price.text = formatMoney(product.price)
-//            product.imageUrl?.let { DownloadImageTask(newView.note_item_image).execute(product.imageUrl) }
-//                    ?: newView.note_item_image.setImageResource(R.drawable.image_noimage)
-//
-//            return newView
-//        }
-//    }
 }

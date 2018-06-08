@@ -53,6 +53,8 @@
     <string name="prompt_logradouro">Logradouro</string>
     <string name="prompt_neighborhood">Bairro</string>
     <string name="prompt_city_state">Cidade, UF</string>
+    <string name="prompt_residence">Número</string>
+    <string name="prompt_complement">Complemento</string>
 
     <string name="action_sign_in">Fazer login</string>
     <string name="action_sign_in_short">Login</string>
@@ -79,6 +81,9 @@
     <string name="cpf">CPF</string>
     <string name="address">Endereço</string>
     <string name="email">Email</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="neighborhood">Bairro</string>
+    <string name="city_state">Cidade, UF</string>
 
     <string name="search">Buscar</string>
     <string name="title_activity_product_detail">Produto</string>
@@ -120,5 +125,6 @@
     <string name="unit_product">unidade</string>
     <string name="units_product">unidades</string>
     <string name="copy_boleto_number">Número de Boleto copiado.</string>
+    <string name="zero_money">R$0.00</string>
 </resources>
 

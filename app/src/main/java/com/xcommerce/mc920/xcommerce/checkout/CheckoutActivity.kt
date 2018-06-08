@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.provider.Telephony
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -13,15 +14,13 @@ import com.xcommerce.mc920.xcommerce.CompletedPurchaseActivity
 import com.xcommerce.mc920.xcommerce.user.AddressActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
-import com.xcommerce.mc920.xcommerce.model.Address
-import com.xcommerce.mc920.xcommerce.model.AddressFull
-import com.xcommerce.mc920.xcommerce.model.Product
-import com.xcommerce.mc920.xcommerce.model.ShipmentIn
+import com.xcommerce.mc920.xcommerce.model.*
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.content_checkout.*
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
+import com.xcommerce.mc920.xcommerce.utilities.utilDays
 import kotlinx.android.synthetic.main.address.*
 import kotlinx.android.synthetic.main.credit_card.*
 import kotlinx.android.synthetic.main.payment_method.*
@@ -37,10 +36,12 @@ class CheckoutActivity : AppCompatActivity() {
     private var task: ShipmentPriceFetchTask? = null
 
     private var shipmentPrices: Map<String, Int> = emptyMap()
+    private var shipmentPrazos: Map<String, Int> = emptyMap()
+
+    private var address: AddressFull? = null
 
     var subtotal: Int = 0
     var shipment: Int = 0
-    var total: Int = 0
 
     private var parcelas: MutableList<String> = mutableListOf()
 
@@ -50,6 +51,7 @@ class CheckoutActivity : AppCompatActivity() {
             val address = data?.getSerializableExtra("address")
 
             if (address is AddressFull) {
+                this.address = address
                 populateAddress(address)
             }
         }
@@ -76,7 +78,7 @@ class CheckoutActivity : AppCompatActivity() {
 
         // get info from user
         val user = UserHelper.retrieveUser()
-        // TODO: populate address view
+        populateAddress(user.address)
 
         val cart = CartHelper.retrieveListCart()
 
@@ -142,10 +144,41 @@ class CheckoutActivity : AppCompatActivity() {
 
         // finish shopping
         checkout_button.setOnClickListener{
-            val intent = Intent(this, CompletedPurchaseActivity::class.java)
-            // TODO: enviar endereço, método de entrega (PAC ou Sedex), Método de pagamento (Boleto ou cartão), valor total da compra
-            startActivity(intent)
+            startCompletedPurchase(true)
         }
+    }
+
+    private fun getDelivery(): Delivery {
+        if (checkout_pac.isChecked) {
+            return Delivery("PAC", shipmentPrices["PAC"]!!, shipmentPrazos["PAC"]!!)
+        }
+
+        return Delivery("Sedex", shipmentPrices["Sedex"]!!, shipmentPrazos["Sedex"]!!)
+    }
+
+    private fun getAddress(): AddressFull {
+        return address!!
+    }
+
+    private fun startCompletedPurchase(successful: Boolean) {
+        val intent = Intent(this, CompletedPurchaseActivity::class.java)
+
+        intent.putExtra("successful", successful)
+
+        if (successful) {
+            // delivery
+            intent.putExtra("delivery", getDelivery())
+
+            // address
+            intent.putExtra("address", getAddress())
+
+            // TODO:  Método de pagamento (Boleto ou cartão)
+
+            // total
+            intent.putExtra("total", subtotal + shipment)
+        }
+
+        startActivity(intent)
     }
 
     private fun spinnerAdapter() {
@@ -157,6 +190,7 @@ class CheckoutActivity : AppCompatActivity() {
 
     fun populateResult(prices: Map<String, Int>, prazos: Map<String, Int>) {
         shipmentPrices = prices
+        shipmentPrazos = prazos
 
         val pricePacString = formatMoney(prices["PAC"]!!)
         checkout_price_pac.text = pricePacString
@@ -164,10 +198,10 @@ class CheckoutActivity : AppCompatActivity() {
         checkout_price_sedex.text = priceSedexString
 
         val prazoPac = prazos["PAC"]!!
-        val prazoPacString = prazoPac.toString() + (if (prazoPac == 1) " dia útil" else "dias úteis")
+        val prazoPacString = prazoPac.toString() + utilDays(prazoPac)
         checkout_prazo_pac.text = prazoPacString
         val prazoSedex = prazos["Sedex"]!!
-        val prazoSedexString = prazoSedex.toString() + (if (prazoSedex == 1) " dia útil" else "dias úteis")
+        val prazoSedexString = prazoSedex.toString() + utilDays(prazoSedex)
         checkout_prazo_sedex.text = prazoSedexString
 
         checkout_price_pac.visibility = View.VISIBLE
