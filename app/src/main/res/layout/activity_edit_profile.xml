@@ -63,7 +63,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/cep"
-                        android:inputType="textPostalAddress"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:singleLine="true" />
 
@@ -80,16 +80,60 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/edit_profile_logradouro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nome da rua"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/edit_profile_neighborhood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bairro"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/edit_profile_city_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cidade, UF"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/address"
+                    android:id="@+id/edit_profile_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_address"
-                    android:inputType="textPostalAddress"
+                    android:hint="Número da residência"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_profile_complement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Complemento"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
 

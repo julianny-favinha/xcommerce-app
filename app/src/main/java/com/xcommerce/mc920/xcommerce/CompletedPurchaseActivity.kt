@@ -22,9 +22,10 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_purchase)
 
-        val purchaseSuccessful: Boolean = isSuccessful()
+        // successful intent
+        val successful: Boolean = intent.getBooleanExtra("successful", false)
 
-        if (purchaseSuccessful) {
+        if (successful) {
             completed_scroll_view.visibility = View.VISIBLE
             purchase_failed.visibility = View.GONE
 
@@ -88,11 +89,6 @@ class CompletedPurchaseActivity: AppCompatActivity() {
             completed_scroll_view.visibility = View.GONE
             purchase_failed.visibility = View.VISIBLE
         }
-    }
-
-    // TODO: definir o que é isSuccessful"
-    private fun isSuccessful(): Boolean {
-        return true
     }
 
     private fun populateAddress(address: AddressFull) {

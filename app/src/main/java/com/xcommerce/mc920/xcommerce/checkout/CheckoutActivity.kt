@@ -80,6 +80,7 @@ class CheckoutActivity : AppCompatActivity() {
         val user = UserHelper.retrieveUser()
         // TODO: populate address view
 
+
         val cart = CartHelper.retrieveListCart()
 
         // calculate shipment prices
@@ -144,22 +145,7 @@ class CheckoutActivity : AppCompatActivity() {
 
         // finish shopping
         checkout_button.setOnClickListener{
-            val intent = Intent(this, CompletedPurchaseActivity::class.java)
-            // TODO:  Método de pagamento (Boleto ou cartão), valor total da compra
-
-            // delivery
-            intent.putExtra("delivery", getDelivery())
-
-            // address
-            intent.putExtra("address", getAddress())
-
-            // payment method
-
-
-            // total
-            intent.putExtra("total", subtotal + shipment)
-
-            startActivity(intent)
+            startCompletedPurchase(true)
         }
     }
 
@@ -173,6 +159,27 @@ class CheckoutActivity : AppCompatActivity() {
 
     private fun getAddress(): AddressFull {
         return address!!
+    }
+
+    private fun startCompletedPurchase(successful: Boolean) {
+        val intent = Intent(this, CompletedPurchaseActivity::class.java)
+
+        intent.putExtra("successful", successful)
+
+        if (successful) {
+            // delivery
+            intent.putExtra("delivery", getDelivery())
+
+            // address
+            intent.putExtra("address", getAddress())
+
+            // TODO:  Método de pagamento (Boleto ou cartão)
+
+            // total
+            intent.putExtra("total", subtotal + shipment)
+        }
+
+        startActivity(intent)
     }
 
     private fun spinnerAdapter() {

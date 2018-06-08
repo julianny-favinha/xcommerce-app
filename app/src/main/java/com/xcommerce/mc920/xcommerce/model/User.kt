@@ -19,4 +19,4 @@ data class UserResponse(val token: String, val user: User) : Serializable
 
 data class Edit(val name: String, val cep: String, val address: String, val email: String, val password: String) : Serializable
 
-data class User(val name: String, val cpf: String, val cep: String, val address: String, val email: String)
+data class User(val name: String, val cpf: String, val cep: String, val address: AddressFull, val email: String)
