@@ -15,6 +15,9 @@ class MyOrdersActivity : AppCompatActivity() {
         
         // back button
         this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        // set subtotal
+        val orders = OrdersHelper.retrieveOrders()
     }
 
     override fun onSupportNavigateUp(): Boolean {
