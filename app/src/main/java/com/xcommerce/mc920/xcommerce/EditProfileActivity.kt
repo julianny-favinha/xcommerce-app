@@ -12,11 +12,14 @@ import com.xcommerce.mc920.xcommerce.model.*
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.content_address.*
 
 class EditProfileActivity : AppCompatActivity() {
 
     private var mAuthTask: UserEditTask? = null
     private var mCepTask: CepTask? = null
+
+    var address: Address? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +32,23 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (UserHelper.isLoggedIn()){
+        if (UserHelper.isLoggedIn()) {
+
             val usr = UserHelper.retrieveUser()
             name.setText(usr.name, TextView.BufferType.EDITABLE)
             email.setText(usr.email, TextView.BufferType.EDITABLE)
             cep.setText(usr.address.address.cep, TextView.BufferType.EDITABLE)
-            val complemento = (if (usr.address.complement != "") "Complemento " + usr.address.complement else "")
-            val logradouro = usr.address.address.logradouro + ", " + usr.address.number + " " + complemento
-            edit_profile_logradouro.text = logradouro
+            edit_profile_logradouro.text = usr.address.address.logradouro
             edit_profile_neighborhood.text = usr.address.address.neighborhood
+            edit_profile_number.setText(usr.address.number.toString(), TextView.BufferType.EDITABLE)
+            edit_profile_complement.setText(usr.address.complement.toString(), TextView.BufferType.EDITABLE)
             val cityStateString = usr.address.address.city + " " + usr.address.address.state
             edit_profile_city_state.text = cityStateString
             birth_date.setText(usr.birthDate, TextView.BufferType.EDITABLE)
             gender.setText(usr.gender, TextView.BufferType.EDITABLE)
             telephone.setText(usr.telephone, TextView.BufferType.EDITABLE)
+
+            edit_profile_address.visibility = View.VISIBLE
         } else {
             finish()
         }
@@ -85,7 +91,11 @@ class EditProfileActivity : AppCompatActivity() {
         val nameStr = name.text.toString()
         val cepStr = cep.text.toString()
         val addressNumber = edit_profile_number.text.toString()
+        val complementStr = edit_profile_complement.text.toString()
         val emailStr = email.text.toString()
+        val birthStr = birth_date.text.toString()
+        val genderStr = gender.text.toString()
+        val telephoneStr = telephone.text.toString()
         val passwordStr = password.text.toString()
         val checkPasswordStr = password_check.text.toString()
 
@@ -95,7 +105,7 @@ class EditProfileActivity : AppCompatActivity() {
             // Show a progress spinner, and kick off a background task to
             // perform the user signup attempt.
             showProgress(true)
-            mAuthTask = UserEditTask(nameStr, cepStr, addressNumber, emailStr, passwordStr, checkPasswordStr)
+            mAuthTask = UserEditTask(nameStr, cepStr, addressNumber, complementStr, emailStr, birthStr, genderStr, telephoneStr, passwordStr, checkPasswordStr)
             mAuthTask!!.execute(null as Void?)
         }
     }
@@ -144,6 +154,8 @@ class EditProfileActivity : AppCompatActivity() {
             mCepTask = null
 
             if (add != null) {
+                address = add
+
                 edit_profile_logradouro.setText(add.logradouro, TextView.BufferType.EDITABLE)
                 edit_profile_neighborhood.setText(add.neighborhood, TextView.BufferType.EDITABLE)
                 val cityStateString = add.city + " " + add.state
@@ -169,9 +181,13 @@ class EditProfileActivity : AppCompatActivity() {
     inner class UserEditTask internal constructor(private val mName: String,
                                                   private val mCep: String,
                                                   private val mAddressNumber: String,
+                                                  private val mComplement: String,
                                                   private val mEmail: String,
+                                                  private val mBirth: String,
+                                                  private val mGender: String,
+                                                  private val mTelephone: String,
                                                   private val mPassword: String,
-                                                  private val mCheckPassword: String) : AsyncTask<Void, Void, UserResponse>() {
+                                                  private val mCheckPassword: String) : AsyncTask<Void, Void, User>() {
 
         override fun onPreExecute() {
             // Reset errors.
@@ -222,7 +238,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
 
             // Check for valid cep.
-            if (TextUtils.isEmpty(mCep)) {
+            if (TextUtils.isEmpty(mCep) || address == null) {
                 cep.error = getString(R.string.error_field_required)
                 focusView = cep
                 cancel = true
@@ -251,22 +267,21 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
-        override fun doInBackground(vararg params: Void): UserResponse? {
-            return ClientHttpUtil.postRequest(UserAPI.Edit.PATH, Edit(mName, mCep, mAddressNumber, mEmail, mPassword), true)
+        override fun doInBackground(vararg params: Void): User? {
+            return ClientHttpUtil.putRequest<User, Update>(UserAPI.Edit.PATH, Update(mName, mPassword, mBirth, mGender, mTelephone, AddressFull(address!!, mAddressNumber.toInt(), mComplement)), true)
         }
 
-        override fun onPostExecute(res: UserResponse?) {
+        override fun onPostExecute(res: User?) {
             mAuthTask = null
             showProgress(false)
 
             if (res != null) {
-                UserHelper.updateUser(res.user)
+                UserHelper.updateUser(res)
                 finish()
             }
 
             email.error = getString(R.string.error_edit)
             email.requestFocus()
-
         }
 
         override fun onCancelled() {

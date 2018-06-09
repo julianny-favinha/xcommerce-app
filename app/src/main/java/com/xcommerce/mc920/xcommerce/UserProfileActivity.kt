@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_user_profile.*
@@ -31,6 +32,24 @@ class UserProfileActivity : AppCompatActivity() {
             profile_neighborhood.setText(usr.address.address.neighborhood, TextView.BufferType.EDITABLE)
             val cityStateString = usr.address.address.city + " " + usr.address.address.state
             profile_city_state.setText(cityStateString, TextView.BufferType.EDITABLE)
+
+            if (usr.gender != "") {
+                gender_title.visibility = View.VISIBLE
+                gender.visibility = View.VISIBLE
+                gender.text = usr.gender
+            }
+
+            if (usr.birthDate != "") {
+                birth_title.visibility = View.VISIBLE
+                birth.visibility = View.VISIBLE
+                birth.text = usr.birthDate
+            }
+
+            if (usr.telephone != "") {
+                telephone_title.visibility = View.VISIBLE
+                telephone.visibility = View.VISIBLE
+                telephone.text = usr.telephone
+            }
         } else {
             finish()
         }

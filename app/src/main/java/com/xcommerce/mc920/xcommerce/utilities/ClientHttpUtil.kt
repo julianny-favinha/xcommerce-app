@@ -63,22 +63,30 @@ class ClientHttpUtil {
             return objectMapper.readValue(response.body()!!.byteStream())
         }
 
-        inline fun <reified T : Any, K> putRequest(path: String, body: K): T? {
+        inline fun <reified T : Any, K> putRequest(path: String, body: K, needLogin: Boolean = false): T? {
             val client = OkHttpClient()
             val objectMapper = jacksonObjectMapper()
 
             val requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), objectMapper.writeValueAsString(body))
-            val request = Request.Builder().url(BASE + path).put(requestBody).build()
+
+            val request = if (needLogin) {
+                Request.Builder().url(BASE + path).put(requestBody).addHeader("x-auth-token", UserHelper.token).build()
+            } else {
+                Request.Builder().url(BASE + path).put(requestBody).build()
+            }
 
             Log.d("[CLIENT HTTP]", "About to do request to " + request.toString())
             val response = client.newCall(request).execute()
             Log.d("[CLIENT HTTP]", "Received: " + response.toString())
 
             if (!response.isSuccessful) {
+
                 return null
             }
+            val body = objectMapper.readValue<T>(response.body()!!.byteStream())
+            Log.d("[CLIENT HTTP]", "Received: $body")
 
-            return objectMapper.readValue(response.body()!!.byteStream())
+            return body
         }
 
     }
