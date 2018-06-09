@@ -24,7 +24,7 @@ class UserProfileActivity : AppCompatActivity() {
             name.setText(usr.name, TextView.BufferType.EDITABLE)
             email.setText(usr.email, TextView.BufferType.EDITABLE)
             cpf.setText(usr.cpf, TextView.BufferType.EDITABLE)
-            cep.setText(usr.cep, TextView.BufferType.EDITABLE)
+            cep.setText(usr.address.address.cep, TextView.BufferType.EDITABLE)
             val complemento = (if (usr.address.complement != "") "Complemento " + usr.address.complement else "")
             val logradouro = usr.address.address.logradouro + ", " + usr.address.number + " " + complemento
             profile_logradouro.setText(logradouro, TextView.BufferType.EDITABLE)

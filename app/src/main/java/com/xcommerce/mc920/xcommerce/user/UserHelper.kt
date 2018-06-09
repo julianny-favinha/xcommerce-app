@@ -4,10 +4,15 @@ import com.xcommerce.mc920.xcommerce.model.User
 
 class UserHelper {
     companion object {
+        var token: String? = null
         private var user: User? = null
 
         fun isLoggedIn(): Boolean {
             return user != null
+        }
+
+        fun retrieveToken(): String?{
+            return token
         }
 
         fun retrieveNullableUser(): User? {

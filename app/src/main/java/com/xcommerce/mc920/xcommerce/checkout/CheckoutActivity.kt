@@ -79,7 +79,7 @@ class CheckoutActivity : AppCompatActivity() {
             }
         }.flatten()
 
-        val shipIn = ShipmentIn(shipmentProducts, user.cep)
+        val shipIn = ShipmentIn(shipmentProducts, user.address.address.cep)
         task = ShipmentPriceFetchTask(this)
         task?.execute(shipIn)
 

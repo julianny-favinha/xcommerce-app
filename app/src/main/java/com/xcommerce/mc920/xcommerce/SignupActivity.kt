@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.AsyncTask
 import android.os.Bundle
+import android.provider.Telephony
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
@@ -13,6 +14,10 @@ import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_signup.*
 import org.w3c.dom.Text
+import android.R.id.edit
+import android.content.SharedPreferences
+
+
 
 /**
  * A login screen that offers login via email/password.
@@ -23,6 +28,8 @@ class SignupActivity : AppCompatActivity() {
      */
     private var mAuthTask: UserSignupTask? = null
     private var mCepTask: CepTask? = null
+
+    var address: Address? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +62,12 @@ class SignupActivity : AppCompatActivity() {
         // Store values at the time of the login attempt.
         val nameStr = name.text.toString()
         val cpfStr = cpf.text.toString()
-        val cepStr = cep.text.toString()
+        val birthStr = birth_date.text.toString()
         val numberStr = sign_up_number.text.toString()
         val complementStr = sign_up_complement.text.toString()
         val emailStr = email.text.toString()
+        val genderStr = gender.text.toString()
+        val telephoneStr = telephone.text.toString()
         val passwordStr = password.text.toString()
         val checkPasswordStr = password_check.text.toString()
 
@@ -68,7 +77,7 @@ class SignupActivity : AppCompatActivity() {
             // Show a progress spinner, and kick off a background task to
             // perform the user signup attempt.
             showProgress(true)
-            mAuthTask = UserSignupTask(nameStr, cpfStr, cepStr, numberStr, complementStr, emailStr, passwordStr, checkPasswordStr)
+            mAuthTask = UserSignupTask(nameStr, cpfStr, address!!.cep, numberStr, complementStr, birthStr, emailStr, genderStr, telephoneStr, passwordStr, checkPasswordStr)
             mAuthTask!!.execute(null as Void?)
         }
     }
@@ -162,6 +171,8 @@ class SignupActivity : AppCompatActivity() {
             mCepTask = null
 
             if (add != null) {
+                address = add
+
                 sign_up_logradouro.setText(add.logradouro, TextView.BufferType.EDITABLE)
                 sign_up_neighborhood.setText(add.neighborhood, TextView.BufferType.EDITABLE)
                 val cityStateString = add.city + " " + add.state
@@ -189,7 +200,10 @@ class SignupActivity : AppCompatActivity() {
                                                     private val mCep: String,
                                                     private val mNumber: String,
                                                     private val mComplement: String,
+                                                    private val mBirth: String,
                                                     private val mEmail: String,
+                                                    private val mGender: String,
+                                                    private val mTelephone: String,
                                                     private val mPassword: String,
                                                     private val mCheckPassword: String) : AsyncTask<Void, Void, UserResponse>() {
 
@@ -243,7 +257,7 @@ class SignupActivity : AppCompatActivity() {
             }
 
             // Check for valid cep.
-            if(TextUtils.isEmpty(mCep)) {
+            if(TextUtils.isEmpty(mCep) || address == null) {
                 cep.error = getString(R.string.error_field_required)
                 focusView = cep
                 cancel = true
@@ -284,16 +298,27 @@ class SignupActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg params: Void): UserResponse? {
-            val signUp = Signup(mName, mCPF, mCep, mNumber, mComplement, mEmail, mPassword)
-            return ClientHttpUtil.putRequest(UserAPI.Signup.PATH, signUp)
+            val addressFull = AddressFull(address!!, mNumber.toInt(), mComplement)
+            val signUp = Signup(User(mName, mEmail, mPassword, mBirth, mCPF, addressFull, mGender, mTelephone))
+            return ClientHttpUtil.postRequest(UserAPI.Signup.PATH, signUp)
         }
 
         override fun onPostExecute(res: UserResponse?) {
             mAuthTask = null
             showProgress(false)
 
-            if(res != null){
+            if(res != null) {
                 UserHelper.updateUser(res.user)
+
+                val settings = applicationContext.getSharedPreferences("com.xcommerce.mc920.xcommerce", 0)
+                val editor = settings.edit()
+                editor.putString("tokenUser", res.token)
+
+                UserHelper.token = res.token
+
+                // Apply the edits!
+                editor.apply()
+
                 finish()
             }
 

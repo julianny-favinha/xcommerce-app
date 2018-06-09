@@ -56,7 +56,7 @@ class AddressActivity : AppCompatActivity() {
 
                 if (address_checkbox_default.isChecked) {
                     val user = UserHelper.retrieveUser()
-                    val newUser = User(user.name, user.cpf, user.cep, newAddress, user.email)
+                    val newUser = User(user.name, user.email, user.password, user.birthDate, user.cpf, newAddress, user.gender, user.telephone)
                     UserHelper.updateUser(newUser)
 
                     // TODO: task para update do user

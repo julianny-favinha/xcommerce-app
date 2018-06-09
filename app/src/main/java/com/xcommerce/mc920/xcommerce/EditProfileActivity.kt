@@ -33,13 +33,16 @@ class EditProfileActivity : AppCompatActivity() {
             val usr = UserHelper.retrieveUser()
             name.setText(usr.name, TextView.BufferType.EDITABLE)
             email.setText(usr.email, TextView.BufferType.EDITABLE)
-            cep.setText(usr.cep, TextView.BufferType.EDITABLE)
+            cep.setText(usr.address.address.cep, TextView.BufferType.EDITABLE)
             val complemento = (if (usr.address.complement != "") "Complemento " + usr.address.complement else "")
             val logradouro = usr.address.address.logradouro + ", " + usr.address.number + " " + complemento
             edit_profile_logradouro.text = logradouro
             edit_profile_neighborhood.text = usr.address.address.neighborhood
             val cityStateString = usr.address.address.city + " " + usr.address.address.state
             edit_profile_city_state.text = cityStateString
+            birth_date.setText(usr.birthDate, TextView.BufferType.EDITABLE)
+            gender.setText(usr.gender, TextView.BufferType.EDITABLE)
+            telephone.setText(usr.telephone, TextView.BufferType.EDITABLE)
         } else {
             finish()
         }
@@ -249,7 +252,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg params: Void): UserResponse? {
-            return ClientHttpUtil.postRequest(UserAPI.Edit.PATH, Edit(mName, mCep, mAddressNumber, mEmail, mPassword))
+            return ClientHttpUtil.postRequest(UserAPI.Edit.PATH, Edit(mName, mCep, mAddressNumber, mEmail, mPassword), true)
         }
 
         override fun onPostExecute(res: UserResponse?) {
