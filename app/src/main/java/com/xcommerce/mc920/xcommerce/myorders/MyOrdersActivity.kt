@@ -25,6 +25,7 @@ class MyOrdersActivity : AppCompatActivity() {
         this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         adapter = MyOrdersViewAdapter(this, orders)
+        listview.adapter = adapter
 
         task = MyOrdersFetchTask(this)
         task?.execute()
@@ -59,7 +60,6 @@ class MyOrdersActivity : AppCompatActivity() {
         this.orders.clear()
         this.orders.addAll(orders)
         adapter?.notifyDataSetChanged()
-
         Log.d("populateResultOrder", orders.toString())
     }
 
