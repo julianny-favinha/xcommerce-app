@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.content_search.*
 import android.widget.Toast
 import android.view.KeyEvent.KEYCODE_ENTER
-
+import android.view.inputmethod.EditorInfo
 
 
 class SearchActivity : AppCompatActivity() {
@@ -65,6 +65,8 @@ class SearchActivity : AppCompatActivity() {
         val query = search_field.text.toString()
 
         var search = SearchTask(query, this)
+
+        search_field.onEditorAction(EditorInfo.IME_ACTION_DONE)
 
         search.execute()
     }

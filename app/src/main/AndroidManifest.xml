@@ -88,8 +88,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SACActivity"
-            android:label="@string/title_activity_sac"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="Atendimento ao Consumidor"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>
