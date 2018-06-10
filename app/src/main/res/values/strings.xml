@@ -125,6 +125,8 @@
     <string name="unit_product">unidade</string>
     <string name="units_product">unidades</string>
     <string name="copy_boleto_number">Número de Boleto copiado.</string>
+    <string name="title_activity_sac">SACActivity</string>
+    <string name="enviar">Enviar</string>
     <string name="zero_money">R$0.00</string>
 </resources>
 

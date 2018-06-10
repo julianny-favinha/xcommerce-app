@@ -117,7 +117,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
             }
             R.id.nav_sac -> {
-
+                val intent = Intent(this, SACActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_login -> {
                 val intent = Intent(this, LoginActivity::class.java)
