@@ -11,6 +11,7 @@ import android.view.View
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.UserAPI
 import com.xcommerce.mc920.xcommerce.model.Login
+import com.xcommerce.mc920.xcommerce.model.SignIn
 import com.xcommerce.mc920.xcommerce.model.UserResponse
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_login.*
@@ -31,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
+        sign_in_button.setOnClickListener { attemptLogin() }
         sign_up_button.setOnClickListener { redirectSignUp() }
     }
 
@@ -159,16 +160,22 @@ class LoginActivity : AppCompatActivity() {
                                                    private val mPassword: String) : AsyncTask<Void, Void, UserResponse>() {
 
         override fun doInBackground(vararg params: Void): UserResponse? {
-            return ClientHttpUtil.postRequest(UserAPI.Login.PATH, Login(mEmail, mPassword))
+            return ClientHttpUtil.postRequest(UserAPI.Login.PATH, SignIn(mEmail, mPassword))
         }
 
         override fun onPostExecute(res: UserResponse?) {
             mAuthTask = null
             showProgress(false)
 
-            if(res != null){
+            if (res != null) {
+                val settings = applicationContext.getSharedPreferences("com.xcommerce.mc920.xcommerce", 0)
+                val editor = settings.edit()
+                editor.putString("tokenUser", res.token)
+                editor.apply()
+
                 UserHelper.updateUser(res.user)
-                // Session.addToken(res.token)
+                UserHelper.token = res.token
+
                 finish()
             }
 
