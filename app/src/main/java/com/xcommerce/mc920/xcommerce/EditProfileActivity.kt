@@ -30,11 +30,16 @@ class EditProfileActivity : AppCompatActivity() {
         super.onResume()
 
         var usr = UserHelper.retrieveNullableUser()
-        if (usr != null){
-            findViewById<TextView>(R.id.name).apply { text = usr.name }
-            findViewById<TextView>(R.id.email).apply { text = usr.email }
-            findViewById<TextView>(R.id.cep).apply { text = usr.cep }
-            findViewById<TextView>(R.id.address).apply { text = usr.address }
+        if (usr != null) {
+            name.setText(usr.name, TextView.BufferType.EDITABLE)
+            email.setText(usr.email, TextView.BufferType.EDITABLE)
+            cep.setText(usr.cep, TextView.BufferType.EDITABLE)
+            val complemento = (if (usr.address.complement != "") "Complemento " + usr.address.complement else "")
+            val logradouro = usr.address.address.logradouro + ", " + usr.address.number + " " + complemento
+            edit_profile_logradouro.setText(logradouro, TextView.BufferType.EDITABLE)
+            edit_profile_neighborhood.setText(usr.address.address.neighborhood, TextView.BufferType.EDITABLE)
+            val cityStateString = usr.address.address.city + " " + usr.address.address.state
+            edit_profile_city_state.setText(cityStateString, TextView.BufferType.EDITABLE)
         } else {
             finish()
         }
@@ -76,7 +81,7 @@ class EditProfileActivity : AppCompatActivity() {
         // Store values at the time of the login attempt.
         val nameStr = name.text.toString()
         val cepStr = cep.text.toString()
-        val addressStr = address.text.toString()
+        val addressNumber = edit_profile_number.text.toString()
         val emailStr = email.text.toString()
         val passwordStr = password.text.toString()
         val checkPasswordStr = password_check.text.toString()
@@ -87,7 +92,7 @@ class EditProfileActivity : AppCompatActivity() {
             // Show a progress spinner, and kick off a background task to
             // perform the user signup attempt.
             showProgress(true)
-            mAuthTask = UserEditTask(nameStr, cepStr, addressStr, emailStr, passwordStr, checkPasswordStr)
+            mAuthTask = UserEditTask(nameStr, cepStr, addressNumber, emailStr, passwordStr, checkPasswordStr)
             mAuthTask!!.execute(null as Void?)
         }
     }
@@ -126,19 +131,20 @@ class EditProfileActivity : AppCompatActivity() {
      * Represents an asynchronous registration task used to authenticate
      * the cep.
      */
-    inner class CepTask internal constructor(private val mCep: String) : AsyncTask<Void, Void, CEPAddress>() {
+    inner class CepTask internal constructor(private val mCep: String): AsyncTask<Void, Void, Address>() {
 
-        override fun doInBackground(vararg params: Void): CEPAddress? {
-            return ClientHttpUtil.postRequest(CEPApi.CheckCEP.PATH, CEP(mCep))
+        override fun doInBackground(vararg params: Void): Address? {
+            return ClientHttpUtil.getRequest(AddressAPI.CheckCep.of(mCep))
         }
 
-        override fun onPostExecute(add: CEPAddress?) {
+        override fun onPostExecute(add: Address?) {
             mCepTask = null
 
-            if (add?.success == true) {
-                if (TextUtils.isEmpty(address.text.toString())) {
-                    findViewById<TextView>(R.id.address).apply { text = add.logradouro }
-                }
+            if (add != null) {
+                edit_profile_logradouro.setText(add.logradouro, TextView.BufferType.EDITABLE)
+                edit_profile_neighborhood.setText(add.neighborhood, TextView.BufferType.EDITABLE)
+                val cityStateString = add.city + " " + add.state
+                edit_profile_city_state.setText(cityStateString, TextView.BufferType.EDITABLE)
             } else {
                 cep.error = getString(R.string.error_invalid_cep)
                 cep.requestFocus()
@@ -158,7 +164,7 @@ class EditProfileActivity : AppCompatActivity() {
      */
     inner class UserEditTask internal constructor(private val mName: String,
                                                   private val mCep: String,
-                                                  private val mAddress: String,
+                                                  private val mAddressNumber: String,
                                                   private val mEmail: String,
                                                   private val mPassword: String,
                                                   private val mCheckPassword: String) : AsyncTask<Void, Void, UserResponse>() {
@@ -167,7 +173,7 @@ class EditProfileActivity : AppCompatActivity() {
             // Reset errors.
             name.error = null
             cep.error = null
-            address.error = null
+            edit_profile_number.error = null
             email.error = null
             password.error = null
             password_check.error = null
@@ -205,9 +211,9 @@ class EditProfileActivity : AppCompatActivity() {
             }
 
             // Check for valid address.
-            if (TextUtils.isEmpty(mAddress)) {
-                address.error = getString(R.string.error_field_required)
-                focusView = address
+            if (TextUtils.isEmpty(mAddressNumber)) {
+                edit_profile_number.error = getString(R.string.error_field_required)
+                focusView = edit_profile_number
                 cancel = true
             }
 
@@ -242,7 +248,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg params: Void): UserResponse? {
-            return ClientHttpUtil.postRequest(UserAPI.Edit.PATH, Edit(mName, mCep, mAddress, mEmail, mPassword))
+            return ClientHttpUtil.postRequest(UserAPI.Edit.PATH, Edit(mName, mCep, mAddressNumber, mEmail, mPassword))
         }
 
         override fun onPostExecute(res: UserResponse?) {

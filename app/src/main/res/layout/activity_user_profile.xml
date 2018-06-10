@@ -27,70 +27,78 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-
                 android:text="@string/name"/>
 
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="32dp" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:layout_marginBottom="32dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@string/cpf"/>
+
+            <TextView
+                android:id="@+id/cpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:layout_marginBottom="32dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@string/address"/>
+
+            <TextView
+                android:id="@+id/cep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/profile_logradouro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome da rua"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/profile_neighborhood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bairro"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/profile_city_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cidade, UF"
+                android:textSize="17sp"
+                android:layout_marginBottom="32dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-
-                    android:text="@string/cpf"/>
-
-                <TextView
-                    android:id="@+id/cpf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:layout_marginBottom="32dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="24sp"
                     android:textStyle="bold"
-
-                    android:text="@string/address"/>
-
-                <TextView
-                    android:id="@+id/cep"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="32dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-
                     android:text="@string/email"/>
 
                 <TextView
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"/>
-
+                    android:textSize="17sp"/>
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

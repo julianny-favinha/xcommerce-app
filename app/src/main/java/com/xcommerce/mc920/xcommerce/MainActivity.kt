@@ -12,6 +12,8 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.cart.CartActivity
 import com.xcommerce.mc920.xcommerce.home.TabPagerAdapter
+import com.xcommerce.mc920.xcommerce.model.Address
+import com.xcommerce.mc920.xcommerce.model.AddressFull
 import com.xcommerce.mc920.xcommerce.model.User
 import com.xcommerce.mc920.xcommerce.myorders.MyOrdersActivity
 import com.xcommerce.mc920.xcommerce.user.UserHelper
@@ -123,7 +125,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             //TODO: Remove when backend integration is done
             R.id.debug_login -> {
-                UserHelper.updateUser(User("Ronaldo Prata Amorim", "35028504812", "13083705", "R. Dr. Ruberlei Boareto da Silva, 350", "roroprata@gmail.com"))
+                val address = AddressFull(Address("Alameda das hortensias", "PVA", "Bauru", "SP"), 851, "1")
+                UserHelper.updateUser(User("Ronaldo Prata Amorim", "35028504812", "13083705", address, "roroprata@gmail.com"))
                 invalidateOptionsMenu()
             }
         }
