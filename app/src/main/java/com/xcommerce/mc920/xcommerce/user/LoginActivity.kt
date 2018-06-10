@@ -142,9 +142,9 @@ class LoginActivity : AppCompatActivity() {
                 UserHelper.token = res.token
 
                 finish()
+            } else {
+                Toast.makeText(container, "Email e/ou senha incorretos.", Toast.LENGTH_SHORT).show()
             }
-
-            Toast.makeText(container, "Email e/ou senha incorretos.", Toast.LENGTH_SHORT).show()
         }
 
         override fun onCancelled() {
