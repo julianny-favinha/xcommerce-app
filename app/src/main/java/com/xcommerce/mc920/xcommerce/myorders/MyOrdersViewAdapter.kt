@@ -2,6 +2,8 @@ package com.xcommerce.mc920.xcommerce.myorders
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,13 +37,11 @@ class MyOrdersViewAdapter(context: Context, orderItems: List<Order>) : ArrayAdap
             newView.product_date_value.text = createdAt
             newView.product_price_value.text = formatMoney(totalPrice.toInt())
 
-//            newView.btn_inc.setOnClickListener {
-//                Toast.makeText(context, "Quantidade atualizada.", Toast.LENGTH_SHORT).show()
-//                CartHelper.retrieveCart().add(product, 1)
-//                newView.note_item_val.text = CartHelper.retrieveProduct(product)!!.quantity.toString()
-//                totalValue.text = formatMoney(CartHelper.retrieveCart().totalPrice)
-//                Log.d("[CART]", CartHelper.retrieveCart().cartItemMap.toString())
-//            }
+            newView.order_element.setOnClickListener {
+                   val intent = Intent(ctx, OrderDetailActivity::class.java)
+                   intent.putExtra("order", orderItem)
+                   ctx.startActivity(intent)
+            }
 
             return newView
      }
