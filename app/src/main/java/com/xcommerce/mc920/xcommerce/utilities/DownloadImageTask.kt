@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.ImageView
+import com.xcommerce.mc920.xcommerce.R
 
 class DownloadImageTask(internal var bmImage: ImageView) : AsyncTask<String, Void, Bitmap>() {
 
@@ -22,7 +23,7 @@ class DownloadImageTask(internal var bmImage: ImageView) : AsyncTask<String, Voi
         return mIcon11
     }
 
-    override fun onPostExecute(result: Bitmap) {
-        bmImage.setImageBitmap(result)
+    override fun onPostExecute(result: Bitmap?) {
+        result?.let { bmImage.setImageBitmap(result) } ?: bmImage.setImageResource(R.drawable.image_noimage)
     }
 }

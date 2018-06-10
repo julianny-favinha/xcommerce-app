@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import com.xcommerce.mc920.xcommerce.home.search.recycler_view.ProductsAdapter
@@ -50,22 +51,20 @@ class SearchActivity : AppCompatActivity() {
         }
 
         // keyboard done button
-        search_field.setOnKeyListener(object : View.OnKeyListener {
-            override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    searchOnClick()
-                }
-                return false
+        search_field.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                searchOnClick()
+                true
+            } else {
+                false
             }
-        })
+        }
     }
 
-    fun searchOnClick(){
+    fun searchOnClick() {
         val query = search_field.text.toString()
 
         var search = SearchTask(query, this)
-
-        search_field.onEditorAction(EditorInfo.IME_ACTION_DONE)
 
         search.execute()
     }
@@ -81,6 +80,8 @@ class SearchActivity : AppCompatActivity() {
                 resultsShown.addAll(results)
                 search_recycler_view.adapter.notifyDataSetChanged()
             }
+
+
         }
 
         override fun onPreExecute() {
@@ -100,6 +101,8 @@ class SearchActivity : AppCompatActivity() {
         override fun onPostExecute(result: Search?) {
             super.onPostExecute(result)
             search_progress.visibility = View.GONE
+            Log.d("resultSearch", result.toString())
+            Log.d("resultSearch2", result?.result.toString())
 
             if (result != null) {
                 if(!(result.result.isEmpty())) {
