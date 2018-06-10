@@ -12,7 +12,7 @@ class ClientHttpUtil {
 
     companion object {
 
-        const val BASE = "https://desolate-gorge-89381.herokuapp.com"
+        const val BASE = "https://hidden-gorge-33055.herokuapp.com"
 
         inline fun <reified T : Any> getRequest(path: String): T? {
             val client = OkHttpClient()
