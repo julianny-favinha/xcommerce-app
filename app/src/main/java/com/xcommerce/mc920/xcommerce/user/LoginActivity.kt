@@ -1,4 +1,4 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.user
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,11 +8,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
+import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.UserAPI
 import com.xcommerce.mc920.xcommerce.model.Login
-import com.xcommerce.mc920.xcommerce.model.User
 import com.xcommerce.mc920.xcommerce.model.UserResponse
-import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_login.*
 

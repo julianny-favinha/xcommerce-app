@@ -1,22 +1,17 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.user
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.AsyncTask
 import android.os.Bundle
-import android.provider.Telephony
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
+import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.*
-import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_signup.*
-import org.w3c.dom.Text
-import android.R.id.edit
-import android.content.SharedPreferences
-
 
 
 /**

@@ -1,18 +1,15 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.sac
 
 import android.content.Context
-import android.support.design.R.id.*
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.xcommerce.mc920.xcommerce.model.MessageReceive
 import kotlinx.android.synthetic.main.adapter_sac_view.view.*
-import android.R.attr.button
 import android.view.Gravity
-import android.R.attr.gravity
 import android.widget.LinearLayout
-
+import com.xcommerce.mc920.xcommerce.R
 
 
 class MessageViewHolder(item: View, context: Context, name: String) : RecyclerView.ViewHolder(item) {

@@ -1,4 +1,4 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.user
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,11 +8,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
+import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.*
-import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.content_address.*
 
 class EditProfileActivity : AppCompatActivity() {
 

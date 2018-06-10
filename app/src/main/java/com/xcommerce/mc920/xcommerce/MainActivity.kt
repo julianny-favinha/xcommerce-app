@@ -3,7 +3,6 @@ package com.xcommerce.mc920.xcommerce
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
@@ -21,9 +20,12 @@ import com.xcommerce.mc920.xcommerce.myorders.MyOrdersActivity
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import android.content.SharedPreferences
 import android.os.AsyncTask
 import com.xcommerce.mc920.xcommerce.model.UserAPI
+import com.xcommerce.mc920.xcommerce.sac.SACActivity
+import com.xcommerce.mc920.xcommerce.search.SearchActivity
+import com.xcommerce.mc920.xcommerce.user.LoginActivity
+import com.xcommerce.mc920.xcommerce.user.UserProfileActivity
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 
 

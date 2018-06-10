@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import com.xcommerce.mc920.xcommerce.R
-import com.xcommerce.mc920.xcommerce.SearchActivity
+import com.xcommerce.mc920.xcommerce.search.SearchActivity
 import com.xcommerce.mc920.xcommerce.model.Category
 import kotlinx.android.synthetic.main.adapter_category_view.view.*
 

@@ -1,4 +1,4 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.checkout
 
 import android.app.Activity
 import android.content.ClipData
@@ -8,14 +8,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
+import com.xcommerce.mc920.xcommerce.cart.CartItemAdapter
 import com.xcommerce.mc920.xcommerce.model.AddressFull
 import com.xcommerce.mc920.xcommerce.model.Delivery
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import com.xcommerce.mc920.xcommerce.utilities.utilDays
-import kotlinx.android.synthetic.main.content_address.*
 import kotlinx.android.synthetic.main.content_completed_purchase.*
 
 class CompletedPurchaseActivity: AppCompatActivity() {

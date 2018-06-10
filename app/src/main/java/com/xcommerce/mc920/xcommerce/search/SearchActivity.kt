@@ -1,4 +1,4 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.search
 
 import android.content.Context
 import android.os.AsyncTask
@@ -16,9 +16,8 @@ import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.content_search.*
-import android.widget.Toast
-import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.inputmethod.EditorInfo
+import com.xcommerce.mc920.xcommerce.R
 
 
 class SearchActivity : AppCompatActivity() {

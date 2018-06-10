@@ -4,13 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.provider.Telephony
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import com.xcommerce.mc920.xcommerce.CartItemAdapter
-import com.xcommerce.mc920.xcommerce.CompletedPurchaseActivity
+import com.xcommerce.mc920.xcommerce.cart.CartItemAdapter
 import com.xcommerce.mc920.xcommerce.user.AddressActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.cart.CartHelper

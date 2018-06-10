@@ -1,4 +1,4 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.sac
 
 import android.content.Context
 import android.os.AsyncTask
@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.MessageReceive
 import com.xcommerce.mc920.xcommerce.model.MessageSend
 import com.xcommerce.mc920.xcommerce.model.SacAPI
