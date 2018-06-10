@@ -14,8 +14,7 @@ class MyOrdersActivity : AppCompatActivity() {
 
     private var orders = emptyList<Order>().toMutableList()
     private var task: MyOrdersFetchTask? = null
-
-    val adapter = MyOrdersViewAdapter(this, orders)
+    var adapter : MyOrdersViewAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +23,8 @@ class MyOrdersActivity : AppCompatActivity() {
 
         // back button
         this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        adapter = MyOrdersViewAdapter(this, orders)
 
         task = MyOrdersFetchTask(this)
         task?.execute()
@@ -57,7 +58,7 @@ class MyOrdersActivity : AppCompatActivity() {
     fun populateResult(orders: List<Order>) {
         this.orders.clear()
         this.orders.addAll(orders)
-        adapter.notifyDataSetChanged()
+        adapter?.notifyDataSetChanged()
 
         Log.d("populateResultOrder", orders.toString())
     }
