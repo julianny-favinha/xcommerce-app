@@ -10,8 +10,8 @@ class MyOrdersFetchTask(private var container: MyOrdersActivity?): AsyncTask<Str
 
     override fun doInBackground(vararg p0: String?): Orders {
         val prod = Product(12, "Nome", "Marca", 1345, 22, 56, 585, 585, "Categ", "descrição", "imagem")
-        val order1 = Order(listOf(prod), 1234567, 45544, 343, 2, ShipmentInfo(type = "PAC", address = "Rua das Flores"), ShipmentStatus("Enviado"), PaymentStatus("Aprovado"), PaymentType("CREDIT_CARD"),  barcode = "", createdAt = "01/01/1979")
-        val order2 = Order(listOf(prod), 12345678, 45545, 343, 2, ShipmentInfo(type = "Sedex", address = "Rua das Flores"), ShipmentStatus("Processando"), PaymentStatus("Aguardando confirmação"), PaymentType("BOLETO"),"54585458545855", "01/01/1979")
+        val order1 = Order(listOf(prod), 1234567, 45544, 343, 2, ShipmentType.SEDEX, ShipmentStatus.PREPARING_FOR_SHIPMENT, PaymentStatus.PENDING, PaymentType.BOLETO,  barcode = "54585458545855", createdAt = "01/01/1979")
+        val order2 = Order(listOf(prod), 12345678, 45545, 343, 2, ShipmentType.PAC, ShipmentStatus.DELIVERED, PaymentStatus.OK, PaymentType.CREDIT_CARD,"", "01/01/1979")
 
         return Orders(listOf(order1, order2))
 

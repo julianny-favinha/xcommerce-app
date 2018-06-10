@@ -85,6 +85,7 @@
         <activity
             android:name=".myorders.OrderDetailActivity"
             android:label="@string/title_activity_order_detail"
+            android:parentActivityName=".myorders.MyOrdersActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
