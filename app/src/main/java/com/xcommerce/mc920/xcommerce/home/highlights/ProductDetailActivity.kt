@@ -3,6 +3,7 @@ package com.xcommerce.mc920.xcommerce.home.highlights
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.cart.ReserveTask
@@ -29,12 +30,15 @@ class ProductDetailActivity : AppCompatActivity() {
         val product = intent.getSerializableExtra("product")
 
         if (product is Product) {
+            if (product.stock == 0) {
+                fab.visibility = View.GONE
+            }
+
             fab.setOnClickListener { _ ->
                 CartHelper.retrieveCart().add(product, 1, ReserveTask())
                 finish()
             }
 
-            // TODO: get product by id from back-end
             val codeString = "Código " + product.id.toString()
             this.product_detail_id.text = codeString
             this.product_detail_name.text = product.name
