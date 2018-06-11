@@ -7,6 +7,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.inputmethod.EditorInfo
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.MessageReceive
@@ -24,56 +25,6 @@ class SACActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         var emptyResults = emptyList<MessageReceive>().toMutableList()
-        // TODO: remove later
-        /*val emptyResults = listOf(MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Hello, I would like to ask some questions."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "Hello mister " + senderName + "."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "How can I help you today?"
-        ),MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Nevermind, thanks."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Hello, I would like to ask some questions."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "Hello mister " + senderName + "."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "How can I help you today?"
-        ),MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Nevermind, thanks."
-        ),MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Hello, I would like to ask some questions."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "Hello mister " + senderName + "."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "How can I help you today?"
-        ),MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Nevermind, thanks."
-        ))*/
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sac)
@@ -87,7 +38,7 @@ class SACActivity : AppCompatActivity() {
 
         // custom layout manager
         val reverseLayoutManager = LinearLayoutManager(this)
-        reverseLayoutManager.stackFromEnd = true
+        reverseLayoutManager.reverseLayout = true
 
         // Set the layout manager to your recyclerview
         sac_recycler_view.layoutManager = reverseLayoutManager
@@ -99,7 +50,7 @@ class SACActivity : AppCompatActivity() {
         }
 
         // get messages after 3s(or 3000ms)
-        myHandler.postDelayed(handlerRunnable, 6000)
+        myHandler.postDelayed(handlerRunnable, 3000)
 
     }
 
@@ -117,14 +68,16 @@ class SACActivity : AppCompatActivity() {
     private fun sendOnClick(){
         val messageContent = sac_message.text.toString()
 
-        val send = SendTask(MessageSend(sender = senderName, message = messageContent), this)
-        sac_message.setText("")
+        if(messageContent.isNotBlank()) {
+            val send = SendTask(MessageSend(sender = senderName, message = messageContent), this)
+            sac_message.setText("")
+
+            // execute send message
+            send.execute()
+        }
 
         // close digital keyboard
         sac_message.onEditorAction(EditorInfo.IME_ACTION_DONE)
-
-        // execute send message
-        send.execute()
     }
 
     inner class ReceiveTask internal constructor(context: Context): AsyncTask<Void, Void, List<MessageReceive>>(){
@@ -140,24 +93,22 @@ class SACActivity : AppCompatActivity() {
             }
         }
 
-        // swap to current adapter
-        override fun onPreExecute() {
-            super.onPreExecute()
-            sac_recycler_view.swapAdapter(SACMessageAdapter(resultsShown, senderName, currentContext), true)
-        }
-
         // http request
         override fun doInBackground(vararg p0: Void?): List<MessageReceive> {
-            return ClientHttpUtil.getRequest(SacAPI.ReceiveMessages.PATH) ?: emptyList()
+            return ClientHttpUtil.getRequest(SacAPI.ReceiveMessages.PATH, true) ?: emptyList()
         }
 
         // populate and call again
         override fun onPostExecute(result: List<MessageReceive>) {
             super.onPostExecute(result)
+
+            // swap to current adapter
+            sac_recycler_view.swapAdapter(SACMessageAdapter(resultsShown, senderName, currentContext), true)
             populateResult(result) // show results on screen
+            sac_recycler_view.scrollToPosition(0)
 
             // get messages again after 3s(or 3000ms)
-            myHandler.postDelayed(handlerRunnable, 6000)
+            myHandler.postDelayed(handlerRunnable, 3000)
         }
     }
 
@@ -165,7 +116,7 @@ class SACActivity : AppCompatActivity() {
 
         // http request
         override fun doInBackground(vararg p0: Void?): Boolean {
-            return ClientHttpUtil.postRequest(SacAPI.SendMessage.PATH, message)?: false
+            return ClientHttpUtil.postRequest(SacAPI.SendMessage.PATH, message, true)?: false
         }
 
         override fun onPostExecute(result: Boolean?) {

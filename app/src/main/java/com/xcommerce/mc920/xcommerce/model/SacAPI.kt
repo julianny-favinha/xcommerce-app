@@ -6,7 +6,7 @@ class SacAPI {
     }
 
     object ReceiveMessages {
-        const val PATH = "/sac/"
+        const val PATH = "/sac"
     }
 
 }
