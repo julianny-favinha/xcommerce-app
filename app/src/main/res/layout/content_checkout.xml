@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
 
-            <include layout="@layout/shipment_options"
+            <include
+                layout="@layout/shipment_options"
                 tools:ignore="ResourceCycle" />
 
             <Space

@@ -4,6 +4,8 @@ import com.xcommerce.mc920.xcommerce.cart.CartActivity
 import com.xcommerce.mc920.xcommerce.cart.ReleaseTask
 import com.xcommerce.mc920.xcommerce.cart.ReserveTask
 
+data class CartIn(val cartItems: List<CartItem>)
+
 class Cart {
     var cartItemMap = emptyMap<Product, Int>().toMutableMap()
     var totalPrice = 0
