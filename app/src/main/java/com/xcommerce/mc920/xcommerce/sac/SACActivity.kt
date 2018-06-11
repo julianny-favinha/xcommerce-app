@@ -1,6 +1,7 @@
 package com.xcommerce.mc920.xcommerce.sac
 
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +13,7 @@ import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.MessageReceive
 import com.xcommerce.mc920.xcommerce.model.MessageSend
 import com.xcommerce.mc920.xcommerce.model.SacAPI
+import com.xcommerce.mc920.xcommerce.user.LoginActivity
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
 import kotlinx.android.synthetic.main.activity_sac.*
@@ -20,61 +22,9 @@ import kotlinx.android.synthetic.main.content_sac.*
 val myHandler = Handler()
 
 class SACActivity : AppCompatActivity() {
-    val senderName = UserHelper.retrieveUser().name
+    var senderName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var emptyResults = emptyList<MessageReceive>().toMutableList()
-        // TODO: remove later
-        /*val emptyResults = listOf(MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Hello, I would like to ask some questions."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "Hello mister " + senderName + "."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "How can I help you today?"
-        ),MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Nevermind, thanks."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Hello, I would like to ask some questions."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "Hello mister " + senderName + "."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "How can I help you today?"
-        ),MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Nevermind, thanks."
-        ),MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Hello, I would like to ask some questions."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "Hello mister " + senderName + "."
-        ), MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = "Support Person",
-                message = "How can I help you today?"
-        ),MessageReceive(
-                timestamp = "2018-06-09T18:13",
-                sender = senderName,
-                message = "Nevermind, thanks."
-        ))*/
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sac)
         setSupportActionBar(toolbar)
@@ -85,22 +35,89 @@ class SACActivity : AppCompatActivity() {
             finish()
         }
 
-        // custom layout manager
-        val reverseLayoutManager = LinearLayoutManager(this)
-        reverseLayoutManager.stackFromEnd = true
-
-        // Set the layout manager to your recyclerview
-        sac_recycler_view.layoutManager = reverseLayoutManager
-        sac_recycler_view.adapter = SACMessageAdapter(emptyResults, senderName, this)
-
         // send button
         sac_button.setOnClickListener{
             sendOnClick()
         }
 
+        if (!UserHelper.isLoggedIn()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         // get messages after 3s(or 3000ms)
         myHandler.postDelayed(handlerRunnable, 6000)
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (!UserHelper.isLoggedIn()) {
+            finish()
+        } else {
+            senderName = UserHelper.retrieveUser().name
+
+            var emptyResults = emptyList<MessageReceive>().toMutableList()
+
+            // TODO: remove later
+            /*val emptyResults = listOf(MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = senderName,
+                    message = "Hello, I would like to ask some questions."
+            ), MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = "Support Person",
+                    message = "Hello mister " + senderName + "."
+            ), MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = "Support Person",
+                    message = "How can I help you today?"
+            ),MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = senderName,
+                    message = "Nevermind, thanks."
+            ), MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = senderName,
+                    message = "Hello, I would like to ask some questions."
+            ), MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = "Support Person",
+                    message = "Hello mister " + senderName + "."
+            ), MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = "Support Person",
+                    message = "How can I help you today?"
+            ),MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = senderName,
+                    message = "Nevermind, thanks."
+            ),MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = senderName,
+                    message = "Hello, I would like to ask some questions."
+            ), MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = "Support Person",
+                    message = "Hello mister " + senderName + "."
+            ), MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = "Support Person",
+                    message = "How can I help you today?"
+            ),MessageReceive(
+                    timestamp = "2018-06-09T18:13",
+                    sender = senderName,
+                    message = "Nevermind, thanks."
+            ))*/
+
+            // custom layout manager
+            val reverseLayoutManager = LinearLayoutManager(this)
+            reverseLayoutManager.stackFromEnd = true
+
+            // Set the layout manager to your recyclerview
+            sac_recycler_view.layoutManager = reverseLayoutManager
+            sac_recycler_view.adapter = SACMessageAdapter(emptyResults, senderName, this)
+        }
     }
 
     // remove handler callbacks when activity is destroyed

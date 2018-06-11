@@ -99,6 +99,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_login)?.setVisible(!UserHelper.isLoggedIn())
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_logout)?.setVisible(UserHelper.isLoggedIn())
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_meuspedidos)?.setVisible(UserHelper.isLoggedIn())
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_profile)?.setVisible(UserHelper.isLoggedIn())
+
         if (UserHelper.isLoggedIn()){
             val usr = UserHelper.retrieveUser()
             findViewById<TextView>(R.id.nav_header_name).apply { text = usr.name }
@@ -110,6 +115,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         return super.onCreateOptionsMenu(menu)
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation item item clicks here.
