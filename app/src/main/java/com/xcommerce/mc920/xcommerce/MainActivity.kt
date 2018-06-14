@@ -21,6 +21,7 @@ import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.os.AsyncTask
+import android.util.Log
 import com.xcommerce.mc920.xcommerce.model.UserAPI
 import com.xcommerce.mc920.xcommerce.sac.SACActivity
 import com.xcommerce.mc920.xcommerce.search.SearchActivity
@@ -45,12 +46,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         configureTabLayout()
 
-        val preferences = getSharedPreferences("com.xcommerce.mc920.xcommerce", Context.MODE_PRIVATE)
-
+        val preferences = getSharedPreferences("com.xcommerce.mc920.xcommerce", 0)
         val token = preferences.getString("tokenUser", "")
 
         if (token != "") {
             UserHelper.token = token
+            Log.d("main token", token)
             GetUserTask().execute()
         }
 
@@ -166,6 +167,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         override fun onPostExecute(user: User?) {
+            Log.d("user", user.toString())
             UserHelper.updateUser(user)
             invalidateOptionsMenu()
         }
