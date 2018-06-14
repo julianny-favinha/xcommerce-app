@@ -18,7 +18,7 @@ class ReleaseTask() : AsyncTask<CartItem, Void, Boolean>() {
     override fun onPostExecute(result: Boolean?) {
         super.onPostExecute(result)
 
-        if (result == false){
+        if (result == false) {
             CartHelper.retrieveCart().add(cartItem!!.product, cartItem!!.quantity, null)
         }
     }
