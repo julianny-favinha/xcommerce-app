@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.view.View
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.checkout.CheckoutActivity
+import com.xcommerce.mc920.xcommerce.checkout.EditUserFetchTask
 import com.xcommerce.mc920.xcommerce.model.Address
 import com.xcommerce.mc920.xcommerce.model.AddressFull
 import com.xcommerce.mc920.xcommerce.model.User
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.content_address.*
 
 class AddressActivity : AppCompatActivity() {
     private var task: AddressFetchTask? = null
+    private var editUserTask: EditUserFetchTask? = null
+
     private var address: Address? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +31,7 @@ class AddressActivity : AppCompatActivity() {
         // back button
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
         toolbar.setNavigationOnClickListener {
-            startActivity(Intent(applicationContext, CheckoutActivity::class.java))
+            finish()
         }
 
         // validate CEP
@@ -56,18 +59,23 @@ class AddressActivity : AppCompatActivity() {
 
                 if (address_checkbox_default.isChecked) {
                     val user = UserHelper.retrieveUser()
-                    val newUser = User(user.name, user.cpf, user.cep, newAddress, user.email)
+                    val newUser = User(user.name, user.email, user.password, user.birthDate, user.cpf, newAddress, user.gender, user.telephone)
                     UserHelper.updateUser(newUser)
 
-                    // TODO: task para update do user
+                    editUserTask = EditUserFetchTask(this)
+                    editUserTask!!.execute(newUser)
+                } else {
+                    finishAddress(newAddress)
                 }
-
-                val returnIntent = Intent()
-                returnIntent.putExtra("address", newAddress!!)
-                setResult(Activity.RESULT_OK, returnIntent)
-                finish()
             }
         }
+    }
+
+    fun finishAddress(newAddress: AddressFull) {
+        val returnIntent = Intent()
+        returnIntent.putExtra("address", newAddress!!)
+        setResult(Activity.RESULT_OK, returnIntent)
+        finish()
     }
 
     fun populateResult(address: Address) {
@@ -77,12 +85,12 @@ class AddressActivity : AppCompatActivity() {
         address_text_view_city_state.text = address.city + ", " + address.state
     }
 
-    fun showProgressBar(){
+    fun showProgressBar() {
         progressbar.visibility = View.VISIBLE
         address_info.visibility = View.GONE
     }
 
-    fun hideProgressBar(){
+    fun hideProgressBar() {
         progressbar.visibility = View.GONE
         address_info.visibility = View.VISIBLE
     }

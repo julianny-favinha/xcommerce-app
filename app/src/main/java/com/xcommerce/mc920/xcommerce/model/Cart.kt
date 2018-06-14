@@ -1,11 +1,17 @@
 package com.xcommerce.mc920.xcommerce.model
 
+import com.xcommerce.mc920.xcommerce.cart.CartActivity
+import com.xcommerce.mc920.xcommerce.cart.ReleaseTask
+import com.xcommerce.mc920.xcommerce.cart.ReserveTask
+
+data class CartIn(val cartItems: List<CartItem>)
+
 class Cart {
     var cartItemMap = emptyMap<Product, Int>().toMutableMap()
     var totalPrice = 0
     var totalQuantity = 0
 
-    fun add(product: Product, quantity: Int) {
+    fun add(product: Product, quantity: Int, task: ReserveTask?) {
         if (cartItemMap.containsKey(product)) {
             cartItemMap[product] = cartItemMap[product]!! + quantity
         } else {
@@ -14,22 +20,11 @@ class Cart {
 
         totalPrice += product.price * quantity
         totalQuantity += quantity
+
+        task?.execute(CartItem(product, quantity))
     }
 
-    fun update(product: Product, newQuantity: Int) {
-        if(!cartItemMap.containsKey(product)) throw IllegalStateException("Product not found in cart!")
-        if(newQuantity < 0) throw IllegalStateException("Quantity to update is not valid!")
-
-        val currentQuantity = cartItemMap[product]!!
-        val currentPrice = currentQuantity * product.price
-        val newPrice = newQuantity * product.price
-
-        cartItemMap[product] = newQuantity
-        totalPrice = totalPrice - currentPrice + newPrice
-        totalQuantity = totalQuantity - currentQuantity + newQuantity
-    }
-
-    fun sub(product: Product, quantity: Int) {
+    fun sub(product: Product, quantity: Int, task: ReleaseTask?) {
         if(!cartItemMap.containsKey(product)) throw IllegalStateException("Product not found in cart!")
         val currentQuantity = cartItemMap[product]!!
 
@@ -43,6 +38,8 @@ class Cart {
 
         totalPrice -= product.price * quantity
         totalQuantity -= quantity
+
+        task?.execute(CartItem(product, quantity))
     }
 
     fun remove(product: Product) {

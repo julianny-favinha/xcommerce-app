@@ -1,5 +1,6 @@
 package com.xcommerce.mc920.xcommerce
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -19,6 +20,14 @@ import com.xcommerce.mc920.xcommerce.myorders.MyOrdersActivity
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import android.os.AsyncTask
+import com.xcommerce.mc920.xcommerce.model.UserAPI
+import com.xcommerce.mc920.xcommerce.sac.SACActivity
+import com.xcommerce.mc920.xcommerce.search.SearchActivity
+import com.xcommerce.mc920.xcommerce.user.LoginActivity
+import com.xcommerce.mc920.xcommerce.user.UserProfileActivity
+import com.xcommerce.mc920.xcommerce.utilities.ClientHttpUtil
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +44,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         configureTabLayout()
+
+        val preferences = getSharedPreferences("com.xcommerce.mc920.xcommerce", Context.MODE_PRIVATE)
+
+        val token = preferences.getString("tokenUser", "")
+
+        if (token != "") {
+            UserHelper.token = token
+            GetUserTask().execute()
+        }
 
         main_search_button.setOnClickListener{
             val intent = Intent(this, SearchActivity::class.java)
@@ -81,8 +99,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        val usr = UserHelper.retrieveNullableUser()
-        if (usr != null){
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_login)?.setVisible(!UserHelper.isLoggedIn())
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_logout)?.setVisible(UserHelper.isLoggedIn())
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_meuspedidos)?.setVisible(UserHelper.isLoggedIn())
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_profile)?.setVisible(UserHelper.isLoggedIn())
+
+        if (UserHelper.isLoggedIn()){
+            val usr = UserHelper.retrieveUser()
             findViewById<TextView>(R.id.nav_header_name).apply { text = usr.name }
             findViewById<TextView>(R.id.nav_header_email).apply { text = usr.email }
         } else {
@@ -93,6 +116,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return super.onCreateOptionsMenu(menu)
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation item item clicks here.
         when (item.itemId) {
@@ -101,7 +125,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
             }
             R.id.nav_sac -> {
-
+                val intent = Intent(this, SACActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_login -> {
                 val intent = Intent(this, LoginActivity::class.java)
@@ -124,13 +149,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             //TODO: Remove when backend integration is done
             R.id.debug_login -> {
-                val address = AddressFull(Address("Alameda das hortensias", "PVA", "Bauru", "SP"), 851, "1")
-                UserHelper.updateUser(User("Ronaldo Prata Amorim", "35028504812", "13083705", address, "roroprata@gmail.com"))
+                val address = AddressFull(Address("17020510","Alameda das hortensias", "PVA", "Bauru", "SP"), 851, "1")
+                UserHelper.updateUser(User("Ronaldo Prata Amorim", "ronaldo@g.com", "123mudar","13/06/1994","35028504812", address, "M", "99999999"))
                 invalidateOptionsMenu()
             }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    inner class GetUserTask internal constructor(): AsyncTask<Void, Void, User>() {
+
+        override fun doInBackground(vararg params: Void): User? {
+            return ClientHttpUtil.getRequest(UserAPI.User.PATH, true)
+        }
+
+        override fun onPostExecute(user: User?) {
+            UserHelper.updateUser(user)
+            invalidateOptionsMenu()
+        }
+
+        override fun onCancelled() {
+
+        }
     }
 }

@@ -1,12 +1,13 @@
-package com.xcommerce.mc920.xcommerce
+package com.xcommerce.mc920.xcommerce.user
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
-import com.xcommerce.mc920.xcommerce.user.UserHelper
+import com.xcommerce.mc920.xcommerce.R
 import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class UserProfileActivity : AppCompatActivity() {
@@ -19,18 +20,36 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val usr = UserHelper.retrieveNullableUser()
-        if (usr != null) {
+        if (UserHelper.isLoggedIn()){
+            val usr = UserHelper.retrieveUser()
             name.setText(usr.name, TextView.BufferType.EDITABLE)
             email.setText(usr.email, TextView.BufferType.EDITABLE)
             cpf.setText(usr.cpf, TextView.BufferType.EDITABLE)
-            cep.setText(usr.cep, TextView.BufferType.EDITABLE)
+            cep.setText(usr.address.address.cep, TextView.BufferType.EDITABLE)
             val complemento = (if (usr.address.complement != "") "Complemento " + usr.address.complement else "")
             val logradouro = usr.address.address.logradouro + ", " + usr.address.number + " " + complemento
             profile_logradouro.setText(logradouro, TextView.BufferType.EDITABLE)
             profile_neighborhood.setText(usr.address.address.neighborhood, TextView.BufferType.EDITABLE)
             val cityStateString = usr.address.address.city + " " + usr.address.address.state
             profile_city_state.setText(cityStateString, TextView.BufferType.EDITABLE)
+
+            if (usr.gender != "") {
+                gender_title.visibility = View.VISIBLE
+                gender.visibility = View.VISIBLE
+                gender.text = usr.gender
+            }
+
+            if (usr.birthDate != "") {
+                birth_title.visibility = View.VISIBLE
+                birth.visibility = View.VISIBLE
+                birth.text = usr.birthDate
+            }
+
+            if (usr.telephone != "") {
+                telephone_title.visibility = View.VISIBLE
+                telephone.visibility = View.VISIBLE
+                telephone.text = usr.telephone
+            }
         } else {
             finish()
         }

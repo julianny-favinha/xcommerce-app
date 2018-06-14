@@ -10,7 +10,6 @@ class AddressFetchTask(private var container: AddressActivity?): AsyncTask<Strin
     override fun doInBackground(vararg p0: String?): Address? {
         try {
             return ClientHttpUtil.getRequest(AddressAPI.CheckCep.of(p0.first()!!))
-                    ?: null
         } catch (e: Exception) {
             return null
         }
@@ -21,7 +20,7 @@ class AddressFetchTask(private var container: AddressActivity?): AsyncTask<Strin
         container?.showProgressBar()
     }
 
-    override fun onPostExecute(result: Address) {
+    override fun onPostExecute(result: Address?) {
         super.onPostExecute(result)
         if (result != null) container?.populateResult(result)
         container?.hideProgressBar()

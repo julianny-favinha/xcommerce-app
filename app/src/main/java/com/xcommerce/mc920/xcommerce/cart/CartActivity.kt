@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.xcommerce.mc920.xcommerce.user.LoginActivity
 import com.xcommerce.mc920.xcommerce.R
+import com.xcommerce.mc920.xcommerce.user.UserHelper
+
 import com.xcommerce.mc920.xcommerce.checkout.CheckoutActivity
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import kotlinx.android.synthetic.main.activity_cart.*
@@ -38,8 +41,14 @@ class CartActivity : AppCompatActivity() {
 
         // next button clicked
         cart_button_next.setOnClickListener {
-            val intent = Intent(this, CheckoutActivity::class.java)
-            startActivity(intent)
+            if (!UserHelper.isLoggedIn()) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckoutActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
+
 }

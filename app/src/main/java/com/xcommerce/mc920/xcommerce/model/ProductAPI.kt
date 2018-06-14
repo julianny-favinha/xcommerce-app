@@ -12,4 +12,12 @@ class ProductAPI {
     object Categories {
         const val PATH = "/category/"
     }
+
+    object Reserve {
+        const val PATH = "/cart/reserve"
+    }
+
+    object Release {
+        const val PATH = "/cart/release"
+    }
 }

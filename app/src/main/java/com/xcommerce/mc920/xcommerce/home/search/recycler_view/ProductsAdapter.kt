@@ -2,13 +2,15 @@ package com.xcommerce.mc920.xcommerce.home.search.recycler_view
 
 import android.content.Intent
 import android.content.Context
+import android.opengl.Visibility
 import android.support.v7.widget.RecyclerView.Adapter
 import android.view.ViewGroup
 import com.xcommerce.mc920.xcommerce.model.Product
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import com.xcommerce.mc920.xcommerce.ProductDetailActivity
+import com.xcommerce.mc920.xcommerce.home.highlights.ProductDetailActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 import kotlinx.android.synthetic.main.adapter_product_view.view.*
@@ -19,6 +21,7 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
     private val price = itemView.note_item_price
     private val category = itemView.note_item_category
     private val image = itemView.note_item_image
+    private val stock = itemView.note_item_esgotado
 
     fun bindClick(listener: View.OnClickListener) {
         itemView.setOnClickListener(listener)
@@ -28,12 +31,21 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         name.text = product.name
         brand.text = product.brand
         category.text = product.category
+        stock.text = "ESGOTADO"
+        if(product.stock == 0) {
+            stock.visibility = View.VISIBLE
+        } else {
+            stock.visibility = View.GONE
+        }
         val priceString = "R$" + ("%.2f".format(product.price / 100.0))
         price.text = priceString
         product.imageUrl?.let { DownloadImageTask(image).execute(product.imageUrl) }
                 ?: image.setImageResource(R.drawable.image_noimage)
     }
+
+
 }
+
 
 class ProductsAdapter(private val products: List<Product>, private val context: Context) : Adapter<ProductViewHolder>() {
 
@@ -57,6 +69,7 @@ class ProductsAdapter(private val products: List<Product>, private val context: 
         })
 
         holder?.bindData(product)
+
     }
 
 

@@ -1,13 +1,17 @@
 package com.xcommerce.mc920.xcommerce.model;
 
 class UserAPI {
+    object User {
+        const val PATH = "/user"
+    }
+
     object Login {
-        const val PATH = "/client/login"
+        const val PATH = "/user/login"
     }
     object Signup {
-        const val PATH = "/client/signup"
+        const val PATH = "/user/signup"
     }
     object Edit {
-        const val PATH = "/client/edit"
+        const val PATH = "/user/update"
     }
 }

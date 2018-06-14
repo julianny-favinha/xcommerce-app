@@ -8,7 +8,7 @@ import com.xcommerce.mc920.xcommerce.model.Product
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
-import com.xcommerce.mc920.xcommerce.ProductDetailActivity
+import com.xcommerce.mc920.xcommerce.home.highlights.ProductDetailActivity
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.utilities.DownloadImageTask
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
@@ -20,6 +20,7 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
     private val price = itemView.note_item_price
     private val category = itemView.note_item_category
     private val image = itemView.note_item_image
+    private val stock = itemView.note_item_esgotado
 
     fun bindClick(listener: View.OnClickListener) {
         itemView.setOnClickListener(listener)
@@ -30,6 +31,12 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         brand.text = product.brand
         category.text = product.category
         val priceString = formatMoney(product.price)
+        stock.text = "ESGOTADO"
+        if (product.stock == 0) {
+            stock.visibility = View.VISIBLE
+        } else {
+            stock.visibility = View.GONE
+        }
         price.text = priceString
         product.imageUrl?.let { DownloadImageTask(image).execute(product.imageUrl) }
                 ?: image.setImageResource(R.drawable.image_noimage)
