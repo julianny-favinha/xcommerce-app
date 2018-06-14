@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.xcommerce.mc920.xcommerce.CartItemAdapter
 import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.model.*
+import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 
 import kotlinx.android.synthetic.main.activity_order_detail.*
@@ -13,6 +15,7 @@ import kotlinx.android.synthetic.main.order_detail.*
 import kotlinx.android.synthetic.main.order_payment_method.*
 import kotlinx.android.synthetic.main.order_products.*
 import kotlinx.android.synthetic.main.order_shipping.*
+import kotlinx.android.synthetic.main.summary_products.*
 
 class OrderDetailActivity : AppCompatActivity() {
 
@@ -57,11 +60,15 @@ class OrderDetailActivity : AppCompatActivity() {
             }
 
 
-            // Product
+            // Products
+            val cart = Cart()
             for (product in order.products) {
-                this.product_name.text = product.name
-                this.product_price.text = formatMoney(product.price)
+                cart.add(product, 1)
             }
+            val cartItems = cart.cartItemMap.map { (k, v) -> CartItem(k, v) }
+            val adapter = CartItemAdapter(this, cartItems)
+            list_view_completed.adapter = adapter
+            UIUtils.setListViewHeightBasedOnItems(list_view_completed)
 
             // Shipping info
             if (order.shipmentStatus == ShipmentStatus.PREPARING_FOR_SHIPMENT) {
