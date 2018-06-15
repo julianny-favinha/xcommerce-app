@@ -57,6 +57,9 @@ class Cart {
     }
 
     fun clear() {
+        for ((product, _) in cartItemMap){
+            remove(product)
+        }
         cartItemMap.clear()
         totalPrice = 0
         totalQuantity = 0

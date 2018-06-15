@@ -1,5 +1,6 @@
 package com.xcommerce.mc920.xcommerce.user
 
+import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.model.User
 
 class UserHelper {
@@ -29,6 +30,7 @@ class UserHelper {
                 return false
             }
 
+            CartHelper.retrieveCart().clear()
             user = null
             return true
         }

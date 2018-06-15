@@ -106,8 +106,9 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         } else {
             completed_scroll_view.visibility = View.GONE
             purchase_failed.visibility = View.VISIBLE
-            CartHelper.retrieveCart().clear()
         }
+        
+        CartHelper.retrieveCart().clear()
     }
 
     private fun populateAddress(address: AddressFull) {
