@@ -25,6 +25,7 @@ class CheckoutFetchTask(private var container: CheckoutActivity?): AsyncTask<Che
             CheckoutStatus.BAD_INPUT -> Toast.makeText(container, "Algo deu errado.", Toast.LENGTH_SHORT).show()
             CheckoutStatus.FAILED -> container!!.startCompletedPurchase(false)
         }
+        container?.hideProgressBar()
     }
 
 }

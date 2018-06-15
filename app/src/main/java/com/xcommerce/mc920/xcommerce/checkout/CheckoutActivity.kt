@@ -136,7 +136,7 @@ class CheckoutActivity : AppCompatActivity() {
             checkout_button.isEnabled = false
             progressBarCompletedPurchase.visibility = View.VISIBLE
             progressBarCompletedPurchase.bringToFront()
-            
+
             val creditCardInfo = if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD) {
                 CreditCardInfo(credit_card_name.text.toString(), credit_card_month.text.toString().toLong(), credit_card_year.text.toString().toLong(), credit_card_code.text.toString(), credit_card_number.text.toString())
             } else {
@@ -154,6 +154,10 @@ class CheckoutActivity : AppCompatActivity() {
             checkoutTask = CheckoutFetchTask(this)
             checkoutTask!!.execute(checkoutIn)
         }
+    }
+
+    fun hideProgressBar() {
+        progressBarCompletedPurchase.visibility = View.GONE
     }
 
     private fun getDelivery(): Delivery {
