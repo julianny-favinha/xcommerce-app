@@ -46,7 +46,7 @@ class SACActivity : AppCompatActivity() {
         }
 
         // get messages after 3s(or 3000ms)
-        myHandler.postDelayed(handlerRunnable, 3000)
+        myHandler.postDelayed(handlerRunnable, 1)
     }
 
     override fun onResume() {
@@ -120,7 +120,7 @@ class SACActivity : AppCompatActivity() {
             populateResult(result) // show results on screen
 
             // get messages again after 3s(or 3000ms)
-            myHandler.postDelayed(handlerRunnable, 3000)
+            myHandler.postDelayed(handlerRunnable, 1000)
         }
     }
 
