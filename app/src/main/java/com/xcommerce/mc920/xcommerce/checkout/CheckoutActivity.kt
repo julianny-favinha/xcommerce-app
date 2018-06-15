@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -132,29 +133,47 @@ class CheckoutActivity : AppCompatActivity() {
         }
 
         // finish shopping
-        checkout_button.setOnClickListener{
-            checkout_button.isEnabled = false
-            progressBarCompletedPurchase.visibility = View.VISIBLE
-            progressBarCompletedPurchase.bringToFront()
+        checkout_button.setOnClickListener {
 
-            val creditCardInfo = if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD) {
-                CreditCardInfo(credit_card_name.text.toString(), credit_card_month.text.toString().toLong(), credit_card_year.text.toString().toLong(), credit_card_code.text.toString(), credit_card_number.text.toString())
+            if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD && credit_card_number.text.toString().length != 16) {
+                credit_card_number.error = "Cartão Inválido"
+                credit_card_number.requestFocus()
+            } else if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD && TextUtils.isEmpty(credit_card_name.text.toString())) {
+                credit_card_name.error = "Campo Obrigatório"
+                credit_card_name.requestFocus()
+            } else if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD && credit_card_code.text.toString().length != 3) {
+                credit_card_code.error = "Número Inválido"
+                credit_card_code.requestFocus()
+            } else if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD && credit_card_month.text.toString().length != 2) {
+                credit_card_month.error = "Inválido"
+                credit_card_month.requestFocus()
+            } else if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD && credit_card_year.text.toString().length != 4) {
+                credit_card_year.error = "Inválido"
+                credit_card_year.requestFocus()
             } else {
-                null
+                    checkout_button.isEnabled = false
+                    progressBarCompletedPurchase.visibility = View.VISIBLE
+                    progressBarCompletedPurchase.bringToFront()
+
+                    val creditCardInfo = if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD) {
+                        CreditCardInfo(credit_card_name.text.toString(), credit_card_month.text.toString().toLong(), credit_card_year.text.toString().toLong(), credit_card_code.text.toString(), credit_card_number.text.toString())
+                    } else {
+                        null
+                    }
+
+                    val paymentInfo = PaymentInfo(PaymentType.getType(getPaymentMethod()), creditCardInfo, getInstallments())
+
+                    val shipmentInfo = ShipmentInfo(UserHelper.retrieveUser().address.address.cep, ShipmentType.getType(getShipmentMethod()))
+
+                    val cart = CartHelper.retrieveListCart()
+                    val cartIn = CartIn(cart)
+                    val checkoutIn = CheckoutIn(cartIn, paymentInfo, shipmentInfo)
+
+                    checkoutTask = CheckoutFetchTask(this)
+                    checkoutTask!!.execute(checkoutIn)
+                }
             }
-
-            val paymentInfo = PaymentInfo(PaymentType.getType(getPaymentMethod()), creditCardInfo, getInstallments())
-
-            val shipmentInfo = ShipmentInfo(UserHelper.retrieveUser().address.address.cep, ShipmentType.getType(getShipmentMethod()))
-
-            val cart = CartHelper.retrieveListCart()
-            val cartIn = CartIn(cart)
-            val checkoutIn = CheckoutIn(cartIn, paymentInfo, shipmentInfo)
-
-            checkoutTask = CheckoutFetchTask(this)
-            checkoutTask!!.execute(checkoutIn)
         }
-    }
 
     fun hideProgressBar() {
         progressBarCompletedPurchase.visibility = View.GONE
