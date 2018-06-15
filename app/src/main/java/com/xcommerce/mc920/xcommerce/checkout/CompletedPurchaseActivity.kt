@@ -45,7 +45,8 @@ class CompletedPurchaseActivity: AppCompatActivity() {
 
             // address
             val user = UserHelper.retrieveUser()
-            populateAddress(user.address)
+            val addressInfo = intent.getSerializableExtra("address") as AddressFull
+            populateAddress(addressInfo)
 
             // total intent
             val total = intent.getIntExtra("total", 0)

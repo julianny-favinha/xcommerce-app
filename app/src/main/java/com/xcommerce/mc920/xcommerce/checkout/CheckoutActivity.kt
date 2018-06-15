@@ -180,7 +180,7 @@ class CheckoutActivity : AppCompatActivity() {
 
                     val paymentInfo = PaymentInfo(PaymentType.getType(getPaymentMethod()), creditCardInfo, getInstallments())
 
-                    val shipmentInfo = ShipmentInfo(UserHelper.retrieveUser().address.address.cep, ShipmentType.getType(getShipmentMethod()))
+                    val shipmentInfo = ShipmentInfo(address?.address?.cep ?: UserHelper.retrieveUser().address.address.cep, ShipmentType.getType(getShipmentMethod()))
 
                     val cart = CartHelper.retrieveListCart()
                     val cartIn = CartIn(cart)
