@@ -85,7 +85,8 @@
         <activity
             android:name=".myorders.OrderDetailActivity"
             android:label="@string/title_activity_order_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".myorders.MyOrdersActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".sac.SACActivity"
             android:label="Atendimento ao Consumidor"

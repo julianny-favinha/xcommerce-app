@@ -57,8 +57,43 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rua Alfred Hitchcock, 1345, Jd. Europa"
+                        android:text=""
                         android:id="@+id/shipping_address_val" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo da entrega"
+                        android:id="@+id/shipping_type_label" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="textEnd"
+                        android:textStyle="bold"
+                        android:id="@+id/shipping_type_val"  />
                 </LinearLayout>
             </LinearLayout>
 
@@ -91,7 +126,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Em trânsito"
+                        android:text=""
                         android:textAlignment="textEnd"
                         android:textStyle="bold"
                         android:id="@+id/shipping_status_val"  />

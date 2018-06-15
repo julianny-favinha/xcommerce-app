@@ -57,7 +57,7 @@
             <include
                 layout="@layout/order_shipping"
                 tools:ignore="ResourceCycle" />
-            <!--End of Payment Method-->
+            <!--End of Shipping-->
 
         </LinearLayout>
     </ScrollView>

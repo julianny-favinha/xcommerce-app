@@ -37,8 +37,43 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Boleto Bancário"
+                        android:text=""
                         android:id="@+id/method_val" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status"
+                        android:id="@+id/payment_status_label" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="textEnd"
+                        android:textStyle="bold"
+                        android:id="@+id/payment_status_val" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -71,7 +106,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="30/05/2018"
+                        android:text=""
                         android:textAlignment="textEnd"
                         android:textStyle="bold"
                         android:id="@+id/boleto_venc_val" />
@@ -115,7 +150,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5854585485222521212112121295000000007252"
+                        android:text=""
                         android:textStyle="bold"
                         android:id="@+id/boleto_num_val"/>
                 </LinearLayout>
