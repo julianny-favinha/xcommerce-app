@@ -12,25 +12,28 @@ import com.xcommerce.mc920.xcommerce.R
 import com.xcommerce.mc920.xcommerce.cart.CartHelper
 import com.xcommerce.mc920.xcommerce.cart.CartItemAdapter
 import com.xcommerce.mc920.xcommerce.model.AddressFull
+import com.xcommerce.mc920.xcommerce.model.CheckoutOut
 import com.xcommerce.mc920.xcommerce.model.Delivery
 import com.xcommerce.mc920.xcommerce.user.UserHelper
 import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
 import com.xcommerce.mc920.xcommerce.utilities.utilDays
 import kotlinx.android.synthetic.main.content_completed_purchase.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class CompletedPurchaseActivity: AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_purchase)
 
         // successful intent
-        val successful: Boolean = intent.getBooleanExtra("successful", false)
+        val successful = intent.getBooleanExtra("successful", false)
 
         if (successful) {
-            completed_scroll_view.visibility = View.VISIBLE
-            purchase_failed.visibility = View.GONE
-
             // delivery intent
             val delivery = intent.getSerializableExtra("delivery")
             if (delivery is Delivery) {
@@ -40,51 +43,66 @@ class CompletedPurchaseActivity: AppCompatActivity() {
                 ship_price.text = formatMoney(delivery.price)
             }
 
-            // address intent
+            // address
             val user = UserHelper.retrieveUser()
             populateAddress(user.address)
 
-            // payment method intent
+            // total intent
             val total = intent.getIntExtra("total", 0)
             price_total.text = formatMoney(total)
 
-            val cartItems = CartHelper.retrieveListCart() // itens da compra
+            // payment method intent (checkout out)
+            val paymentMethod = intent.getStringExtra("paymentMethod")
+            val checkoutOut = intent.getSerializableExtra("checkoutOut")
+            if (checkoutOut is CheckoutOut) {
+                val orderStr = "Pedido número " + checkoutOut.orderId.toString()
+                order_number.text = orderStr
 
-            // método de pagamento
-            val paymentType = getPaymentType() // Boleto ou Cartao
+                if (paymentMethod == "Boleto") {
+                    val boletoNumber = checkoutOut.paymentDetails!!.barCode
+                    val today = Calendar.getInstance()
+                    today.add(Calendar.DATE, 5)
+                    val vencimento = SimpleDateFormat("d/M/y").format(today.time)
+                    boleto_vencimento_date.text = vencimento
+                    boleto_number.text = boletoNumber
 
-            if (paymentType == "Boleto") {
-                val (boletoNumber, vencimento) = getBoletoInfo(total)
-                boleto_vencimento_date.text = vencimento
-                boleto_number.text = boletoNumber
+                    card_view_payment_boleto.visibility = View.VISIBLE
+                    card_view_payment_card.visibility = View.GONE
 
-                card_view_payment_boleto.visibility = View.VISIBLE
-                card_view_payment_card.visibility = View.GONE
+                    button_copy.setOnClickListener{
+                        copyToClipboard(this, boletoNumber)
 
-                button_copy.setOnClickListener{
-                    copyToClipboard(this, boletoNumber)
+                        val duration = Toast.LENGTH_SHORT
+                        val toast = Toast.makeText(applicationContext, R.string.copy_boleto_number, duration)
+                        toast.show()
+                    }
 
-                    val duration = Toast.LENGTH_SHORT
-                    val toast = Toast.makeText(applicationContext, R.string.copy_boleto_number, duration)
-                    toast.show()
+                } else { // Pagamento por Cartão
+                    val creditCardNumber = intent.getStringExtra("creditCardNumber")
+                    val creditCardStr = "..." + creditCardNumber.takeLast(4)
+                    card_end.text = creditCardStr
+
+                    // intent of installments
+                    val parcelaNum = intent.getLongExtra("installments", 1)
+                    val parcelaValue = total / parcelaNum
+                    val parcelas = parcelaNum.toString() + "x " + formatMoney(parcelaValue.toInt())
+                    card_parcelas.text = parcelas
+
+                    card_view_payment_card.visibility = View.VISIBLE
+                    card_view_payment_boleto.visibility = View.GONE
                 }
-
-            } else { // Pagamento por Cartão
-                val cardEnd = getCardEnd()
-                card_end.text = cardEnd
-
-                val (parcelaNum, parcelaValue) = getParcelas()
-                val parcelas = parcelaNum + "x " + formatMoney(parcelaValue.toInt())
-                card_parcelas.text = parcelas
-
-                card_view_payment_card.visibility = View.VISIBLE
-                card_view_payment_boleto.visibility = View.GONE
             }
+
+            val cartItems = CartHelper.retrieveListCart() // itens da compra
 
             // --- resumo da compra ---
             val adapter = CartItemAdapter(this, cartItems)
             list_view_completed.adapter = adapter
             UIUtils.setListViewHeightBasedOnItems(list_view_completed)
+
+            // show views
+            completed_scroll_view.visibility = View.VISIBLE
+            purchase_failed.visibility = View.GONE
         } else {
             completed_scroll_view.visibility = View.GONE
             purchase_failed.visibility = View.VISIBLE
@@ -101,22 +119,22 @@ class CompletedPurchaseActivity: AppCompatActivity() {
         ship_city_state.text = cityState
     }
 
-    private fun getPaymentType(): String {
-        return "Boleto"
-        //return "Cartão de crédito"
-    }
-
-    private fun getBoletoInfo(price: Int): Pair<String, String> {
-        return Pair("34191790010104351004791020150008775410026000", "01/07/2018")
-    }
-
-    private fun getCardEnd(): String {
-        return "3419"
-    }
-
-    private fun getParcelas(): Pair<String, String> {
-        return Pair("3", "1499")
-    }
+//    private fun getPaymentType(): String {
+//        return "Boleto"
+//        //return "Cartão de crédito"
+//    }
+//
+//    private fun getBoletoInfo(price: Int): Pair<String, String> {
+//        return Pair("34191790010104351004791020150008775410026000", "01/07/2018")
+//    }
+//
+//    private fun getCardEnd(): String {
+//        return "3419"
+//    }
+//
+//    private fun getParcelas(): Pair<String, String> {
+//        return Pair("3", "1499")
+//    }
 
     private fun copyToClipboard(activity: Activity, text: String) {
         val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

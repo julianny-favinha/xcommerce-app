@@ -6,6 +6,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.xcommerce.mc920.xcommerce.R
@@ -310,6 +311,7 @@ class SignupActivity : AppCompatActivity() {
                 editor.putString("tokenUser", res.token)
 
                 UserHelper.token = res.token
+                Log.d("signUp token", res.token)
 
                 // Apply the edits!
                 editor.apply()

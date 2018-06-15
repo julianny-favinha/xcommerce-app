@@ -1,8 +1,11 @@
 package com.xcommerce.mc920.xcommerce.model
 
+import android.util.Log
 import com.xcommerce.mc920.xcommerce.cart.CartActivity
 import com.xcommerce.mc920.xcommerce.cart.ReleaseTask
 import com.xcommerce.mc920.xcommerce.cart.ReserveTask
+
+data class CartIn(val cartItems: List<CartItem>)
 
 class Cart {
     var cartItemMap = emptyMap<Product, Int>().toMutableMap()
@@ -28,7 +31,7 @@ class Cart {
 
         if(currentQuantity < 0 || currentQuantity < quantity) throw IllegalStateException("Quantity to decrease is not valid!")
 
-        if(currentQuantity == quantity){
+        if(currentQuantity == quantity) {
             cartItemMap.remove(product)
         } else {
             cartItemMap[product] = cartItemMap[product]!! - quantity
@@ -37,12 +40,16 @@ class Cart {
         totalPrice -= product.price * quantity
         totalQuantity -= quantity
 
+        Log.d("quantity", quantity.toString())
         task?.execute(CartItem(product, quantity))
     }
 
     fun remove(product: Product) {
         if(!cartItemMap.containsKey(product)) throw IllegalStateException("Product not found in cart!")
         val quantity = cartItemMap[product]!!
+
+        val task = ReleaseTask()
+        task?.execute(CartItem(product, quantity))
 
         cartItemMap.remove(product)
         totalPrice -= product.price * quantity

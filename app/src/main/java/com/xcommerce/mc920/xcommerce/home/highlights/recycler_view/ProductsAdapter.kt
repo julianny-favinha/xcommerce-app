@@ -20,6 +20,7 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
     private val price = itemView.note_item_price
     private val category = itemView.note_item_category
     private val image = itemView.note_item_image
+    private val stock = itemView.note_item_esgotado
 
     fun bindClick(listener: View.OnClickListener) {
         itemView.setOnClickListener(listener)
@@ -30,6 +31,12 @@ class ProductViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         brand.text = product.brand
         category.text = product.category
         val priceString = formatMoney(product.price)
+        stock.text = "ESGOTADO"
+        if (product.stock == 0) {
+            stock.visibility = View.VISIBLE
+        } else {
+            stock.visibility = View.GONE
+        }
         price.text = priceString
         product.imageUrl?.let { DownloadImageTask(image).execute(product.imageUrl) }
                 ?: image.setImageResource(R.drawable.image_noimage)

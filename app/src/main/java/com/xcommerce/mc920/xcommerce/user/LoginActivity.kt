@@ -7,6 +7,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.xcommerce.mc920.xcommerce.R
@@ -132,14 +133,19 @@ class LoginActivity : AppCompatActivity() {
             mAuthTask = null
             showProgress(false)
 
-            if (res != null) {
+            if(res != null) {
+                UserHelper.updateUser(res.user)
+
                 val settings = applicationContext.getSharedPreferences("com.xcommerce.mc920.xcommerce", 0)
                 val editor = settings.edit()
                 editor.putString("tokenUser", res.token)
-                editor.apply()
+                Log.d("login token", res.token)
 
-                UserHelper.updateUser(res.user)
+
                 UserHelper.token = res.token
+
+                // Apply the edits!
+                editor.apply()
 
                 finish()
             } else {

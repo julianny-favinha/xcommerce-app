@@ -32,6 +32,7 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private var task: ShipmentPriceFetchTask? = null
+    private var checkoutTask: CheckoutFetchTask? = null
 
     private var shipmentPrices: Map<String, Int> = emptyMap()
     private var shipmentPrazos: Map<String, Int> = emptyMap()
@@ -111,10 +112,10 @@ class CheckoutActivity : AppCompatActivity() {
         // set shipment price
         checkout_radio_pac_sedex.setOnCheckedChangeListener { _, optionId ->
             when (optionId) {
-                R.id.checkout_pac -> {
+                R.id.checkout_radio_button_pac -> {
                     shipment = shipmentPrices["PAC"]!!
                 }
-                R.id.checkout_sedex -> {
+                R.id.checkout_radio_button_sedex -> {
                     shipment = shipmentPrices["Sedex"]!!
                 }
             }
@@ -132,19 +133,62 @@ class CheckoutActivity : AppCompatActivity() {
 
         // finish shopping
         checkout_button.setOnClickListener{
-            startCompletedPurchase(true)
+            checkout_button.isEnabled = false
+            progressBarCompletedPurchase.visibility = View.VISIBLE
+            progressBarCompletedPurchase.bringToFront()
+
+            val creditCardInfo = if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD) {
+                CreditCardInfo(credit_card_name.text.toString(), credit_card_month.text.toString().toLong(), credit_card_year.text.toString().toLong(), credit_card_code.text.toString(), credit_card_number.text.toString())
+            } else {
+                null
+            }
+
+            val paymentInfo = PaymentInfo(PaymentType.getType(getPaymentMethod()), creditCardInfo, getInstallments())
+
+            val shipmentInfo = ShipmentInfo(UserHelper.retrieveUser().address.address.cep, ShipmentType.getType(getShipmentMethod()))
+
+            val cart = CartHelper.retrieveListCart()
+            val cartIn = CartIn(cart)
+            val checkoutIn = CheckoutIn(cartIn, paymentInfo, shipmentInfo)
+
+            checkoutTask = CheckoutFetchTask(this)
+            checkoutTask!!.execute(checkoutIn)
         }
     }
 
+    fun hideProgressBar() {
+        progressBarCompletedPurchase.visibility = View.GONE
+    }
+
     private fun getDelivery(): Delivery {
-        if (checkout_pac.isChecked) {
+        if (checkout_radio_button_pac.isChecked) {
             return Delivery("PAC", shipmentPrices["PAC"]!!, shipmentPrazos["PAC"]!!)
         }
 
         return Delivery("Sedex", shipmentPrices["Sedex"]!!, shipmentPrazos["Sedex"]!!)
     }
 
-    private fun startCompletedPurchase(successful: Boolean) {
+    private fun getPaymentMethod(): String {
+        if (checkout_radio_button_credit_card.isChecked) {
+            return checkout_radio_button_credit_card.text.toString()
+        }
+
+        return checkout_radio_button_boleto.text.toString()
+    }
+
+    private fun getShipmentMethod(): String {
+        if (checkout_radio_button_pac.isChecked) {
+            return checkout_radio_button_pac.text.toString()
+        }
+
+        return checkout_radio_button_sedex.text.toString()
+    }
+
+    private fun getInstallments(): Long {
+        return (credit_card_spinner.selectedItemPosition + 1).toLong()
+    }
+
+    fun startCompletedPurchase(successful: Boolean, checkoutOut: CheckoutOut = CheckoutOut(CheckoutStatus.FAILED)) {
         val intent = Intent(this, CompletedPurchaseActivity::class.java)
 
         intent.putExtra("successful", successful)
@@ -153,7 +197,16 @@ class CheckoutActivity : AppCompatActivity() {
             // delivery
             intent.putExtra("delivery", getDelivery())
 
-            // TODO:  Método de pagamento (Boleto ou cartão)
+            // checkout out
+            intent.putExtra("paymentMethod", getPaymentMethod())
+
+            // installments
+            if (getPaymentMethod() == "Cartão de crédito") {
+                intent.putExtra("installments", getInstallments())
+                intent.putExtra("creditCardNumber", credit_card_code.text.toString())
+            }
+
+            intent.putExtra("checkoutOut", checkoutOut)
 
             // total
             intent.putExtra("total", subtotal + shipment)
@@ -190,7 +243,7 @@ class CheckoutActivity : AppCompatActivity() {
         checkout_prazo_pac.visibility = View.VISIBLE
         checkout_prazo_sedex.visibility = View.VISIBLE
 
-        shipment = if (checkout_pac.isChecked) prices["PAC"]!! else prices["Sedex"]!!
+        shipment = if (checkout_radio_button_pac.isChecked) prices["PAC"]!! else prices["Sedex"]!!
 
         populateShipment()
         populateSubtotal()

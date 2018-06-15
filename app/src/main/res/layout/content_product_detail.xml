@@ -27,16 +27,6 @@
                 android:contentDescription="@string/text_description_photo" />
 
             <TextView
-                android:id="@+id/product_detail_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textSize="12sp"
-                tools:text="Código" />
-
-
-            <TextView
                 android:id="@+id/product_detail_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
