@@ -139,6 +139,8 @@ class LoginActivity : AppCompatActivity() {
                 val settings = applicationContext.getSharedPreferences("com.xcommerce.mc920.xcommerce", 0)
                 val editor = settings.edit()
                 editor.putString("tokenUser", res.token)
+                Log.d("login token", res.token)
+
 
                 UserHelper.token = res.token
 

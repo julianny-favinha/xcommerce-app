@@ -311,6 +311,7 @@ class SignupActivity : AppCompatActivity() {
                 editor.putString("tokenUser", res.token)
 
                 UserHelper.token = res.token
+                Log.d("signUp token", res.token)
 
                 // Apply the edits!
                 editor.apply()

@@ -39,8 +39,6 @@ class ProductDetailActivity : AppCompatActivity() {
                 finish()
             }
 
-            val codeString = "Código " + product.id.toString()
-            this.product_detail_id.text = codeString
             this.product_detail_name.text = product.name
             this.product_detail_brand.text = product.brand
             val priceString = formatMoney(product.price)
