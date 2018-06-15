@@ -4,14 +4,19 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonValue
 import java.io.Serializable
+import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.KeyDeserializer
+import java.io.IOException
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class Order(val products: List<Product>,
+data class Order(val productsByQuantity: List<CartItem>,
                  val orderId: Long,
                  val totalPrice: Long,
                  val freightPrice: Long,
                  val totalQuantity: Long,
-                 val shipmentTYpe: ShipmentType,
+                 val shipmentInfo: ShipmentInfo,
                  val shipmentStatus: ShipmentStatus,
                  val paymentStatus: PaymentStatus,
                  val paymentType: PaymentType,
@@ -19,43 +24,6 @@ data class Order(val products: List<Product>,
                  val createdAt: String) : Serializable
 
 data class Orders(val orders: List<Order>)
-
-enum class ShipmentType(private val _id: Int) : Serializable {
-    PAC(1),
-    SEDEX(2);
-
-    @JsonValue
-    fun getId() = _id
-
-    companion object {
-        @JvmStatic
-        @JsonCreator
-        fun forValue(value: Int): ShipmentType {
-            return (ShipmentType::class.java).enumConstants.first { value == it.getId() }
-                    ?: throw IllegalArgumentException("Invalid id for enum")
-        }
-
-    }
-}
-
-enum class PaymentType(private val _id: Int) : Serializable {
-    CREDIT_CARD(1),
-    BOLETO(2);
-
-    @JsonValue
-    fun getId() = _id
-
-    companion object {
-        @JvmStatic
-        @JsonCreator
-        fun forValue(value: Int): PaymentType {
-            return (PaymentType::class.java).enumConstants.first { value == it.getId() }
-                    ?: throw IllegalArgumentException("Invalid id for enum")
-        }
-
-    }
-
-}
 
 enum class PaymentStatus(private val _id: Int) : Serializable {
     PENDING(1),

@@ -57,7 +57,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rua Alfred Hitchcock, 1345, Jd. Europa"
+                        android:text=""
                         android:id="@+id/shipping_address_val" />
                 </LinearLayout>
             </LinearLayout>
@@ -90,7 +90,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="PAC"
+                        android:text=""
                         android:textAlignment="textEnd"
                         android:textStyle="bold"
                         android:id="@+id/shipping_type_val"  />
@@ -126,7 +126,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Em trânsito"
+                        android:text=""
                         android:textAlignment="textEnd"
                         android:textStyle="bold"
                         android:id="@+id/shipping_status_val"  />

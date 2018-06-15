@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.xcommerce.mc920.xcommerce.CartItemAdapter
 import com.xcommerce.mc920.xcommerce.R
+import com.xcommerce.mc920.xcommerce.cart.CartItemAdapter
 import com.xcommerce.mc920.xcommerce.model.*
 import com.xcommerce.mc920.xcommerce.utilities.UIUtils
 import com.xcommerce.mc920.xcommerce.utilities.formatMoney
@@ -34,10 +34,16 @@ class OrderDetailActivity : AppCompatActivity() {
             this.number_val.text = order.orderId.toString()
             this.date_val.text = order.createdAt
             this.total_val.text = formatMoney(order.totalPrice.toInt())
+            this.shipping_address_val.text = order.shipmentInfo.cepDst
+
 
             // Payment method
             if (order.paymentType == PaymentType.BOLETO) {
+                // calculate boleto expiration based on date of creation (+5 days from that)
+                val createdSplit = order.createdAt.split("/")
+                val expBoleto = (createdSplit[0].toInt() + 5).toString() + "/" + createdSplit[1] + "/" + createdSplit[2]
                 this.method_val.text = "Boleto bancário"
+                this.boleto_venc_val.text = expBoleto
                 this.boleto_num_val.text = order.barcode
             } else if (order.paymentType == PaymentType.CREDIT_CARD) {
                 this.method_val.text = "Cartão de cŕedito"
@@ -59,14 +65,8 @@ class OrderDetailActivity : AppCompatActivity() {
                 this.payment_status_val.text = "Pagamento pendente"
             }
 
-
             // Products
-            val cart = Cart()
-            for (product in order.products) {
-                cart.add(product, 1)
-            }
-            val cartItems = cart.cartItemMap.map { (k, v) -> CartItem(k, v) }
-            val adapter = CartItemAdapter(this, cartItems)
+            val adapter = CartItemAdapter(this, order.productsByQuantity)
             list_view_completed.adapter = adapter
             UIUtils.setListViewHeightBasedOnItems(list_view_completed)
 
@@ -81,6 +81,12 @@ class OrderDetailActivity : AppCompatActivity() {
                 this.shipping_status_val.text = "Saiu para entrega"
             } else if (order.shipmentStatus == ShipmentStatus.ERROR) {
                 this.shipping_status_val.text = "Houve um erro"
+            }
+
+            if (order.shipmentInfo.shipmentType == ShipmentType.PAC) {
+                this.shipping_type_val.text = "PAC"
+            } else if (order.shipmentInfo.shipmentType == ShipmentType.SEDEX) {
+                this.shipping_type_val.text = "Sedex"
             }
 
             if (order.shipmentStatus == ShipmentType.PAC) {

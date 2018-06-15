@@ -8,7 +8,7 @@ data class CheckoutIn(val cart: CartIn, val paymentInfo: PaymentInfo, val shipme
 
 data class PaymentInfo(val paymentType: PaymentType, val creditCardInfo: CreditCardInfo?, val installments: Long?)
 
-data class ShipmentInfo(val cepDst: String, val shipmentType: ShipmentType)
+data class ShipmentInfo(val cepDst: String, val shipmentType: ShipmentType) : Serializable
 
 data class CheckoutOut(val orderId: Long?, val status: CheckoutStatus, val paymentDetails: PaymentOut?, val validation_status: ValidationStatus?): Serializable {
     constructor(status: CheckoutStatus) : this(null, status, null, null)

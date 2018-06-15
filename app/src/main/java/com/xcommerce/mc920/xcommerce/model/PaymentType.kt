@@ -2,8 +2,9 @@ package com.xcommerce.mc920.xcommerce.model
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
+import java.io.Serializable
 
-enum class PaymentType(private val _id: Int, private val _text: String) {
+enum class PaymentType(private val _id: Int, private val _text: String): Serializable {
     CREDIT_CARD(1, "Cartão de crédito"),
     BOLETO(2, "Boleto");
 
