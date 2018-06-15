@@ -146,12 +146,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_logout -> {
                 UserHelper.logOut()
-                invalidateOptionsMenu()
-            }
-            //TODO: Remove when backend integration is done
-            R.id.debug_login -> {
-                val address = AddressFull(Address("17020510","Alameda das hortensias", "PVA", "Bauru", "SP"), 851, "1")
-                UserHelper.updateUser(User("Ronaldo Prata Amorim", "ronaldo@g.com", "123mudar","13/06/1994","35028504812", address, "M", "99999999"))
+
+                val settings = applicationContext.getSharedPreferences("com.xcommerce.mc920.xcommerce", 0)
+                val editor = settings.edit()
+                editor.putString("tokenUser", "")
+
+                // Apply the edits!
+                editor.apply()
+
                 invalidateOptionsMenu()
             }
         }
