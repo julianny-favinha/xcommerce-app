@@ -39,10 +39,10 @@ class AddressActivity : AppCompatActivity() {
             task = AddressFetchTask(this)
             task?.execute(address_edit_text_cep.text.toString())
 
-            if(isTaskRunning(task)){
+            if (isTaskRunning(task)) {
                 showProgressBar()
             } else {
-                hideProgressBar()
+                hideProgressBar(true)
             }
         }
 
@@ -90,9 +90,11 @@ class AddressActivity : AppCompatActivity() {
         address_info.visibility = View.GONE
     }
 
-    fun hideProgressBar() {
+    fun hideProgressBar(hasAddress: Boolean) {
         progressbar.visibility = View.GONE
-        address_info.visibility = View.VISIBLE
+        if (hasAddress) {
+            address_info.visibility = View.VISIBLE
+        }
     }
 
     private fun isTaskRunning(task: AddressFetchTask?): Boolean {
