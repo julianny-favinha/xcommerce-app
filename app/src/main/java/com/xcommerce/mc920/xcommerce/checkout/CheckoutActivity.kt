@@ -49,9 +49,9 @@ class CheckoutActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RETURN_CODE && resultCode == Activity.RESULT_OK) {
 
-            val addres = data?.getSerializableExtra("address")
+            val address = data?.getSerializableExtra("address")
 
-            if (addres is AddressFull) {
+            if (address is AddressFull) {
 
                 val shipmentProducts = CartHelper.retrieveListCart().map {cartItem ->
                     (0..cartItem.quantity).map {
@@ -59,10 +59,10 @@ class CheckoutActivity : AppCompatActivity() {
                     }
                 }.flatten()
 
-                populateAddress(addres)
+                populateAddress(address)
                 task?.let { task = ShipmentPriceFetchTask(this) }
-                task?.execute(ShipmentIn(shipmentProducts, addres.address.cep))
-                address = addres
+                task?.execute(ShipmentIn(shipmentProducts, address.address.cep))
+                this.address = address
 
                 if (isTaskRunning(task)) {
                     showShipmentOptionsProgressBar()
@@ -96,7 +96,7 @@ class CheckoutActivity : AppCompatActivity() {
             }
         }.flatten()
 
-        val shipIn = ShipmentIn(shipmentProducts, user.address.address.cep)
+        val shipIn = ShipmentIn(shipmentProducts, address?.address?.cep ?: user.address.address.cep)
         task = ShipmentPriceFetchTask(this)
         task?.execute(shipIn)
 
