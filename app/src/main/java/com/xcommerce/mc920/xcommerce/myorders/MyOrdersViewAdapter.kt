@@ -36,6 +36,7 @@ class MyOrdersViewAdapter(context: Context, orderItems: List<Order>) : ArrayAdap
             newView.product_nitems_value.text = totalQuantity.toString()
             newView.product_date_value.text = createdAt
             newView.product_price_value.text = formatMoney(totalPrice.toInt())
+            newView.product_image.setImageResource(R.drawable.shopping_bag)
 
             newView.order_element.setOnClickListener {
                    val intent = Intent(ctx, OrderDetailActivity::class.java)
