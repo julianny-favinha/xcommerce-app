@@ -317,10 +317,10 @@ class SignupActivity : AppCompatActivity() {
                 editor.apply()
 
                 finish()
+            } else {
+                email.error = getString(R.string.error_existing_user)
+                email.requestFocus()
             }
-
-            email.error = getString(R.string.error_existing_user)
-            email.requestFocus()
         }
 
         override fun onCancelled() {
