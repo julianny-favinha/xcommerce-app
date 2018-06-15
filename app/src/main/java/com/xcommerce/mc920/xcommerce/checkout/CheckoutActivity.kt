@@ -39,6 +39,7 @@ class CheckoutActivity : AppCompatActivity() {
     private var shipmentPrazos: Map<String, Int> = emptyMap()
 
     var user: User? = null
+    var address: AddressFull? = null
 
     var subtotal: Int = 0
     var shipment: Int = 0
@@ -48,10 +49,26 @@ class CheckoutActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RETURN_CODE && resultCode == Activity.RESULT_OK) {
 
-            val address = data?.getSerializableExtra("address")
+            val addres = data?.getSerializableExtra("address")
 
-            if (address is AddressFull) {
-                populateAddress(address)
+            if (addres is AddressFull) {
+
+                val shipmentProducts = CartHelper.retrieveListCart().map {cartItem ->
+                    (0..cartItem.quantity).map {
+                        cartItem.product
+                    }
+                }.flatten()
+
+                populateAddress(addres)
+                task?.let { task = ShipmentPriceFetchTask(this) }
+                task?.execute(ShipmentIn(shipmentProducts, addres.address.cep))
+                address = addres
+
+                if (isTaskRunning(task)) {
+                    showShipmentOptionsProgressBar()
+                } else {
+                    hideShipmentOptionsProgressBar()
+                }
             }
         }
     }
@@ -213,6 +230,9 @@ class CheckoutActivity : AppCompatActivity() {
         intent.putExtra("successful", successful)
 
         if (successful) {
+            // address
+            intent.putExtra("address", address ?: UserHelper.retrieveUser().address)
+
             // delivery
             intent.putExtra("delivery", getDelivery())
 
