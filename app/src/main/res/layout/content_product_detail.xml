@@ -27,6 +27,15 @@
                 android:contentDescription="@string/text_description_photo" />
 
             <TextView
+                android:id="@+id/note_item_esgotado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                tools:text="ESGOTADO"
+                android:textColor="@color/red"
+                android:textAlignment="textEnd"/>
+
+            <TextView
                 android:id="@+id/product_detail_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

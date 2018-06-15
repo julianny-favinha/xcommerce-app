@@ -45,6 +45,12 @@ class ProductDetailActivity : AppCompatActivity() {
             this.product_detail_price.text = priceString
             this.product_detail_category.text = product.category
             this.product_detail_description.text = product.description
+            this.note_item_esgotado.text = "ESGOTADO"
+            if(product.stock == 0) {
+                note_item_esgotado.visibility = View.VISIBLE
+            } else {
+                note_item_esgotado.visibility = View.GONE
+            }
             product.imageUrl?.let { DownloadImageTask(this.product_detail_image).execute(product.imageUrl) }
                     ?: this.product_detail_image.setImageResource(R.drawable.image_noimage)
         }
