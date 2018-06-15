@@ -133,6 +133,10 @@ class CheckoutActivity : AppCompatActivity() {
 
         // finish shopping
         checkout_button.setOnClickListener{
+            checkout_button.isEnabled = false
+            progressBarCompletedPurchase.visibility = View.VISIBLE
+            progressBarCompletedPurchase.bringToFront()
+            
             val creditCardInfo = if (PaymentType.getType(getPaymentMethod()) == PaymentType.CREDIT_CARD) {
                 CreditCardInfo(credit_card_name.text.toString(), credit_card_month.text.toString().toLong(), credit_card_year.text.toString().toLong(), credit_card_code.text.toString(), credit_card_number.text.toString())
             } else {

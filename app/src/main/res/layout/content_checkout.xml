@@ -8,7 +8,9 @@
     tools:context=".checkout.CheckoutActivity"
     tools:showIn="@layout/activity_checkout">
 
+
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -37,21 +39,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
 
-            <include layout="@layout/payment_method"
+            <include
+                layout="@layout/payment_method"
                 tools:ignore="ResourceCycle" />
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="15sp" />
 
-            <include layout="@layout/summary_products"
+            <include
+                layout="@layout/summary_products"
                 tools:ignore="ResourceCycle" />
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="15sp" />
 
-            <include layout="@layout/summary_price_checkout"
+            <include
+                layout="@layout/summary_price_checkout"
                 tools:ignore="ResourceCycle" />
 
             <Space
@@ -62,7 +67,7 @@
                 android:id="@+id/checkout_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/checkout"/>
+                android:text="@string/checkout" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
