@@ -44,11 +44,4 @@
         </menu>
     </item>
 
-    <!-- TODO: Remove when backend integration is done -->
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/debug_login"
-            android:title="Login debug" />
-    </group>
-
 </menu>
