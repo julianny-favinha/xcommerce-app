@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_logout)?.setVisible(UserHelper.isLoggedIn())
         findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_meuspedidos)?.setVisible(UserHelper.isLoggedIn())
         findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_profile)?.setVisible(UserHelper.isLoggedIn())
+        findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.nav_sac)?.setVisible(UserHelper.isLoggedIn())
 
         if (UserHelper.isLoggedIn()){
             val usr = UserHelper.retrieveUser()
