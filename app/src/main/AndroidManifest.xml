@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xcommerce.mc920.xcommerce">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +21,80 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".user.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".user.SignupActivity"
+            android:label="@string/title_activity_signup"
+            android:parentActivityName=".user.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".user.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".home.highlights.ProductDetailActivity"
+            android:label="@string/title_activity_product_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".search.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".user.InfoCreditCardActivity"
+            android:label="@string/title_activity_info_credit_cart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".checkout.CheckoutActivity"
+            android:label="@string/title_activity_checkout"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".checkout.CompletedPurchaseActivity"
+            android:label="@string/title_completed_purchase"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".cart.OldCartActivity"
+            android:label="@string/title_activity_cart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".user.AddressActivity"
+            android:label="@string/title_activity_address"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".user.UserProfileActivity"
+            android:label="@string/title_activity_user_profile"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".user.EditProfileActivity"
+            android:label="@string/action_edit_profile"
+            android:parentActivityName=".user.UserProfileActivity" />
+        <activity
+            android:name=".myorders.MyOrdersActivity"
+            android:label="@string/title_activity_my_orders"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".cart.CartActivity"
+            android:label="@string/title_activity_cart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".myorders.OrderDetailActivity"
+            android:label="@string/title_activity_order_detail"
+            android:parentActivityName=".myorders.MyOrdersActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".sac.SACActivity"
+            android:label="Atendimento ao Consumidor"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 
